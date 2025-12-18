@@ -10,14 +10,14 @@
     <meta name="rating" content="General">
     <base target="_target">
     <meta name="description" content="">
-    <title>Fourth Portfolio</title>
+    <title>簡宏祐 Fourth | 作品集</title>
     <link rel="icon" type="image/png" sizes="32x32" href="">
     <link rel="icon" type="image/png" sizes="16x16" href="">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#020202">
 
     <!--LINE / FB / IG / Twitter 預覽 -->
-    <meta property="og:title" content="北經殘卷">
+    <meta property="og:title" content="簡宏祐|作品集">
     <meta property="og:description" content="你好，我是簡宏祐，注重使用者體驗與設計平衡的UI/UX設計師，歡迎參閱作品集。">
     <meta property="og:image" content="">
     <meta property="og:url" content="">
@@ -41,11 +41,54 @@
 
 <body>
     <!-- particle zone-->
-    <div id="canvas-container"></div>
+    
+    <div class="background-layer theme-abyss"></div>
+    <div id="canvas-container" class="canvas-wrapper"></div>
 
+    <main class="main-content">      
+        <!-- hero section-->
+        <section class="hero-section">
+            <div class="hero-container">                
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        CREATIVE<br>PORTFOLIO<br>DESIGN
+                    </h1>
+                    <a href="#portfolio" class="btn btn-primary btn-glow">
+                        DIRECT TO PORTFOLIO
+                    </a>
+                </div>
 
+                <div class="hero-right">
+                    <ul class="hero-list">
+                        <li>abcdefg (替換文字1)</li>
+                        <li>abcdefg (替換文字2)</li>
+                        <li>abcdefg (替換文字3)</li>
+                    </ul>
+                    <h2 class="hero-subtitle">
+                        Visual Experience &<br>Interaction Design
+                    </h2>
+                </div>
 
-    <!-- Particle JS -->
+            </div>
+
+            <nav class="hero-bottom-nav">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio" class="active">Works</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </section>
+
+    </main>
+
+    <!-- Particle JS -->     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="./js/particle.js"></script>
+
+    <!-- nav/footer JS -->
+    <script src="./js/nav.js"></script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>

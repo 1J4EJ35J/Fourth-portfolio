@@ -1,1 +1,61 @@
-/*# sourceMappingURL=nav.css.map */
+/* --- 下方導覽列設計 --- */
+.hero-bottom-nav {
+    position: absolute;
+    bottom: 3vh;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-bottom-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 3rem;
+    /* 選單間距 */
+}
+
+.hero-bottom-nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    text-transform: uppercase;
+    /* 全大寫 */
+    letter-spacing: 0.2em;
+    transition: all 0.3s ease;
+    position: relative;
+    font-family: var(--font-family-main);
+    letter-spacing: 0.15em;
+    /* 導覽列字距拉大，增加呼吸感 */
+    text-transform: uppercase;
+}
+
+/* 懸停與啟用狀態 */
+.hero-bottom-nav a:hover,
+.hero-bottom-nav a.active {
+    color: var(--color-primary);
+}
+
+/* 啟用狀態下方的光點指示 */
+.hero-bottom-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-primary);
+}
+
+@media (max-width: 768px) {
+    .hero-bottom-nav ul {
+        gap: 1.5rem;
+        /* 手機版選單間距縮小 */
+    }
+}

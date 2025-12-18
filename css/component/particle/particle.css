@@ -1,11 +1,62 @@
-@charset "UTF-8";
-body {
-  margin: 0;
-  overflow: hidden; /* 隱藏滾動條 */
-  background-color: #000000; /* 純黑背景 */
+/* --- 全域重置 --- */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    /* 移除背景色，讓它透明，完全交給 .background-layer 控制 */
+    background-color: transparent; 
 }
 
-#canvas-container {
-  width: 100%;
-  height: 100vh;
-}/*# sourceMappingURL=particle.css.map */
+/* --- 1. 背景層 (最底層) --- */
+.background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* 【關鍵修正】改為正數 1，確保它在 html 畫布之上 */
+    z-index: -2;     
+    pointer-events: none;
+}
+
+/* --- 2. 深淵主題配色 --- */
+.theme-abyss {
+    background: 
+        radial-gradient(
+            circle at 50% 50%,
+            transparent 10%, 
+            rgba(21, 21, 21, 0.9) 100%
+        ),
+        radial-gradient(
+            ellipse at 50% 0%, 
+            #212537 0%,    
+            #092745 40%,   
+            #141643 85%    
+        );
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* --- 3. 粒子畫布容器 (中間層) --- */
+.canvas-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 【關鍵修正】改為正數 2，疊在背景之上 */
+    z-index: -1; 
+    pointer-events: none;
+}
+
+/* --- 4. 內容層 (最上層) --- */
+/* 注意：您需要在 HTML 的 main 標籤加上這個 class */
+.main-content {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    /* 【關鍵修正】改為正數 10，確保文字按鈕在最上面 */
+    z-index: 10; 
+}

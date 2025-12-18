@@ -1,2 +1,9 @@
-@import url(./reset.css);
-@import url(./component/particle/particle.css);
+@import url("./reset.css");
+@import url("./design-system/color-system.css");
+@import url("./design-system/font-system.css");
+
+@import url("./component/button/button.css");
+@import url("./component/particle/particle.css");
+
+
+@import url("./page/home/home.css");

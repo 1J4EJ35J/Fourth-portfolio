@@ -1,1 +1,32 @@
-/*# sourceMappingURL=button.css.map */
+/* 按鈕設計 */
+.btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border-radius: 50px; /* 圓角按鈕 */
+    font-size: var(--fs-small-title);
+    font-weight: var(--fw-medium);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    /* ... (前略) ... */
+    font-family: var(--font-family-main);
+    font-weight: var(--fw-semibold); /* 改用 600 半粗體，英文顯示較佳 */
+    letter-spacing: 0.08em; /* 按鈕文字稍微拉開間距 */
+    text-transform: uppercase; /* 強制全大寫 (設計慣例) */
+}
+
+/* 主要按鈕風格 (配合粒子色系) */
+.btn-primary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+/* 發光效果 */
+.btn-glow:hover {
+    background-color: var(--color-primary);
+    color: #000; /* 懸停時文字變黑，對比更強 */
+    box-shadow: 0 0 20px var(--color-btn-glow), 0 0 40px var(--color-btn-glow);
+    transform: translateY(-3px); /* 微微上浮 */
+}

@@ -1,0 +1,153 @@
+/* css/main.css */
+
+/* --- 確保內容層級正確 --- */
+.main-content {
+    position: relative;
+    z-index: 10;
+    /* 確保在粒子之上 */
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* --- Hero Section 佈局容器 --- */
+.hero-section {
+    height: 100vh;
+    /* 佔滿全螢幕高度 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* 垂直居中 */
+    padding: 0 5vw;
+    /* 兩側留白 */
+    position: relative;
+    /* 為了定位下方的 nav */
+}
+
+/* 主要內容 Grid 佈局 (左側與右側) */
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 左右各佔 50% */
+    gap: 4rem;
+    /* 左右區塊間距 */
+    align-items: center;
+    /* 垂直對齊 */
+    max-width: 1200px;
+    /* 最大寬度限制，避免在大螢幕太開 */
+    margin: 0 auto;
+    /* 水平居中 */
+    width: 100%;
+}
+
+/* --- 左側內容設計 --- */
+.hero-left {
+    /* 左側內容靠左對齊 */
+}
+
+.hero-title {
+    font-family: var(--font-family-main);
+    /* 確保吃到 Montserrat */
+    font-size: var(--fs-hero-title);
+    font-weight: var(--fw-bold);
+    /* 700 */
+    line-height: 1.1;
+    /* 英文大標題行高可以更緊湊一點 */
+    color: var(--color-text-primary);
+    margin-bottom: 2.5rem;
+
+    /* 英文全大寫時，加上字距會更有質感 */
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* --- 右側內容設計 --- */
+.hero-right {
+    /* 右側內容靠右對齊 (依據參考圖) */
+    justify-self: end;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* 讓內部元素靠右 */
+}
+
+/* 上方小清單 */
+.hero-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    color: var(--color-text-secondary);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-regular);
+    letter-spacing: 0.1em;
+}
+
+.hero-list li {
+    margin-bottom: 0.5rem;
+    /* 選用：在項目在前面加上一個小裝飾線 */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.hero-list li::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background-color: var(--color-primary);
+    margin-right: 10px;
+    opacity: 0.5;
+}
+
+/* 右側中標題 */
+.hero-subtitle {
+    font-size: var(--fs-subtitle);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+
+
+
+/* --- 響應式設計 (手機版適配) --- */
+@media (max-width: 768px) {
+    .hero-section {
+        padding-top: 80px;
+        /* 手機版上方留位置給未來的 Header */
+        justify-content: flex-start;
+        /* 手機版靠上對齊 */
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        /* 改為單欄堆疊 */
+        gap: 3rem;
+        text-align: center;
+        /* 手機版全部居中對齊比較好看 */
+    }
+
+    .hero-left {
+        margin-bottom: 2rem;
+    }
+
+    .hero-right {
+        justify-self: center;
+        text-align: center;
+        align-items: center;
+    }
+
+    .hero-list li {
+        justify-content: center;
+    }
+
+    .hero-list li::before {
+        display: none;
+        /* 手機版移除裝飾線，保持簡潔 */
+    }
+
+
+}
