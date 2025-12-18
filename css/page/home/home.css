@@ -28,9 +28,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     /* 左右各佔 50% */
-    gap: 4rem;
+    gap: 0;
     /* 左右區塊間距 */
-    align-items: center;
+    align-items: end;
     /* 垂直對齊 */
     max-width: 1200px;
     /* 最大寬度限制，避免在大螢幕太開 */
@@ -41,25 +41,55 @@
 
 /* --- 左側內容設計 --- */
 .hero-left {
-    /* 左側內容靠左對齊 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(1.25rem, 3vw, 2rem);
 }
 
-.hero-title {
+.hero-left .title-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+.hero-title-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+.hero-title-container .span-box{
+    display: flex;
+    flex-direction: row;
+    align-items: first baseline;
+}
+.hero-title-container .span-box{
+    margin-bottom: -.7rem;
+}
+.hero-title-text.first{
+    font-size: clamp(3.2rem, 7.4vw, 7rem);
+}
+.hero-title-text{
+    margin-left: -.15rem;
     font-family: var(--font-family-main);
     /* 確保吃到 Montserrat */
     font-size: var(--fs-hero-title);
-    font-weight: var(--fw-bold);
+    font-weight: var(--fw-semibold);
     /* 700 */
     line-height: 1.1;
     /* 英文大標題行高可以更緊湊一點 */
     color: var(--color-text-primary);
-    margin-bottom: 2.5rem;
 
     /* 英文全大寫時，加上字距會更有質感 */
     letter-spacing: -0.02em;
+    transform: scaleY(1.04);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
-
+.hero-left .sub-title{
+    font-size: var(--fs-subtitle);
+    font-weight: var(--fw-regular);
+}
 
 /* --- 右側內容設計 --- */
 .hero-right {
@@ -68,15 +98,19 @@
     text-align: right;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     /* 讓內部元素靠右 */
 }
-
+.hero-right .hero-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
 /* 上方小清單 */
 .hero-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 1.5rem 0;
     color: var(--color-text-secondary);
     font-size: var(--fs-small);
     font-weight: var(--fw-regular);
@@ -84,30 +118,25 @@
 }
 
 .hero-list li {
-    margin-bottom: 0.5rem;
     /* 選用：在項目在前面加上一個小裝飾線 */
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
-.hero-list li::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 1px;
-    background-color: var(--color-primary);
-    margin-right: 10px;
-    opacity: 0.5;
+.hero-right .hero-title-text{
+font-weight: var(--fw-medium);
+transform: scaleY(1);
+   margin-bottom: -.7rem;
 }
 
 /* 右側中標題 */
 .hero-subtitle {
-    font-size: var(--fs-subtitle);
+    font-size: var(--fs-section-title);
     font-weight: var(--fw-medium);
     color: var(--color-text-primary);
     line-height: 1.4;
-    margin: 0;
+    margin-left: .5rem;
 }
 
 

@@ -1,88 +1,128 @@
 /* 按鈕設計 */
 .btn {
-    display: inline-block;
-    padding: 1rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    border-radius: 50px; /* 圓角按鈕 */
-    font-size: var(--fs-small-title);
-    font-weight: var(--fw-medium);
+    border-radius: 50px;
+    /* 圓角按鈕 */
+    width: fit-content;
     transition: all 0.3s ease;
     cursor: pointer;
-    letter-spacing: 0.05em;
-    /* ... (前略) ... */
-    font-family: var(--font-family-main);
-    font-weight: var(--fw-semibold); /* 改用 600 半粗體，英文顯示較佳 */
-    letter-spacing: 0.08em; /* 按鈕文字稍微拉開間距 */
-    text-transform: uppercase; /* 強制全大寫 (設計慣例) */
 }
 
-/* --- 全新 Liquid Glass 按鈕特效 --- */
+.btn.style-01 {
+    padding: .75rem 2rem;
+}
 
-/* 1. 按鈕基礎容器 - 玻璃與發光層 */
+.btn.style-01:has(.icon-controller) {
+    padding-right: 1.5rem;
+    gap: .75rem;
+}
+
+/* --- Liquid Glass 按鈕特效 (藍色修正版) --- */
+
+/* 1. 按鈕基礎容器 */
 .btn-liquid-glass {
     position: relative;
-    overflow: hidden; /* 隱藏超出邊界的特效 */
-    /* 玻璃底色：極淡的青藍色透明背景 */
-    background: rgba(0, 219, 211, 0.05);
-    /* 玻璃邊框：細緻的發光邊框 */
-    border: 1px solid rgba(0, 219, 211, 0.4);
-    /* 文字顏色 */
+    overflow: hidden;
+
+    /* 【修改點 1：顏色改為正藍色 (0, 140, 255)】 */
+    /* 【修改點 2：大幅降低透明度 (0.05 -> 0.02) 讓它更清透】 */
+    background: rgba(0, 140, 255, 0.02);
+
+    /* 邊框也調淡一點 */
+    border: 1px solid rgba(0, 140, 255, 0.3);
+
     color: var(--color-primary);
-    /* 玻璃磨砂效果 (關鍵!) */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Safari 支援 */
-    /* 常態發光：微弱的呼吸光暈 */
-    box-shadow: 0 0 15px rgba(0, 219, 211, 0.2), inset 0 0 15px rgba(0, 219, 211, 0.1);
+    /* 使用新的藍色變數 */
+
+    /* 【修改點 3：降低模糊效果 (10px -> 2px)】 */
+    /* Default 狀態下幾乎看不出模糊，只有一點點質感 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+
+    /* 發光也調弱，讓它更低調 */
+    box-shadow: 0 0 10px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
+
     transition: all 0.4s ease-out;
 }
 
-/* 2. 液態流體動畫層 (使用偽元素 ::before) */
-.btn-liquid-glass::before {
-    content: '';
+/* 2. 液態流體動畫層 */
+.liquid-light {
     position: absolute;
     top: 0;
-    left: -100%; /* 一開始藏在左邊外面 */
+    left: -100%;
     width: 100%;
     height: 100%;
-    /* 液態光波漸層：透明 -> 高亮藍白 -> 透明 */
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.6),
-        rgba(0, 219, 211, 0.8),
-        transparent
-    );
-    /* 稍微傾斜一點角度，看起來更動感 */
+    /* 液態光波：改成藍色系漸層 */
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(63, 134, 193, 0.9),
+            /* 核心亮白 */
+            rgba(255, 255, 255, 0.68),
+            /* 尾巴正藍 */
+            transparent);
     transform: skewX(-20deg);
     transition: all 0.6s ease-out;
-    z-index: 0; /* 放在文字下面 */
-    opacity: 0; /* 常態隱藏 */
+    z-index: 0;
+    opacity: 0;
 }
 
-/* 3. 確保文字在最上層 */
+
+/* 3. 文字層 */
 .btn-text {
     position: relative;
-    z-index: 1;
-    text-shadow: 0 0 5px rgba(0,0,0,0.5); /* 加一點文字陰影確保易讀性 */
+    /* 平常文字不加陰影，保持清晰 */
+    text-shadow: none;
     transition: all 0.3s ease-out;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    font-family: var(--font-family-main);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.08em;
+}
+
+.icon-controller {
+    position: relative;
+    /* 平常文字不加陰影，保持清晰 */
+    text-shadow: none;
+    transition: all 0.3s ease-out;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.08em;
 }
 
 /* --- 懸停 (Hover) 互動效果 --- */
 .btn-liquid-glass:hover {
-    /* 外框與背景變亮 */
+    /* Hover 時才加強邊框與背景，讓互動感更強 */
     border-color: var(--color-primary);
-    background: rgba(0, 219, 211, 0.15);
-    color: #ffffff; /* 文字變白 */
-    /* 強烈發光：外部光暈 + 內部光暈 */
-    box-shadow: 
-        0 0 30px rgba(0, 219, 211, 0.6), 
-        0 0 60px rgba(0, 219, 211, 0.3),
-        inset 0 0 20px rgba(0, 219, 211, 0.4);
-    transform: translateY(-3px) scale(1.02); /* 微微上浮放大 */
+    background: rgba(0, 140, 255, 0.2);
+    /* 背景變明顯 */
+    color: #ffffff;
+
+    /* Hover 時模糊度增加，產生聚焦感 */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    /* 發光增強 */
+    box-shadow:
+        0 0 25px rgba(0, 140, 255, 0.6),
+        0 0 50px rgba(0, 140, 255, 0.3),
+        inset 0 0 15px rgba(0, 140, 255, 0.4);
+
+    transform: translateY(-2px) scale(1.02);
 }
 
+.btn-liquid-glass:hover .liquid-light {
+    opacity: 1;
+    left: 60%;
+    transition: left 0.7s ease-in-out;
+}
 
-.btn-liquid-glass:hover .btn-text {
-    /* 懸停時文字發光 */
-    text-shadow: 0 0 10px #ffffff, 0 0 20px var(--color-primary);
+.btn-liquid-glass:hover .btn-text,
+.btn-liquid-glass:hover .icon-controller {
+    /* Hover 時文字發光 */
+    text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
 }
