@@ -16,17 +16,73 @@
     text-transform: uppercase; /* 強制全大寫 (設計慣例) */
 }
 
-/* 主要按鈕風格 (配合粒子色系) */
-.btn-primary {
-    background-color: transparent;
+/* --- 全新 Liquid Glass 按鈕特效 --- */
+
+/* 1. 按鈕基礎容器 - 玻璃與發光層 */
+.btn-liquid-glass {
+    position: relative;
+    overflow: hidden; /* 隱藏超出邊界的特效 */
+    /* 玻璃底色：極淡的青藍色透明背景 */
+    background: rgba(0, 219, 211, 0.05);
+    /* 玻璃邊框：細緻的發光邊框 */
+    border: 1px solid rgba(0, 219, 211, 0.4);
+    /* 文字顏色 */
     color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+    /* 玻璃磨砂效果 (關鍵!) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari 支援 */
+    /* 常態發光：微弱的呼吸光暈 */
+    box-shadow: 0 0 15px rgba(0, 219, 211, 0.2), inset 0 0 15px rgba(0, 219, 211, 0.1);
+    transition: all 0.4s ease-out;
 }
 
-/* 發光效果 */
-.btn-glow:hover {
-    background-color: var(--color-primary);
-    color: #000; /* 懸停時文字變黑，對比更強 */
-    box-shadow: 0 0 20px var(--color-btn-glow), 0 0 40px var(--color-btn-glow);
-    transform: translateY(-3px); /* 微微上浮 */
+/* 2. 液態流體動畫層 (使用偽元素 ::before) */
+.btn-liquid-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* 一開始藏在左邊外面 */
+    width: 100%;
+    height: 100%;
+    /* 液態光波漸層：透明 -> 高亮藍白 -> 透明 */
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        rgba(0, 219, 211, 0.8),
+        transparent
+    );
+    /* 稍微傾斜一點角度，看起來更動感 */
+    transform: skewX(-20deg);
+    transition: all 0.6s ease-out;
+    z-index: 0; /* 放在文字下面 */
+    opacity: 0; /* 常態隱藏 */
+}
+
+/* 3. 確保文字在最上層 */
+.btn-text {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5); /* 加一點文字陰影確保易讀性 */
+    transition: all 0.3s ease-out;
+}
+
+/* --- 懸停 (Hover) 互動效果 --- */
+.btn-liquid-glass:hover {
+    /* 外框與背景變亮 */
+    border-color: var(--color-primary);
+    background: rgba(0, 219, 211, 0.15);
+    color: #ffffff; /* 文字變白 */
+    /* 強烈發光：外部光暈 + 內部光暈 */
+    box-shadow: 
+        0 0 30px rgba(0, 219, 211, 0.6), 
+        0 0 60px rgba(0, 219, 211, 0.3),
+        inset 0 0 20px rgba(0, 219, 211, 0.4);
+    transform: translateY(-3px) scale(1.02); /* 微微上浮放大 */
+}
+
+
+.btn-liquid-glass:hover .btn-text {
+    /* 懸停時文字發光 */
+    text-shadow: 0 0 10px #ffffff, 0 0 20px var(--color-primary);
 }
