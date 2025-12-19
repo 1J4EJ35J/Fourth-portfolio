@@ -16,26 +16,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* 垂直居中 */
+    align-items: center;
     padding: 0 5vw;
-    /* 兩側留白 */
     position: relative;
-    /* 為了定位下方的 nav */
 }
 
 /* 主要內容 Grid 佈局 (左側與右側) */
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* 左右各佔 50% */
     gap: 0;
-    /* 左右區塊間距 */
     align-items: end;
-    /* 垂直對齊 */
+    justify-content: center;
     max-width: 1200px;
-    /* 最大寬度限制，避免在大螢幕太開 */
-    margin: 0 auto;
-    /* 水平居中 */
     width: 100%;
 }
 
@@ -105,14 +98,14 @@
     text-align: right;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     /* 讓內部元素靠右 */
 }
 
 .hero-right .hero-container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     gap: 1.5rem;
 }
 
@@ -146,7 +139,7 @@
     font-weight: var(--fw-regular);
     color: var(--color-text-primary);
     line-height: 1.4;
-    margin-left: 2rem;
+    
     margin-top: -1.5rem;
     letter-spacing: -.5px;
 }
@@ -189,6 +182,5 @@
         display: none;
         /* 手機版移除裝飾線，保持簡潔 */
     }
-
-
 }
+

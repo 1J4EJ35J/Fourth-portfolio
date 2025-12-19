@@ -2,9 +2,10 @@
 @import url("./design-system/color-system.css");
 @import url("./design-system/font-system.css");
 
-@import url("./component/button/button.css");
-@import url("./component/particle/particle.css");
-@import url("./component/nav/nav.css");
+@import url("./component/button.css");
+@import url("./component/particle.css");
+@import url("./component/nav.css");
+@import url("./component/tunnel.css");
 
-@import url("./page/home/home.css");
-@import url("./page/about/about.css");
+@import url("./page/home.css");
+@import url("./page/about.css");
