@@ -17,7 +17,7 @@ html, body {
     width: 100vw;
     height: 100vh;
     /* 【關鍵修正】改為正數 1，確保它在 html 畫布之上 */
-    z-index: -2;     
+    z-index: -3;     
     pointer-events: none;
 }
 
@@ -47,8 +47,9 @@ html, body {
     width: 100%;
     height: 100%;
     /* 【關鍵修正】改為正數 2，疊在背景之上 */
-    z-index: -1; 
+    z-index: -2; 
     pointer-events: none;
+    /* display: none; */
 }
 
 /* --- 4. 內容層 (最上層) --- */
@@ -59,4 +60,84 @@ html, body {
     min-height: 100vh;
     /* 【關鍵修正】改為正數 10，確保文字按鈕在最上面 */
     z-index: 10; 
+}
+
+/* --- 斜角光束特效 (Volumetric God Rays) --- */
+
+/* 1. 光束容器 */
+.light-beams {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none; /* 讓滑鼠穿透，不影響操作 */
+    overflow: hidden; /* 確保光束不會撐開卷軸 */
+}
+
+/* 2. 光束通用設定 */
+.beam {
+    position: absolute;
+    top: -20%; /* 從螢幕上方外面開始 */
+    height: 150%; /* 拉長長度以覆蓋螢幕 */
+    background: linear-gradient(
+        180deg, 
+        #003564b3 0%,   /* 頂端：亮白 (光源處) */
+        rgba(0, 48, 92, 0.8) 60%,    /* 中段：帶藍色的微光 */
+        transparent 80%                 /* 尾端：完全透明消失 */
+    );
+    /* 關鍵：使用高斯模糊製造柔和光感 */
+    filter: blur(30px); 
+    transform-origin: top center; /* 旋轉軸心設在上方 */
+    border-radius: 50%; /* 讓光束邊緣稍微圓潤一點 */
+    
+    /* 讓光線與背景融合得更好 (可選，若不支援會自動忽略) */
+    mix-blend-mode: screen; 
+}
+
+/* --- 3. 個別光束設定 (位置、角度、寬度) --- */
+
+/* 光束 1: 主光束 (最亮、最寬) */
+.beam-1 {
+    left: 60%;
+    width: 150px;
+    transform: rotate(25deg); /* 向右傾斜 */
+    opacity: 0.4;
+    animation: light-breathe 4s infinite ease-in-out;
+}
+
+/* 光束 2: 輔助光 (較細、角度稍大) */
+.beam-2 {
+    left: 70%;
+    width: 50px;
+    transform: rotate(35deg);
+    opacity: 0.5;
+    animation: light-breathe 7s infinite ease-in-out 3s; /* 延遲動畫 */
+    filter: blur(16px); /* 更模糊一點 */
+}
+
+/* 光束 3: 氛圍光 (最細、最淡) */
+.beam-3 {
+    left: 34%; /* 從更左邊射進來 */
+    width: 100px;
+    transform: rotate(20deg);
+    opacity: 0.15;
+    animation: light-breathe 4s infinite ease-in-out  reverse 2s; /* 反向呼吸 */
+}
+
+/* --- 4. 呼吸動畫 (讓光線有微微閃爍感) --- */
+@keyframes light-breathe {
+    0% {
+        opacity: 0.3;
+        transform: rotate(25deg) scaleX(1);
+    }
+    50% {
+        opacity: 0.5; /* 變亮 */
+        transform: rotate(25deg) scaleX(1.1); /* 微微變寬 */
+    }
+    100% {
+        opacity: 0.3;
+        transform: rotate(25deg) scaleX(1);
+    }
 }

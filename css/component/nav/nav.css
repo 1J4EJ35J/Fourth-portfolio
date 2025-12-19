@@ -1,23 +1,68 @@
 /* --- 下方導覽列設計 --- */
-.hero-bottom-nav {
-    position: absolute;
+.nav {
+    position: fixed;
     bottom: 3vh;
     left: 0;
     width: 100%;
     display: flex;
     justify-content: center;
+    z-index: 1000;
+    height: fit-content;
 }
 
-.hero-bottom-nav ul {
+.nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 3rem;
+    gap: 0rem;
     /* 選單間距 */
+    border-radius: 50px;
+    width: fit-content;
+    height: fit-content;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    background: rgba(0, 140, 255, 0.02);
+    border: 1px solid rgba(0, 140, 255, 0.3);
+    color: var(--color-primary);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    box-shadow: 0 0 10px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
+    transition: all 0.4s ease-out;
+    padding: .3rem .5rem;
 }
 
-.hero-bottom-nav a {
+.nav ul li {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+}
+
+.nav .nav-btn {
+    display: block;
+    padding: .25rem 2rem;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border: 1px solid rgba(0, 140, 255, 0);
+    /* 使用新的藍色變數 */
+
+    /* 【修改點 3：降低模糊效果 (10px -> 2px)】 */
+    /* Default 狀態下幾乎看不出模糊，只有一點點質感 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    /* 發光也調弱，讓它更低調 */
+
+
+    transition: all 0.4s ease-out;
+
+}
+
+
+
+.nav .nav-btn .text {
     text-decoration: none;
     color: var(--color-text-secondary);
     font-size: var(--fs-small);
@@ -28,33 +73,55 @@
     transition: all 0.3s ease;
     position: relative;
     font-family: var(--font-family-main);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.05em;
     /* 導覽列字距拉大，增加呼吸感 */
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 /* 懸停與啟用狀態 */
-.hero-bottom-nav a:hover,
-.hero-bottom-nav a.active {
-    color: var(--color-primary);
+.nav ul:hover{
+box-shadow:
+        0 0 25px hsla(207, 100%, 78%, 0.6),
+        0 0 50px rgba(104, 232, 255, 0.6)
+}
+.nav .nav-btn:hover {
+    border-radius: 50px;
+    border: 1px solid rgba(0, 140, 255, 0.3);
+    /* Hover 時才加強邊框與背景，讓互動感更強 */
+    border-color: var(--color-primary);
+    background: rgba(0, 140, 255, 0.2);
+    /* 背景變明顯 */
+    color: #ffffff;
+    /* Hover 時模糊度增加，產生聚焦感 */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    /* 發光增強 */   
+    transform:  scale(1.02);
 }
 
-/* 啟用狀態下方的光點指示 */
-.hero-bottom-nav a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background-color: var(--color-primary);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--color-primary);
+.nav .nav-btn:hover .liquid-light {
+    opacity: 1;
+    left: 60%;
+    transition: left 0.7s ease-in-out;
 }
+.nav .nav-btn:hover .liquid-light {
+    opacity: 1;
+    left: 60%;
+    transition: left 0.7s ease-in-out;
+}
+
+.nav .nav-btn:hover .text,
+.nav .nav-btn:hover .icon-controller {
+    /* Hover 時文字發光 */
+    color: var(--color-text-primary);
+    text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
+}
+/* 啟用狀態下方的光點指示 */
+
 
 @media (max-width: 768px) {
-    .hero-bottom-nav ul {
+    .nav ul {
         gap: 1.5rem;
         /* 手機版選單間距縮小 */
     }

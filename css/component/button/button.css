@@ -58,9 +58,9 @@
     /* 液態光波：改成藍色系漸層 */
     background: linear-gradient(90deg,
             transparent,
-            rgba(63, 134, 193, 0.9),
+            rgba(63, 134, 193, 0.6),
             /* 核心亮白 */
-            rgba(255, 255, 255, 0.68),
+            rgba(0, 238, 255, 0.68),
             /* 尾巴正藍 */
             transparent);
     transform: skewX(-20deg);

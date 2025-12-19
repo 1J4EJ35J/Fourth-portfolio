@@ -53,40 +53,47 @@
     align-items: flex-start;
     gap: 1rem;
 }
-.hero-title-container{
+
+.hero-title-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
 }
-.hero-title-container .span-box{
+
+.hero-title-container .span-box {
     display: flex;
     flex-direction: row;
     align-items: first baseline;
 }
-.hero-title-container .span-box{
-    margin-bottom: -.7rem;
+
+.hero-title-container .span-box {
+    margin-bottom: -1.2rem;
+    margin-left: -.25rem;
 }
-.hero-title-text.first{
-    font-size: clamp(3.2rem, 7.4vw, 7rem);
+
+.hero-title-text.first {
+    font-size: clamp(3.4rem, 7.4vw, 8rem);
 }
-.hero-title-text{
+
+.hero-title-text {
     margin-left: -.15rem;
     font-family: var(--font-family-main);
     /* 確保吃到 Montserrat */
     font-size: var(--fs-hero-title);
-    font-weight: var(--fw-semibold);
+    font-weight: var(--fw-medium);
     /* 700 */
     line-height: 1.1;
     /* 英文大標題行高可以更緊湊一點 */
     color: var(--color-text-primary);
 
     /* 英文全大寫時，加上字距會更有質感 */
-    letter-spacing: -0.02em;
+    letter-spacing: -0.07em;
     transform: scaleY(1.04);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
-.hero-left .sub-title{
+
+.hero-left .sub-title {
     font-size: var(--fs-subtitle);
     font-weight: var(--fw-regular);
 }
@@ -101,12 +108,14 @@
     align-items: flex-start;
     /* 讓內部元素靠右 */
 }
-.hero-right .hero-container{
+
+.hero-right .hero-container {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
 }
+
 /* 上方小清單 */
 .hero-list {
     list-style: none;
@@ -124,19 +133,22 @@
     justify-content: flex-start;
 }
 
-.hero-right .hero-title-text{
-font-weight: var(--fw-medium);
-transform: scaleY(1);
-   margin-bottom: -.7rem;
+.hero-right .hero-title-text {
+    font-family: 'Outfit', sans-serif;
+    font-weight: var(--fw-regular);
+    transform: scaleY(1);
+    /* margin-bottom: -.7rem; */
 }
 
 /* 右側中標題 */
 .hero-subtitle {
     font-size: var(--fs-section-title);
-    font-weight: var(--fw-medium);
+    font-weight: var(--fw-regular);
     color: var(--color-text-primary);
     line-height: 1.4;
-    margin-left: .5rem;
+    margin-left: 2rem;
+    margin-top: -1.5rem;
+    letter-spacing: -.5px;
 }
 
 
