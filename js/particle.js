@@ -1,3 +1,5 @@
+let isTunnelMode = false; // 控制是否進入隧道模式
+
 // --- 參數設定 ---
 const config = {
   particleCount: 150000,    // 粒子總數
@@ -174,19 +176,20 @@ function onWindowResize() {
 
 function animate() {
   requestAnimationFrame(animate);
-  const positions = particleSystem.geometry.attributes.position.array;
-  const basePositions = particleSystem.geometry.userData.basePositions;
   time += 0.015; 
 
-  // 更新路徑
+  // 更新路徑 (僅在非隧道模式且非閒置時)
   let targetPoint = isIdle ? new THREE.Vector3(0,0,0) : mouse3DVec;
-  if (!isIdle) {
+  if (!isIdle && !isTunnelMode) { // 隧道模式下不紀錄滑鼠軌跡
       mousePath.unshift(targetPoint.clone());
       if (mousePath.length > config.pathLength) {
         mousePath.pop();
       }
   }
 
+  const positions = particleSystem.geometry.attributes.position.array;
+
+  // 迴圈更新粒子
   for (let i = 0; i < config.particleCount; i++) {
     let i3 = i * 3;
     let pData = particlesData[i];
@@ -195,42 +198,66 @@ function animate() {
     let cz = positions[i3+2];
     let tx, ty, tz, s;
 
-    if (isIdle) {
-      // --- 閒置光球 ---
-      let bx = basePositions[i3];
-      let by = basePositions[i3+1];
-      let bz = basePositions[i3+2];
-      
+    // --- 狀態機邏輯 ---
+    if (isTunnelMode) {
+        // === 模式 C: 隧道散射模式 ===
+        // 1. 斷開滑鼠跟隨，改為向四周擴散
+        // 利用角度 (angle) 讓粒子往外飛
+        let flyOutSpeed = 2.0; 
+        
+        // 2. 模擬彎曲隧道：整體向左或向右移動 (X軸偏移)
+        // 這裡用 sin(time) 製造波浪式的彎曲感
+        let curveOffset = Math.sin(time * 0.5) * 50;
+        
+        // 計算目標：往外擴散 + 往前(或往後)飛 + 彎曲
+        tx = cx + Math.cos(pData.angle) * flyOutSpeed + curveOffset * 0.1;
+        ty = cy + Math.sin(pData.angle) * flyOutSpeed;
+        
+        // 3. 中心遮罩邏輯 (簡單版)：
+        // 讓靠近中心的粒子飛快一點，或是直接把中心粒子推遠
+        // 這裡我們直接讓所有粒子往 Z 軸深處飛，製造穿越感
+        tz = cz + 15; // 粒子往攝影機飛來 (加速)
+        
+        // 如果飛太近(超過攝影機)，重置到遠處，形成無限循環
+        if (tz > 800) tz = -1000;
+        
+        s = 0.1; // 隧道模式的移動平滑度
+
+    } else if (isIdle) {
+      // === 模式 A: 閒置光球 (保持不變) ===
+      // ... (原代碼) ...
+      let bx = particleSystem.geometry.userData.basePositions[i3];
+      let by = particleSystem.geometry.userData.basePositions[i3+1];
+      let bz = particleSystem.geometry.userData.basePositions[i3+2];
       let dist = Math.sqrt(bx*bx + by*by + bz*bz);
       let ripple = Math.sin(time * config.rippleSpeed - dist * config.rippleFrequency);
       let scale = (dist + ripple * config.rippleIntensity) / dist;
-      
-      tx = bx * scale;
-      ty = by * scale;
-      tz = bz * scale;
+      tx = bx * scale; ty = by * scale; tz = bz * scale;
       s = config.returnSpeed;
-    } else {
-      // --- 軌跡跟隨 ---
-      let targetIndex = Math.min(pData.pathIndex, mousePath.length - 1);
-      let pathPos = mousePath[targetIndex];
 
+    } else {
+      // === 模式 B: 軌跡跟隨 (保持不變) ===
+      // ... (原代碼) ...
+      let targetIndex = Math.min(pData.pathIndex, mousePath.length - 1);
+      let pathPos = mousePath[targetIndex] || mousePath[0];
       let ox = Math.cos(pData.angle) * pData.scatterRadius;
       let oy = Math.sin(pData.angle) * pData.scatterRadius;
-      
-      tx = pathPos.x + ox;
-      ty = pathPos.y + oy;
-      tz = 0;
+      tx = pathPos.x + ox; ty = pathPos.y + oy; tz = 0;
       s = pData.speed;
     }
 
+    // 物理移動插值
     positions[i3]   += (tx - cx) * s;
     positions[i3+1] += (ty - cy) * s;
     positions[i3+2] += (tz - cz) * s;
   }
 
   particleSystem.geometry.attributes.position.needsUpdate = true;
-
-  if (isIdle) {
+// 旋轉控制
+  if (isTunnelMode) {
+      // 隧道模式下，稍微旋轉視角增加暈眩/動感
+      particleSystem.rotation.z += 0.001;
+  } else if (isIdle) {
     particleSystem.rotation.y += 0.003;
     particleSystem.rotation.z = Math.sin(time * 0.2) * 0.05; 
   } else {
@@ -240,6 +267,12 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+
+// --- 對外暴露控制函數 (讓 scroll.js 呼叫) ---
+window.setTunnelMode = function(enable) {
+    isTunnelMode = enable;
+};
+
 
 // --- 貼圖產生器 ---
 function createGlowingDot() {

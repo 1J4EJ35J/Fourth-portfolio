@@ -1,1 +1,148 @@
-/*# sourceMappingURL=about.css.map */
+/* css/main.css - 接續原本內容 */
+
+/* --- 隧道光壁特效 (Tunnel Walls) --- */
+.tunnel-walls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0; /* 初始隱藏，靠 JS 滾動顯示 */
+    transition: opacity 0.5s ease;
+}
+
+.wall-light {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px); /* 大量模糊製造光暈感 */
+    mix-blend-mode: screen; /* 讓光疊加 */
+    opacity: 0;
+    transform-origin: center;
+}
+
+/* 仿造您提供的綠色岩壁圖，但改用藍色系 (配合網站) */
+/* 如果想要綠色，將 #004e92 改為 #00924e 即可 */
+.wall-1 {
+    top: 20%;
+    left: -10%;
+    width: 60vw;
+    height: 40vh;
+    background: linear-gradient(45deg, transparent, rgba(0, 78, 146, 0.4));
+    transform: rotate(15deg) skewX(20deg);
+}
+
+.wall-2 {
+    bottom: 10%;
+    right: -20%;
+    width: 70vw;
+    height: 50vh;
+    background: linear-gradient(135deg, transparent, rgba(0, 140, 255, 0.3));
+    transform: rotate(-10deg) skewY(10deg);
+}
+
+.wall-3 {
+    top: 10%;
+    right: 10%;
+    width: 40vw;
+    height: 30vh;
+    background: linear-gradient(90deg, transparent, rgba(0, 219, 211, 0.2));
+    filter: blur(40px);
+}
+
+/* --- Section 2: About Me 樣式 --- */
+.about-section {
+    position: relative;
+    /* 這裡設定高度，讓 User 有足夠的滾動空間來看完轉場 */
+    /* Hero(100vh) + Transition(100vh空間) + About(100vh) */
+    margin-top: 100vh; /* 先把 About 往下推，留出轉場空間 */
+    min-height: 100vh;
+    padding: 10vh 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 初始狀態：縮小 */
+    transform: scale(0.8); 
+    transform-origin: center center;
+    transition: transform 0.1s linear; /* 使用 JS 控制時設為 linear 比較順 */
+}
+
+.about-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+/* 標題區 */
+.section-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+.section-title {
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+.section-subtitle {
+    font-size: var(--fs-small-title);
+    color: var(--color-primary); /* 使用主色調 */
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: var(--fw-medium);
+}
+
+/* 內容區：左右佈局 */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* 左小右大 */
+    gap: 4rem;
+    align-items: flex-start;
+}
+
+/* 左側：照片佔位符 */
+.about-photo {
+    width: 100%;
+    aspect-ratio: 3/4; /* 直式照片比例 */
+    background: rgba(255, 255, 255, 0.05); /* 半透明灰底 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+}
+
+/* 右側：文字 */
+.about-text .text-title {
+    font-size: var(--fs-subtitle);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary); /* 標題用亮白 */
+    margin-bottom: 1.5rem;
+}
+
+.about-text .text-body {
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    color: var(--color-text-secondary); /* 內文用灰藍色，區分層次 */
+    line-height: 1.8;
+}
+
+/* RWD */
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr; /* 手機變單欄 */
+        gap: 2rem;
+    }
+    .about-photo {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}

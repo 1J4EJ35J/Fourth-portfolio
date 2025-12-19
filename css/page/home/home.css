@@ -89,7 +89,7 @@
 
     /* 英文全大寫時，加上字距會更有質感 */
     letter-spacing: -0.07em;
-    transform: scaleY(1.04);
+    transform: scaleY(1.008);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
