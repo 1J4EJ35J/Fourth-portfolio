@@ -3,9 +3,9 @@ html {
     /* 關鍵：絕不要在 html 設 height: 100% 或 overflow，這會鎖死視窗 */
     width: 100%;
     
-    overflow-y: auto !important; 
+    overflow-y: auto ; 
     /* 【關鍵 2】確保 html 高度不被鎖死在 100% */
-    height: auto !important;
+    height: auto ;
     overflow-x: hidden;
 }
 
