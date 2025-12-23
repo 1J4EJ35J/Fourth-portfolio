@@ -1,12 +1,45 @@
-/* --- 全域重置 --- */
-html, body {
-    margin: 0;
+/* --- 全域重置 (修正捲軸綁架版) --- */
+html {
+    /* 關鍵：絕不要在 html 設 height: 100% 或 overflow，這會鎖死視窗 */
+    width: 100%;
+    
+    overflow-y: auto !important; 
+    /* 【關鍵 2】確保 html 高度不被鎖死在 100% */
+    height: auto !important;
+    overflow-x: hidden;
+}
+
+body {
+   margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    /* 移除背景色，讓它透明，完全交給 .background-layer 控制 */
+    
+    /* 1. 設定最小高度為視窗高度，確保背景填滿 */
+    min-height: 100vh;
+    overflow-y: visible !important;
+    
+    position: relative;
     background-color: transparent; 
+    
+    /* 2. 只隱藏水平卷軸 */
+    overflow-x: hidden;
+}
+/* 確保您的黑色卷軸樣式能作用 (如果您之前有寫這段的話，請保留) */
+::-webkit-scrollbar {
+    width: 8px;
+    background: #020202; /* 軌道顏色 */
+}
+::-webkit-scrollbar-thumb {
+    background: #333; /* 滑塊顏色 */
+    border-radius: 5px;
+}
+/* --- 捲軸容器 (用於測試) --- */
+.test-scrollbar-container{
+    position: relative;
+    overflow-x: hidden;
+    height: fit-content;
+    min-height: fit-content;
+    width: auto;
 }
 
 /* --- 1. 背景層 (最底層) --- */

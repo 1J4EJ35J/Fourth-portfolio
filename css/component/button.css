@@ -74,7 +74,7 @@
 
 
 /* 3. 文字層 */
-.btn-text {
+.btn.style-01 .btn-text {
     position: relative;
     /* 平常文字不加陰影，保持清晰 */
     text-shadow: none;
@@ -86,7 +86,7 @@
     letter-spacing: 0.08em;
 }
 
-.icon-controller {
+.btn.style-01 .icon-controller {
     position: relative;
     /* 平常文字不加陰影，保持清晰 */
     text-shadow: none;
@@ -98,7 +98,7 @@
 }
 
 /* --- 懸停 (Hover) 互動效果 --- */
-.btn-liquid-glass:hover {
+.btn.style-01.btn-liquid-glass:hover {
     /* Hover 時才加強邊框與背景，讓互動感更強 */
     border-color: var(--color-primary);
     background: rgba(0, 140, 255, 0.2);
@@ -118,14 +118,14 @@
     transform: translateY(-2px) scale(1.02);
 }
 
-.btn-liquid-glass:hover .liquid-light {
+.btn.style-01.btn-liquid-glass:hover .liquid-light {
     opacity: 1;
     left: 60%;
     transition: left 0.7s ease-in-out;
 }
 
-.btn-liquid-glass:hover .btn-text,
-.btn-liquid-glass:hover .icon-controller {
+.btn.style-01.btn-liquid-glass:hover .btn-text,
+.btn.style-01.btn-liquid-glass:hover .icon-controller {
     /* Hover 時文字發光 */
     text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
 }
