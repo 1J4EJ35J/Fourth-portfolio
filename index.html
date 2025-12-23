@@ -27,12 +27,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 
     <!-- fontawsome -->
-    <link rel="stylesheet" href="./css/asset/fontawsome/css/all.min.css" />
-    <link rel="stylesheet" href="./css/asset/fontawsome/css/fontawesome.min.css" />
-    <link rel="stylesheet" href="./css/asset/fontawsome/css/brands.min.css" />
-    <link rel="stylesheet" href="./css/asset/fontawsome/css/regular.min.css" />
-    <link rel="stylesheet" href="./css/asset/fontawsome/css/solid.min.css" />
-    <link rel="stylesheet" href="./css/asset/fontawsome/css/svg-with-js.min.css" />
+    <link rel="stylesheet" href="./asset/fontawsome/css/all.min.css" />
+    <link rel="stylesheet" href="./asset/fontawsome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="./asset/fontawsome/css/brands.min.css" />
+    <link rel="stylesheet" href="./asset/fontawsome/css/regular.min.css" />
+    <link rel="stylesheet" href="./asset/fontawsome/css/solid.min.css" />
+    <link rel="stylesheet" href="./asset/fontawsome/css/svg-with-js.min.css" />
 
     <!-- style -->
     <link rel="stylesheet" href="./css/main.css" />
@@ -40,102 +40,132 @@
 </head>
 
 <body>
-    <!-- particle zone-->
+    
+        <!-- particle zone-->
 
-    <div class="background-layer theme-abyss"></div>
-    <div id="canvas-container" class="canvas-wrapper"></div>
-    <div class="light-beams">
-        <div class="beam beam-1"></div>
-        <div class="beam beam-2"></div>
-        <div class="beam beam-3"></div>
-    </div>
-    <main class="main-content">
-        <nav class="nav">
-            <ul>
-                <li>
-                    <a href="#home" class="nav-btn">
-                        <div class="liquid-light"></div>
-                        <span class="btn-text">首頁</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#about" class="nav-btn">
-                        <div class="liquid-light"></div><span class="text">關於我</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#services" class="nav-btn">
-                        <div class="liquid-light"></div>
-                        <span class="text">服務</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#portfolio" class="nav-btn">
-                        <div class="liquid-light"></div>
-                        <span class="text">作品集</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#contact" class="nav-btn">
-                        <div class="liquid-light"></div>
-                        <span class="text">與我聯繫</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- hero section-->
-        <section class="hero-section" id="home">
-            <div class="hero-container">
-                <div class="hero-left">
-                    <div class="title-box">
-                        <div class="hero-title-container">
-                            <div class="span-box">
-                                <span class="hero-title-text first">F</span>
-                                <span class="hero-title-text">OURTH</span>
+        <div class="background-layer theme-abyss"></div>
+        <div id="canvas-container" class="canvas-wrapper"></div>
+        <div class="light-beams">
+            <div class="beam beam-1"></div>
+            <div class="beam beam-2"></div>
+            <div class="beam beam-3"></div>
+        </div>
+
+        <div class="tunnel-container" id="tunnel-effect">
+            <div class="tunnel-vignette"></div>
+            <div class="wall-light wall-1"></div>
+            <div class="wall-light wall-2"></div>
+            <div class="wall-light wall-3"></div>
+            <div class="wall-light wall-4"></div>
+        </div>
+        <main class="main-content">
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <a href="#home" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">首頁</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="nav-btn">
+                            <div class="liquid-light"></div><span class="text">關於我</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#services" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">服務</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#portfolio" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">作品集</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">與我聯繫</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- hero section-->
+            <section class="hero-section" id="home">
+                <div class="hero-container">
+                    <div class="hero-left">
+                        <div class="title-box">
+                            <div class="hero-title-container">
+                                <div class="span-box">
+                                    <span class="hero-title-text first">F</span>
+                                    <span class="hero-title-text">OURTH</span>
+                                </div>
+                                <div class="span-box">
+                                    <span class="hero-title-text first">P</span>
+                                    <span class="hero-title-text">ORTFOLIO</span>
+                                </div>
                             </div>
-                            <div class="span-box">
-                                <span class="hero-title-text first">P</span>
-                                <span class="hero-title-text">ORTFOLIO</span>
-                            </div>
+                            <h2 class="sub-title">
+                                簡宏祐 | UI/UX 作品集
+                            </h2>
                         </div>
-                        <h2 class="sub-title">
-                            簡宏祐 | UI/UX 作品集
+
+                        <a href="#portfolio" class="btn style-01 btn-liquid-glass">
+                            <div class="liquid-light"></div>
+                            <span class="btn-text">DIRECT TO PORTFOLIO</span>
+                            <i class="fa-solid fa-arrow-right icon-controller"></i>
+                        </a>
+                    </div>
+
+                    <div class="hero-right">
+                        <div class="hero-container">
+                            <span class="hero-title-text first">&</span>
+                            <ul class="hero-list">
+                                <li><span>#具Git與前端實作，消除設計的轉譯落差</span></li>
+                                <li><span>#擅解析複雜流程，高保真原型加速產品驗證</span></li>
+                                <li><span>#在極致易用與視覺美學間取得平衡</span></li>
+                            </ul>
+                        </div>
+
+                        <h2 class="hero-subtitle">
+                            Core Competencies
                         </h2>
                     </div>
 
-                    <a href="#portfolio" class="btn style-01 btn-liquid-glass">
-                        <div class="liquid-light"></div>
-                        <span class="btn-text">DIRECT TO PORTFOLIO</span>
-                        <i class="fa-solid fa-arrow-right icon-controller"></i>
-                    </a>
                 </div>
-
-                <div class="hero-right">
-                    <div class="hero-container">
-                        <span class="hero-title-text first">&</span>
-                        <ul class="hero-list">
-                            <li><span>#具Git與前端實作，消除設計的轉譯落差</span></li>
-                            <li><span>#擅解析複雜流程，高保真原型加速產品驗證</span></li>
-                            <li><span>#在極致易用與視覺美學間取得平衡</span></li>
-                        </ul>
+            </section>
+            <section class="about-section" id="about">
+                <div class="about-container">
+                    <div class="section-header">
+                        <h2 class="section-title">ABOUT ME</h2>
+                        <span class="section-subtitle">關於我</span>
                     </div>
 
-                    <h2 class="hero-subtitle">
-                        Core Competencies
-                    </h2>
+                    <div class="about-content">
+                        <div class="about-photo">
+                            <div class="photo-placeholder"></div>
+                        </div>
+
+                        <div class="about-text">
+                            <h3 class="text-title">Creating Digital Experiences</h3>
+                            <p class="text-body">
+                                abcabcabcabcabcabcabcabcabc
+                                <br><br>
+                                abcabcabcabcabcabcabcabcabc
+                            </p>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-            </div>
-        </section>
-
-    </main>
-
+        </main>
     <!-- Particle JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="./js/particle.js"></script>
 
-    <!-- nav/footer JS -->
-    <script src="./js/nav.js"></script>
+
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>

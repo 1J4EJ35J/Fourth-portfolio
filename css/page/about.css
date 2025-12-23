@@ -1,0 +1,120 @@
+/* --- 1. 隧道特效樣式 (Tunnel Effect) --- */
+.tunnel-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 3; /* 在粒子之上，但在文字之下(如果有的話) */
+    pointer-events: none;
+    opacity: 0; /* 預設隱藏 */
+    transition: opacity 0.8s ease;
+}
+
+/* 中央黑洞遮罩 (製造隧道深處的黑色) */
+.tunnel-vignette {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(0,0,0,1) 10%, transparent 70%);
+    opacity: 0.8;
+}
+
+/* 發光岩壁 (使用模糊光塊模擬) */
+.wall-light {
+    position: absolute;
+    filter: blur(60px); /* 大量模糊 */
+    mix-blend-mode: screen; /* 發光疊加模式 */
+    opacity: 0.5;
+    background-size: cover;
+}
+
+/* 依照您的圖片風格，繪製不規則光塊 (模擬岩壁) */
+/* 使用藍綠色調與深藍色調 */
+.wall-1 { 
+    top: -10%; left: -20%; width: 60vw; height: 80vh; 
+    background: linear-gradient(120deg, transparent, rgba(0, 140, 255, 0.3)); 
+    transform: rotate(15deg); 
+}
+.wall-2 { 
+    bottom: -10%; right: -20%; width: 70vw; height: 70vh; 
+    background: linear-gradient(-60deg, transparent, rgba(0, 219, 211, 0.2)); 
+    transform: rotate(-10deg); 
+}
+.wall-3 { 
+    top: 30%; right: 10%; width: 40vw; height: 30vh; 
+    background: radial-gradient(circle, rgba(0, 100, 200, 0.2), transparent);
+}
+.wall-4 { 
+    bottom: 20%; left: 10%; width: 30vw; height: 30vh; 
+    background: radial-gradient(circle, rgba(0, 180, 255, 0.1), transparent);
+}
+
+
+/* --- 2. Section 2: About Me --- */
+.about-section {
+    position: relative;
+    /* 往下推，留出轉場空間 (這是滾動距離的關鍵) */
+    margin-top: 250vh; 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5vw;
+    /* 初始狀態 */
+    opacity: 0; 
+    transform: scale(0.8); 
+    /* JS 控制時，我們會移除這個 transition 以獲得即時反應 */
+}
+
+.about-container { width: 100%; max-width: 1200px; }
+
+.section-header { margin-bottom: 3rem; }
+.section-title { 
+    font-size: clamp(2rem, 4vw, 3rem); 
+    font-weight: 700; 
+    color: #fff; 
+    margin-bottom: 0.5rem; 
+}
+.section-subtitle { 
+    color: #008cff; /* 主題藍 */
+    font-size: 1rem; 
+    letter-spacing: 0.2em; 
+    text-transform: uppercase; 
+    font-weight: 500; 
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* 左側照片佔位符 */
+.about-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #333; /* 灰色塊 */
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+.photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5));
+}
+
+/* 右側文字 */
+.text-title { 
+    font-size: clamp(1.5rem, 2.5vw, 2rem); 
+    color: #fff; 
+    margin-bottom: 1.5rem; 
+}
+.text-body { 
+    font-size: 1rem; 
+    color: #b8cce4; 
+    line-height: 1.8; 
+}
+
+@media (max-width: 768px) {
+    .about-content { grid-template-columns: 1fr; }
+    .about-photo { max-width: 300px; margin: 0 auto; }
+}
