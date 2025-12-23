@@ -20,10 +20,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-<<<<<<< HEAD
-    padding: 0 5vw;
-    position: relative;
-=======
     /* 垂直居中 */
     padding: 0 5vw;
     /* 兩側留白 */
@@ -31,7 +27,6 @@
     top: 0; 
     left: 0;
     /* 為了定位下方的 nav */
->>>>>>> feat/fourth
 }
 
 /* 主要內容 Grid 佈局 (左側與右側) */
@@ -42,11 +37,8 @@
     align-items: end;
     justify-content: center;
     max-width: 1200px;
-<<<<<<< HEAD
-=======
     
     /* 水平居中 */
->>>>>>> feat/fourth
     width: 100%;
 }
 
@@ -123,11 +115,7 @@
 .hero-right .hero-container {
     display: flex;
     align-items: center;
-<<<<<<< HEAD
-    justify-content: start;
-=======
     justify-content: flex-start;
->>>>>>> feat/fourth
     gap: 1.5rem;
 }
 
@@ -161,10 +149,6 @@
     font-weight: var(--fw-regular);
     color: var(--color-text-primary);
     line-height: 1.4;
-<<<<<<< HEAD
-    
-=======
->>>>>>> feat/fourth
     margin-top: -1.5rem;
     letter-spacing: -.5px;
 }
