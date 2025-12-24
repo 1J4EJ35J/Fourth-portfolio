@@ -9,6 +9,8 @@
     /* 強調色：亮白色 (保持不變) */
     --color-accent: #ffffff;
 
+    --color-secondary: #0a2e4f;
+
     /* (其餘保持不變...) */
     --color-bg-main: #000000;
     --color-bg-abyss-core: #101c2a; 

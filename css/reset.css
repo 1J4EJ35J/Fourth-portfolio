@@ -59,3 +59,93 @@ h6 {
   isolation: isolate;
 }
 
+/* 標題區 */
+.section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-title {
+    font-size: var(--fs-section-title);
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em;
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-tight);
+}
+.section-title.zhtw-container{
+  display: flex;
+  align-items: first baseline;
+  gap: 1rem;
+
+}
+.section-subtitle {
+    font-size: var(--fs-small-title);
+    color: var(--color-primary);
+    /* 使用主色調 */
+    /* text-transform: uppercase; */
+    font-weight: var(--fw-medium);
+}
+
+/* 預留 */
+.section-padding-top{
+  padding-top: 240px;
+}
+
+.section-padding-bottom{
+  padding-bottom: 120px;
+}
+.section-padding-bottom.-bt{
+  padding-bottom: 0;
+}
+
+.pt-005{
+  padding-top: 0.5rem;
+}
+.pt-010{
+  padding-top: 1rem;
+}
+.pt-010{
+  padding-top: 1rem;
+}
+.pt-015{
+  padding-top: 1.5rem;
+}
+.pt-020{
+  padding-top: 2rem;
+}
+.pt-025{
+  padding-top: 2.5rem;
+}
+.pt-030{
+  padding-top: 3rem;
+}
+.pt-035{
+  padding-top: 3.5rem;
+}
+
+.pb-005{
+  padding-bottom: 0.5rem;
+}
+.pb-010{
+  padding-bottom: 1rem;
+}
+.pb-010{
+  padding-bottom: 1rem;
+}
+.pb-015{
+  padding-bottom: 1.5rem;
+}
+.pb-020{
+  padding-bottom: 2rem;
+}
+.pb-025{
+  padding-bottom: 2.5rem;
+}
+.pb-030{
+  padding-bottom: 3rem;
+}
+.pb-035{
+  padding-bottom: 3.5rem;
+}

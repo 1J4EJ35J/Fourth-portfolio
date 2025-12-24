@@ -28,8 +28,8 @@
     color: var(--color-primary);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
-    box-shadow: 0 0 10px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
-    transition: all 0.4s ease-out;
+    box-shadow: 0 0 4px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
+    transition: all .5s ease;
     padding: .3rem .5rem;
 }
 
@@ -55,7 +55,6 @@
     -webkit-backdrop-filter: blur(2px);
     /* 發光也調弱，讓它更低調 */
 
-
     transition: all 0.4s ease-out;
 
 }
@@ -80,11 +79,15 @@
 }
 
 /* 懸停與啟用狀態 */
-.nav ul:hover{
-box-shadow:
-        0 0 25px hsla(207, 100%, 78%, 0.6),
-        0 0 50px rgba(104, 232, 255, 0.6)
+.nav ul:hover {
+    box-shadow:
+        0 0 25px rgba(0, 140, 255, 0.6),
+        0 0 50px rgba(0, 140, 255, 0.3);
+         backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    
 }
+
 .nav .nav-btn:hover {
     border-radius: 50px;
     border: 1px solid rgba(0, 140, 255, 0.3);
@@ -96,8 +99,8 @@ box-shadow:
     /* Hover 時模糊度增加，產生聚焦感 */
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    /* 發光增強 */   
-    transform:  scale(1.02);
+    /* 發光增強 */
+    transform: scale(1.02);
 }
 
 .nav .nav-btn:hover .liquid-light {
@@ -105,6 +108,7 @@ box-shadow:
     left: 60%;
     transition: left 0.7s ease-in-out;
 }
+
 .nav .nav-btn:hover .liquid-light {
     opacity: 1;
     left: 60%;
@@ -117,6 +121,7 @@ box-shadow:
     color: var(--color-text-primary);
     text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
 }
+
 /* 啟用狀態下方的光點指示 */
 
 

@@ -9,97 +9,77 @@
     height: 100vh;
     z-index: 3;
     pointer-events: none;
-    opacity: 0; /* 初始隱藏，靠 JS 滾動顯示 */
+    opacity: 0;
+    /* 初始隱藏，靠 JS 滾動顯示 */
     transition: opacity 0.5s ease;
 }
 
 .wall-light {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px); /* 大量模糊製造光暈感 */
-    mix-blend-mode: screen; /* 讓光疊加 */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    /* 初始縮小且居中 */
     opacity: 0;
-    transform-origin: center;
-}
-
-/* 仿造您提供的綠色岩壁圖，但改用藍色系 (配合網站) */
-/* 如果想要綠色，將 #004e92 改為 #00924e 即可 */
-.wall-1 {
-    top: 20%;
-    left: -10%;
-    width: 60vw;
-    height: 40vh;
-    background: linear-gradient(45deg, transparent, rgba(0, 78, 146, 0.4));
-    transform: rotate(15deg) skewX(20deg);
-}
-
-.wall-2 {
-    bottom: 10%;
-    right: -20%;
-    width: 70vw;
-    height: 50vh;
-    background: linear-gradient(135deg, transparent, rgba(0, 140, 255, 0.3));
-    transform: rotate(-10deg) skewY(10deg);
-}
-
-.wall-3 {
-    top: 10%;
-    right: 10%;
-    width: 40vw;
-    height: 30vh;
-    background: linear-gradient(90deg, transparent, rgba(0, 219, 211, 0.2));
-    filter: blur(40px);
+    pointer-events: none;
+    z-index: 3;
+    will-change: transform, opacity;
+    /* 效能優化 */
 }
 
 /* --- Section 2: About Me 樣式 --- */
-.about-section {
+/* 1. 撐開高度的 Spacer */
+.about-spacer {
+    width: 100%;
+    height: clamp(2200px, 300vh, 2200px);
+    /* 原本 margin-top 的數值 */
+    pointer-events: none;
+}
+
+/* 2. 外殼 */
+.about-wrapper-outer {
     position: relative;
-    /* 這裡設定高度，讓 User 有足夠的滾動空間來看完轉場 */
-    /* Hero(100vh) + Transition(100vh空間) + About(100vh) */
-    margin-top: 100vh; /* 先把 About 往下推，留出轉場空間 */
-    min-height: 100vh;
-    padding: 10vh 5vw;
+    width: 100vw;
+    min-height: 700px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* 初始狀態：縮小 */
-    transform: scale(0.8); 
-    transform-origin: center center;
-    transition: transform 0.1s linear; /* 使用 JS 控制時設為 linear 比較順 */
+    overflow: hidden;
+    /* 避免縮放時出現捲軸 */
 }
 
-.about-container {
-    width: 100%;
+/* 3. 內部實際內容 */
+.about-content-inner {
     max-width: 1200px;
     display: flex;
-    flex-direction: column;
-    gap: 4rem;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.4);
+    /* 初始縮小 */
+    transform-origin: center center;
+    background: var();
 }
 
-/* 標題區 */
-.section-header {
-    text-align: left;
-    margin-bottom: 2rem;
+/* 讓原本的 about-container 保持樣式 */
+.about-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 5vw;
 }
-.section-title {
-    font-size: var(--fs-section-title);
-    font-weight: var(--fw-bold);
-    color: var(--color-text-primary);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.05em;
-}
-.section-subtitle {
-    font-size: var(--fs-small-title);
-    color: var(--color-primary); /* 使用主色調 */
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-weight: var(--fw-medium);
-}
+
+
+
 
 /* 內容區：左右佈局 */
 .about-content {
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1.2fr; /* 左小右大 */
+    grid-template-columns: minmax(200px, 30%) 1fr;
+    /* 左小右大 */
     gap: 4rem;
     align-items: flex-start;
 }
@@ -107,40 +87,73 @@
 /* 左側：照片佔位符 */
 .about-photo {
     width: 100%;
-    aspect-ratio: 3/4; /* 直式照片比例 */
-    background: rgba(255, 255, 255, 0.05); /* 半透明灰底 */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+
+
     position: relative;
     overflow: hidden;
 }
-.photo-placeholder {
+
+.img-container {
     width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+    height: fit-content;
+    /* 直式照片比例 */
+    /* aspect-ratio: 3/4;  */
+    background: rgba(255, 255, 255, 0.05);
+    /* 半透明灰底 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    border-radius: 4px;
+    padding-bottom: .75rem;
+}
+
+.boku-pig.img-controller {
+    width: 100%;
+    height: auto;
 }
 
 /* 右側：文字 */
-.about-text .text-title {
-    font-size: var(--fs-subtitle);
-    font-weight: var(--fw-medium);
-    color: var(--color-text-primary); /* 標題用亮白 */
-    margin-bottom: 1.5rem;
+.about-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
 }
 
-.about-text .text-body {
+.about-text .title-text {
+    font-size: var(--fs-small-title);
+    font-weight: var(--fw-regular);
+    color: var(--color-text-primary);
+    /* 標題用亮白 */
+    line-height: var(--lh-tight);
+    transform: skew(-8deg);
+}
+.about-text .job-title{
+    font-size: clamp(1.75rem, 3vw, 2.4rem);
+    transform: skew(-8deg);
+    font-weight: var(--fw-medium);
+line-height: var(--lh-tight);
+}
+.about-text .article-container{
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;    
+}
+.about-text .article-container .text {
     font-size: var(--fs-body);
     font-weight: var(--fw-regular);
-    color: var(--color-text-secondary); /* 內文用灰藍色，區分層次 */
-    line-height: 1.8;
+    color: var(--color-text-secondary);
+
 }
 
 /* RWD */
 @media (max-width: 768px) {
     .about-content {
-        grid-template-columns: 1fr; /* 手機變單欄 */
+        grid-template-columns: 1fr;
+        /* 手機變單欄 */
         gap: 2rem;
     }
+
     .about-photo {
         max-width: 300px;
         margin: 0 auto;
