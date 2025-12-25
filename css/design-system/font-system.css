@@ -35,13 +35,15 @@
 
     /* --- 行高 (Line Height) --- */
     --lh-tight: 1.2;
-    --lh-normal: 1.45;
+    --lh-normal: 1.47;
     --lh-loose: 1.7;
 
     /* --- 字元間距 (Letter Spacing) - 新增 --- */
     /* 英文字型通常需要一點間距才好看，尤其是全大寫時 */
     --ls-heading: 0.02em;
     --ls-uppercase: 0.1em;
+
+    --ls-article: 0.057em;
     /* 給按鈕或導覽列用 */
 }
 
@@ -64,7 +66,9 @@ h3,
     /* 標題類預設稍微緊一點，更有力道 */
     letter-spacing: var(--ls-heading);
 }
-
+article{
+    letter-spacing: var(--ls-article);
+}
 span {
     cursor: default;
 }

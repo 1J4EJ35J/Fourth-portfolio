@@ -1,5 +1,3 @@
-/* css/main.css - 接續原本內容 */
-
 /* --- 隧道光壁特效 (Tunnel Walls) --- */
 .tunnel-walls {
     position: fixed;
@@ -27,6 +25,21 @@
     /* 效能優化 */
 }
 
+/* --- 隧道容器 (新增/確保這段存在) --- */
+#tunnel-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    /* 確保在背景之上，但在文字之下 */
+    pointer-events: none;
+    will-change: transform;
+    /* 效能優化 */
+}
+
+
 /* --- Section 2: About Me 樣式 --- */
 /* 1. 撐開高度的 Spacer */
 .about-spacer {
@@ -41,13 +54,18 @@
     position: relative;
     width: 100vw;
     min-height: 700px;
-    height: auto;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    /* 避免縮放時出現捲軸 */
+    /* 確保 About 區塊完全不受 fixed 定位影響 */
+    position: relative;
+    z-index: 20;
+    /* 確保 About 內容浮在最上層 */
+    background: transparent;
 }
+
 
 /* 3. 內部實際內容 */
 .about-content-inner {
@@ -58,7 +76,6 @@
     transform: scale(0.4);
     /* 初始縮小 */
     transform-origin: center center;
-    background: var();
 }
 
 /* 讓原本的 about-container 保持樣式 */
@@ -116,7 +133,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: .75rem;
 
 }
 
@@ -128,17 +145,24 @@
     line-height: var(--lh-tight);
     transform: skew(-8deg);
 }
-.about-text .job-title{
+
+.about-text .job-title {
     font-size: clamp(1.75rem, 3vw, 2.4rem);
     transform: skew(-8deg);
     font-weight: var(--fw-medium);
-line-height: var(--lh-tight);
+    line-height: var(--lh-tight);
 }
-.about-text .article-container{
+
+.about-text .job-title span {
+    font-size: clamp(2rem, 3vw, 2.9rem);
+}
+
+.about-text .article-container {
     display: flex;
     flex-direction: column;
-    gap: .75rem;    
+    gap: .75rem;
 }
+
 .about-text .article-container .text {
     font-size: var(--fs-body);
     font-weight: var(--fw-regular);

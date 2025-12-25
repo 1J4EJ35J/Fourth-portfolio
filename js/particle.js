@@ -11,7 +11,7 @@ let firstParticleSystem, secondParticleSystem, thirdParticleSystem;
 let secondParticleMaterial, thirdParticleMaterial;
 let container = document.getElementById('canvas-container');
 
-// 效能優化開關 (預設第一粒子開啟，其他關閉)
+// 效能優化開關
 let runFirst = true;
 let runSecond = false;
 let runThird = false;
@@ -70,30 +70,26 @@ const config = {
 try {
     initScene();                
     
-    // 1. 第一粒子
+    // 1. 粒子系統
     initFirstParticle();        
     initFirstParticleEffects(); 
     
-    // 2. 第二粒子 (圓形星空)
     initSecondParticle();
     initSecondParticleEffects();
 
-    // 3. 第三粒子 (流星光束)
     initThirdParticle();
     initThirdParticleEffects();
 
-    // 4. 隧道光壁特效 (SVG)
+    // 2. 隧道 SVG 特效
     initTunnelEffects();
 
-    // 5. About 區塊特效
+    // 3. 頁面區塊特效 (修正：從中心生長)
     initAboutEffects();
-
-    // 6. 文字特效 (原本的 Hero)
     initTextEffects(); 
     
     animate();                  
     
-    console.log("✅ 粒子系統與隧道特效已啟動 (效能優化模式)");
+    console.log("✅ 粒子系統啟動：晃動移除，About 改為中心生長");
 } catch (e) {
     console.error("❌ 錯誤:", e);
 }
@@ -130,7 +126,7 @@ function initScene() {
 }
 
 // ==========================================
-// 2. 第一粒子
+// 2. 第一粒子 (First Particle)
 // ==========================================
 function initFirstParticle() {
     const pConfig = config.firstParticle;
@@ -193,7 +189,6 @@ function initFirstParticle() {
 function initFirstParticleEffects() {
     if (!firstParticleSystem) return;
     
-    // 擴散效果
     gsap.to(firstParticleSystem.scale, {
         x: 4, y: 4, z: 1,  
         ease: "power1.in", 
@@ -205,7 +200,6 @@ function initFirstParticleEffects() {
         }
     });
 
-    // 透明度與開關控制
     gsap.to(firstParticleSystem.material, {
         opacity: 0,
         ease: "none",
@@ -214,22 +208,14 @@ function initFirstParticleEffects() {
             start: "1100px top",   
             end: "1200px top",    
             scrub: 0.1,
-            onLeave: () => {
-                // 透明度變 0 時，關閉運算
-                runFirst = false;
-                console.log("Stats: First Particle STOPPED");
-            },
-            onEnterBack: () => {
-                // 透明度 > 0 時，恢復運算
-                runFirst = true;
-                console.log("Stats: First Particle RUNNING");
-            }
+            onLeave: () => { runFirst = false; },
+            onEnterBack: () => { runFirst = true; }
         }
     });
 }
 
 // ==========================================
-// 3. 第二粒子 (圓形星空)
+// 3. 第二粒子 (Second Particle)
 // ==========================================
 function initSecondParticle() {
     const params = config.secondParticle;
@@ -285,7 +271,6 @@ function initSecondParticle() {
     scene.add(secondParticleSystem);
 }
 
-// 第二粒子 ScrollTrigger + 開關
 function initSecondParticleEffects() {
     if (!secondParticleMaterial) return;
 
@@ -299,21 +284,15 @@ function initSecondParticleEffects() {
                 start: "1000px top",  
                 end: "1800px top",    
                 scrub: 0.1,
-                onEnter: () => {
-                    runSecond = true;
-                    console.log("Stats: Second Particle RUNNING");
-                },
-                onLeaveBack: () => {
-                    runSecond = false;
-                    console.log("Stats: Second Particle STOPPED");
-                }
+                onEnter: () => { runSecond = true; },
+                onLeaveBack: () => { runSecond = false; }
             }
         }
     );
 }
 
 // ==========================================
-// 4. 第三粒子 (流星光束)
+// 4. 第三粒子 (Third Particle)
 // ==========================================
 function initThirdParticle() {
     const params = config.thirdParticle;
@@ -376,7 +355,6 @@ function initThirdParticle() {
     scene.add(thirdParticleSystem);
 }
 
-// 第三粒子 ScrollTrigger + 開關 (獨立判斷)
 function initThirdParticleEffects() {
     if (!thirdParticleMaterial) return;
 
@@ -390,26 +368,17 @@ function initThirdParticleEffects() {
                 start: "1000px top",  
                 end: "1800px top",    
                 scrub: 0.1,
-                onEnter: () => {
-                    runThird = true;
-                    console.log("Stats: Third Particle RUNNING");
-                },
-                onLeaveBack: () => {
-                    runThird = false;
-                    console.log("Stats: Third Particle STOPPED");
-                }
+                onEnter: () => { runThird = true; },
+                onLeaveBack: () => { runThird = false; }
             }
         }
     );
 }
 
 // ==========================================
-// 5. 隧道光壁特效 (Tunnel Effects)
+// 5. 隧道光壁特效 (Tunnel Walls)
 // ==========================================
 function initTunnelEffects() {
-    // 牆壁配置：根據圖片位置設定飛出的方向 (translateX/Y)
-    // 1: 右側, 2: 左側, 3: 右偏中, 4: 上偏左, 5: 下偏中
-    // 數值是 vw/vh，讓它們飛出畫面邊緣
     const walls = [
         { el: '.wall-1', start: 700, out: 1400, end: 1500, x: 60, y: 10 },
         { el: '.wall-2', start: 700, out: 1600, end: 1700, x: -60, y: 20 },
@@ -427,35 +396,25 @@ function initTunnelEffects() {
                 trigger: "body",
                 start: `${w.start}px top`,
                 end: `${w.end}px top`,
-                scrub: 0.5, // 增加一點平滑度
+                scrub: 0.5, 
             }
         });
 
-        // 階段 1: 出現並開始放大 (Scale 0 -> 1, Opacity 0 -> 1)
-        // 同時開始往外移動一點點
         tl.to(element, {
-            scale: 1,
-            opacity: 1,
-            x: `${w.x * 0.3}vw`, // 先移動 30% 路程
-            y: `${w.y * 0.3}vh`,
-            duration: (w.out - w.start), // 換算成時間比例
-            ease: "power1.in"
+            scale: 1, opacity: 1,
+            x: `${w.x * 0.3}vw`, y: `${w.y * 0.3}vh`,
+            duration: (w.out - w.start), ease: "power1.in"
         })
-        // 階段 2: 飛出畫面 (Scale > 1, Opacity -> 0)
-        // 模擬穿過相機
         .to(element, {
-            scale: 3, 
-            opacity: 0,
-            x: `${w.x}vw`, // 移動到最終位置
-            y: `${w.y}vh`,
-            duration: (w.end - w.out),
-            ease: "power1.in"
+            scale: 3, opacity: 0,
+            x: `${w.x}vw`, y: `${w.y}vh`,
+            duration: (w.end - w.out), ease: "power1.in"
         });
     });
 }
 
 // ==========================================
-// 6. About 區塊特效
+// 6. About 區塊特效 (修正：從中心生長 + Pinning)
 // ==========================================
 function initAboutEffects() {
     const outerWrapper = document.querySelector('.about-wrapper-outer');
@@ -463,36 +422,33 @@ function initAboutEffects() {
 
     if (!outerWrapper || !innerContent) return;
 
-    // 當 outerWrapper 的頂部碰到視窗頂部時 (top top)
-    gsap.to(innerContent, {
-        scale: 1,
-        opacity: 1,
-        ease: "power2.out",
-        duration: 1.0, // 過渡時間
+    // 1. 設定初始狀態：縮小且透明
+    gsap.set(innerContent, { scale: 0.1, opacity: 0 });
+
+    // 2. 建立 ScrollTrigger 動畫
+    // 我們使用 "pin" (釘選) 效果，讓區塊在畫面中心停留，
+    // 使用者的滾動行為會轉化為 "放大" 動畫，而不是網頁滑動。
+    let tl = gsap.timeline({
         scrollTrigger: {
             trigger: outerWrapper,
-            start: "top top", // 當外殼頂部碰到視窗頂部
-            end: "+=360",     // 這裡的 end 不是很重要，因為我們是用 trigger 觸發一次性動畫
-            toggleActions: "play none none reverse", // 向下播，向上倒帶
-            onComplete: () => {
-                // 動畫完成且顯示後，調整高度
-                if (innerContent.style.opacity > 0.9) {
-                    outerWrapper.style.minHeight = "fit-content";
-                    outerWrapper.style.height = "fit-content";
-                    ScrollTrigger.refresh(); // 通知 GSAP 重新計算高度
-                }
-            },
-            onReverseComplete: () => {
-                // 倒帶回去時，恢復 min-height 撐開版面
-                outerWrapper.style.minHeight = "700px";
-                ScrollTrigger.refresh();
-            }
+            start: "top top",     // 當區塊頂部碰到視窗頂部時 (佔滿全螢幕)
+            end: "+=1200",        // 釘選 1200px 的滾動距離來播放生長動畫
+            pin: true,            // 【關鍵】鎖住畫面
+            scrub: 0.5,           // 綁定滾動條進度，帶點平滑
+            anticipatePin: 1      // 優化釘選效能
         }
+    });
+
+    // 3. 定義動畫過程
+    tl.to(innerContent, {
+        scale: 1,      // 放大至原尺寸
+        opacity: 1,    // 變為不透明
+        ease: "power2.out"
     });
 }
 
 // ==========================================
-// 文字特效 (Hero)
+// 7. 文字特效
 // ==========================================
 function initTextEffects() {
     const heroContainer = document.querySelector('.hero-container');
@@ -526,23 +482,18 @@ function initTextEffects() {
 }
 
 // ==========================================
-// 7. 動畫渲染迴圈 (含效能判斷)
+// 8. 動畫渲染迴圈
 // ==========================================
 function animate() {
     requestAnimationFrame(animate);
     time += 0.015;
 
-    // 1. 第一粒子運算
-    if (runFirst) {
-        updateFirstParticlePhysics();
-    }
+    if (runFirst) updateFirstParticlePhysics();
 
-    // 2. 第二粒子運算
     if (runSecond && secondParticleMaterial) {
         secondParticleMaterial.uniforms.uTime.value = time;
     }
 
-    // 3. 第三粒子運算
     if (runThird && thirdParticleMaterial) {
         thirdParticleMaterial.uniforms.uTime.value = time;
     }
@@ -552,11 +503,9 @@ function animate() {
 
 function updateFirstParticlePhysics() {
     if (!firstParticleSystem) return;
-    
-    // 雙重保險：如果 opacity 已經很低，也可以跳過，但主要靠 runFirst 控制
-    // if (firstParticleSystem.material.opacity <= 0.01) return;
 
     const isScrollUnbound = window.scrollY > 680;
+    
     let targetPoint = (isIdle || isScrollUnbound) ? new THREE.Vector3(0,0,0) : mouse3DVec;
     
     if (!isScrollUnbound) {
