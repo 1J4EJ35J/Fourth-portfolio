@@ -63,9 +63,11 @@ h6 {
 .section-header {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    height: clamp(60px, 8vw, 80px);
+  }
 
 .section-title {
     font-size: var(--fs-section-title);
@@ -81,11 +83,19 @@ h6 {
 
 }
 .section-subtitle {
-    font-size: var(--fs-small-title);
+    font-size: clamp(4.5rem, 5vw, 5.25rem);
     color: var(--color-primary);
     /* 使用主色調 */
     /* text-transform: uppercase; */
-    font-weight: var(--fw-medium);
+    font-weight: var(--fw-regular);
+    /* padding-left: .2rem; */
+    position:absolute;
+    opacity: .4;
+    transform: skew(-12deg) ;
+    left: 2rem;
+    top: -.5rem;
+letter-spacing: -10px;
+  z-index: -1;
 }
 
 /* 預留 */

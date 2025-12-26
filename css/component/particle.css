@@ -1,39 +1,33 @@
+/* css/component/particle.css */
+
 /* --- 全域重置 (修正捲軸綁架版) --- */
 html {
-    /* 關鍵：絕不要在 html 設 height: 100% 或 overflow，這會鎖死視窗 */
     width: 100%;
-    
     overflow-y: auto ; 
-    /* 【關鍵 2】確保 html 高度不被鎖死在 100% */
     height: auto ;
     overflow-x: hidden;
 }
 
 body {
-   margin: 0;
+    margin: 0;
     padding: 0;
     width: 100%;
-    
-    /* 1. 設定最小高度為視窗高度，確保背景填滿 */
     min-height: 100vh;
     overflow-y: visible !important;
-    
     position: relative;
     background-color: transparent; 
-    
-    /* 2. 只隱藏水平卷軸 */
     overflow-x: hidden;
 }
-/* 確保您的黑色卷軸樣式能作用 (如果您之前有寫這段的話，請保留) */
+
 ::-webkit-scrollbar {
     width: 8px;
-    background: #020202; /* 軌道顏色 */
+    background: #020202; 
 }
 ::-webkit-scrollbar-thumb {
-    background: #333; /* 滑塊顏色 */
+    background: #333; 
     border-radius: 5px;
 }
-/* --- 捲軸容器 (用於測試) --- */
+
 .test-scrollbar-container{
     position: relative;
     overflow-x: hidden;
@@ -42,19 +36,32 @@ body {
     width: auto;
 }
 
-/* --- 1. 背景層 (最底層) --- */
+/* --- 1. 背景層 1 (最底層) --- */
 .background-layer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* 【關鍵修正】改為正數 1，確保它在 html 畫布之上 */
-    z-index: -3;     
+    /* 【修改】改為 -4，在第二背景層之下 */
+    z-index: -4;     
     pointer-events: none;
 }
 
-/* --- 2. 深淵主題配色 --- */
+/* --- 2. 背景層 2 (第二層，初始隱藏) --- */
+.background-layer-2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* 【修改】改為 -3，在第一背景層之上 */
+    z-index: -3;     
+    pointer-events: none;
+    opacity: 0; /* 初始透明 */
+}
+
+/* 深淵主題配色 1 */
 .theme-abyss {
     background: 
         radial-gradient(
@@ -72,32 +79,45 @@ body {
     background-repeat: no-repeat;
 }
 
-/* --- 3. 粒子畫布容器 (中間層) --- */
+/* 深淵主題配色 2 (可在此獨立調整顏色) */
+.theme-abyss-2 {
+    background: 
+        radial-gradient(
+            circle at 50% 50%,
+            transparent 10%, 
+            rgba(21, 21, 21, 0.9) 100%
+        ),
+        radial-gradient(
+            ellipse at 50% 0%, 
+            #0f2538 0%,    
+            #001021 30%,   
+            #111520 75%      
+        );
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* --- 3. 粒子畫布容器 --- */
 .canvas-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* 【關鍵修正】改為正數 2，疊在背景之上 */
+    /* 改為 -2，疊在背景之上 */
     z-index: -2; 
     pointer-events: none;
-    /* display: none; */
 }
 
-/* --- 4. 內容層 (最上層) --- */
-/* 注意：您需要在 HTML 的 main 標籤加上這個 class */
+/* --- 4. 內容層 --- */
 .main-content {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    /* 【關鍵修正】改為正數 10，確保文字按鈕在最上面 */
     z-index: 10; 
 }
 
-/* --- 斜角光束特效 (Volumetric God Rays) --- */
-
-/* 1. 光束容器 */
+/* --- 斜角光束特效 --- */
 .light-beams {
     position: fixed;
     top: 0;
@@ -105,72 +125,62 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    pointer-events: none; /* 讓滑鼠穿透，不影響操作 */
-    overflow: hidden; /* 確保光束不會撐開卷軸 */
+    pointer-events: none; 
+    overflow: hidden; 
 }
 
-/* 2. 光束通用設定 */
 .beam {
     position: absolute;
-    top: -20%; /* 從螢幕上方外面開始 */
-    height: 150%; /* 拉長長度以覆蓋螢幕 */
+    top: -20%; 
+    height: 150%; 
     background: linear-gradient(
         180deg, 
-        #003564b3 0%,   /* 頂端：亮白 (光源處) */
-        rgba(0, 48, 92, 0.8) 60%,    /* 中段：帶藍色的微光 */
-        transparent 80%                 /* 尾端：完全透明消失 */
+        #003564b3 0%,   
+        rgba(0, 48, 92, 0.8) 60%,    
+        transparent 80%                 
     );
-    /* 關鍵：使用高斯模糊製造柔和光感 */
     filter: blur(30px); 
-    transform-origin: top center; /* 旋轉軸心設在上方 */
-    border-radius: 50%; /* 讓光束邊緣稍微圓潤一點 */
-    
-    /* 讓光線與背景融合得更好 (可選，若不支援會自動忽略) */
+    transform-origin: top center; 
+    border-radius: 50%; 
     mix-blend-mode: screen; 
 }
 
-/* --- 3. 個別光束設定 (位置、角度、寬度) --- */
-
-/* 光束 1: 主光束 (最亮、最寬) */
 .beam-1 {
     left: 60%;
     width: 150px;
-    transform: rotate(25deg); /* 向右傾斜 */
+    transform: rotate(25deg); 
     opacity: 0.4;
     animation: light-breathe 4s infinite ease-in-out;
 }
 
-/* 光束 2: 輔助光 (較細、角度稍大) */
 .beam-2 {
     left: 70%;
     width: 50px;
-    transform: rotate(35deg);
+    transform: rotate(24deg);
     opacity: 0.5;
-    animation: light-breathe 7s infinite ease-in-out 3s; /* 延遲動畫 */
-    filter: blur(16px); /* 更模糊一點 */
+    animation: light-breathe 7s infinite ease-in-out 3s; 
+    filter: blur(16px); 
 }
 
-/* 光束 3: 氛圍光 (最細、最淡) */
 .beam-3 {
-    left: 34%; /* 從更左邊射進來 */
+    left: 34%; 
     width: 100px;
-    transform: rotate(20deg);
+    transform: rotate(23deg);
     opacity: 0.15;
-    animation: light-breathe 4s infinite ease-in-out  reverse 2s; /* 反向呼吸 */
+    animation: light-breathe 4s infinite ease-in-out  reverse 2s; 
 }
 
-/* --- 4. 呼吸動畫 (讓光線有微微閃爍感) --- */
 @keyframes light-breathe {
     0% {
         opacity: 0.3;
-        transform: rotate(25deg) scaleX(1);
+        transform: rotate(25deg) scaleX(1.02);
     }
     50% {
-        opacity: 0.5; /* 變亮 */
-        transform: rotate(25deg) scaleX(1.1); /* 微微變寬 */
+        opacity: 0.5; 
+        transform: rotate(25deg) scaleX(1.1); 
     }
     100% {
         opacity: 0.3;
-        transform: rotate(25deg) scaleX(1);
+        transform: rotate(25deg) scaleX(1.03);
     }
 }

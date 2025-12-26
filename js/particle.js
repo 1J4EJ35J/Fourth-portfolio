@@ -7,14 +7,21 @@ gsap.registerPlugin(ScrollTrigger);
 // 全域變數
 // ==========================================
 let scene, camera, renderer;
-let firstParticleSystem, secondParticleSystem, thirdParticleSystem;
-let secondParticleMaterial, thirdParticleMaterial;
 let container = document.getElementById('canvas-container');
+
+// 粒子系統物件
+let firstParticleSystem;
+let secondParticleSystem, secondParticleMaterial;
+let thirdParticleSystem, thirdParticleMaterial;
+let fourthParticleSystem, fourthParticleMaterial;
+let fifthParticleSystem, fifthParticleMaterial;
 
 // 效能優化開關
 let runFirst = true;
 let runSecond = false;
 let runThird = false;
+let runFourth = false; 
+let runFifth = false;  
 
 // 第一粒子專用變數
 let firstParticleData = [];
@@ -46,21 +53,39 @@ const config = {
       rippleSpeed: 1.7,
       rippleFrequency: 0.026
   },
-  secondParticle: { // 背景圓點星空
-      count: 8000,          
-      rangeZ: 1000,         
+  secondParticle: { 
+      count: 12000,          
+      rangeZ: 1600,         
       rangeXY: 2500,        
-      speed: 20.0,          
+      speed: 20.0,
       size: 1800.0 * window.devicePixelRatio, 
       color: '#008cff',     
   },
-  thirdParticle: { // 流星光束
+  thirdParticle: { 
       count: 10,           
       rangeZ: 3000,         
       rangeXY: 2000,        
-      speed: 40.0,          
-      streakLength: 300.0,  
+      speed: 40.0,
+      streakLength: 200.0,  
       color: '#008cff',     
+  },
+  fourthParticle: { 
+      count: 8000, 
+      rangeZ: 2500,
+      rangeXY: 2500,
+      speed: 120.0,      // 初始速度
+      maxSpeed: 540.0,   // 加速後速度
+      size: 4800.0 * window.devicePixelRatio,
+      color: '#008cff'
+  },
+  fifthParticle: {
+      count: 10, 
+      rangeZ: 3000,
+      rangeXY: 2000,
+      speed: 140.0,      // 初始速度
+      maxSpeed: 890.0,   // 加速後速度
+      streakLength: 300.0,
+      color: '#008cff'
   }
 };
 
@@ -70,26 +95,29 @@ const config = {
 try {
     initScene();                
     
-    // 1. 粒子系統
+    // 1. 舊粒子系統
     initFirstParticle();        
     initFirstParticleEffects(); 
-    
     initSecondParticle();
     initSecondParticleEffects();
-
     initThirdParticle();
     initThirdParticleEffects();
 
-    // 2. 隧道 SVG 特效
-    initTunnelEffects();
+    // 2. 新增粒子系統
+    initFourthParticle(); 
+    initFifthParticle();  
 
-    // 3. 頁面區塊特效 (修正：從中心生長)
+    // 3. 特效邏輯
+    initTunnelEffects();
     initAboutEffects();
-    initTextEffects(); 
+    initTextEffects();
+    
+    // 4. Competencies 區塊特效
+    initCompetenciesEffects();
     
     animate();                  
     
-    console.log("✅ 粒子系統啟動：晃動移除，About 改為中心生長");
+    console.log("✅ 粒子系統啟動：數量漸增 + 條件加速版本");
 } catch (e) {
     console.error("❌ 錯誤:", e);
 }
@@ -126,8 +154,9 @@ function initScene() {
 }
 
 // ==========================================
-// 2. 第一粒子 (First Particle)
+// 2~6. 粒子初始化
 // ==========================================
+
 function initFirstParticle() {
     const pConfig = config.firstParticle;
     const geometry = new THREE.BufferGeometry();
@@ -135,248 +164,333 @@ function initFirstParticle() {
     const basePositions = new Float32Array(pConfig.count * 3);
     const colors = new Float32Array(pConfig.count * 3);
     const colorObj = new THREE.Color();
-
     for (let i = 0; i < pConfig.count; i++) {
-        let i3 = i * 3;
-        let t = Math.random();
-        let distribution = Math.pow(t, 2);
+        let i3 = i * 3; let t = Math.random(); let distribution = Math.pow(t, 2);
         let pathIndex = Math.floor(distribution * (pConfig.pathLength - 1));
         let speed = pConfig.speedFast * (1 - distribution) + pConfig.speedSlow * distribution;
         let scatter = pConfig.scatterHead * (1 - distribution) + pConfig.scatterTail * distribution;
-
         const r = pConfig.sphereRadius * Math.pow(Math.random(), 0.8);
         const phi = Math.acos(-1 + (2 * i) / pConfig.count);
         const theta = Math.sqrt(pConfig.count * Math.PI) * phi;
-        
-        let bx = r * Math.cos(theta) * Math.sin(phi);
-        let by = r * Math.sin(theta) * Math.sin(phi);
-        
+        let bx = r * Math.cos(theta) * Math.sin(phi); let by = r * Math.sin(theta) * Math.sin(phi);
         basePositions[i3] = bx; basePositions[i3+1] = by; basePositions[i3+2] = 0; 
         positions[i3] = bx; positions[i3+1] = by; positions[i3+2] = 0; 
-
-        firstParticleData.push({ 
-            speed: speed, 
-            scatterRadius: scatter * Math.random(), 
-            angle: Math.random() * Math.PI * 2, 
-            pathIndex: pathIndex 
-        });
-
+        firstParticleData.push({ speed: speed, scatterRadius: scatter * Math.random(), angle: Math.random() * Math.PI * 2, pathIndex: pathIndex });
         let distFromCenter = r / pConfig.sphereRadius;
         let lightness = 0.3 + (distFromCenter * 0.4);
         colorObj.setHSL(0.6, 1.0, lightness);
         colors[i3] = colorObj.r; colors[i3+1] = colorObj.g; colors[i3+2] = colorObj.b;
     }
-
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     geometry.userData = { basePositions: basePositions };
-
     const texture = createGlowingDot();
-    const material = new THREE.PointsMaterial({ 
-        size: pConfig.size, 
-        map: texture, 
-        vertexColors: true, 
-        blending: THREE.AdditiveBlending, 
-        transparent: true, 
-        opacity: pConfig.opacity, 
-        depthWrite: false 
-    });
-
+    const material = new THREE.PointsMaterial({ size: pConfig.size, map: texture, vertexColors: true, blending: THREE.AdditiveBlending, transparent: true, opacity: pConfig.opacity, depthWrite: false });
     firstParticleSystem = new THREE.Points(geometry, material);
     scene.add(firstParticleSystem);
 }
-
 function initFirstParticleEffects() {
     if (!firstParticleSystem) return;
-    
-    gsap.to(firstParticleSystem.scale, {
-        x: 4, y: 4, z: 1,  
-        ease: "power1.in", 
-        scrollTrigger: {
-            trigger: "body",
-            start: "500px top",  
-            end: "1200px top",   
-            scrub: 0.1,          
-        }
-    });
-
-    gsap.to(firstParticleSystem.material, {
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-            trigger: "body",
-            start: "1100px top",   
-            end: "1200px top",    
-            scrub: 0.1,
-            onLeave: () => { runFirst = false; },
-            onEnterBack: () => { runFirst = true; }
-        }
-    });
+    gsap.to(firstParticleSystem.scale, { x: 4, y: 4, z: 1, ease: "power1.in", scrollTrigger: { trigger: "body", start: "500px top", end: "1200px top", scrub: 0.1 }});
+    gsap.to(firstParticleSystem.material, { opacity: 0, ease: "none", scrollTrigger: { trigger: "body", start: "1100px top", end: "1200px top", scrub: 0.1, onLeave: () => { runFirst = false; }, onEnterBack: () => { runFirst = true; }}});
 }
 
-// ==========================================
-// 3. 第二粒子 (Second Particle)
-// ==========================================
 function initSecondParticle() {
     const params = config.secondParticle;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(params.count * 3);
     const randomness = new Float32Array(params.count * 3);
-    
     for (let i = 0; i < params.count; i++) {
-        const i3 = i * 3;
-        positions[i3] = (Math.random() - 0.5) * params.rangeXY * 2;
-        positions[i3 + 1] = (Math.random() - 0.5) * params.rangeXY * 2;
-        positions[i3 + 2] = (Math.random() - 0.5) * params.rangeZ * 2;
+        const i3 = i * 3; positions[i3] = (Math.random() - 0.5) * params.rangeXY * 2; positions[i3 + 1] = (Math.random() - 0.5) * params.rangeXY * 2; positions[i3 + 2] = (Math.random() - 0.5) * params.rangeZ * 2;
         randomness[i3] = Math.random(); randomness[i3+1] = Math.random(); randomness[i3+2] = Math.random();
     }
-
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3));
-
-    secondParticleMaterial = new THREE.ShaderMaterial({
-        depthWrite: false, blending: THREE.AdditiveBlending, vertexColors: false, transparent: true,
-        uniforms: {
-            uTime: { value: 0 }, uSpeed: { value: params.speed }, uRangeZ: { value: params.rangeZ }, 
-            uSize: { value: params.size }, uOpacity: { value: 0 }, uColor: { value: new THREE.Color(params.color) }
-        },
-        vertexShader: `
-            uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uSize;
-            attribute vec3 aRandomness; varying float vAlpha;
-            void main() {
-                vec3 pos = position;
-                float zOffset = uTime * uSpeed * 5.0 + aRandomness.z * 200.0;
-                pos.z = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ;
-                vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
-                vec4 viewPosition = viewMatrix * modelPosition;
-                gl_Position = projectionMatrix * viewPosition;
-                gl_PointSize = uSize * (1.0 / -viewPosition.z);
-                float dist = abs(pos.z);
-                vAlpha = smoothstep(uRangeZ, uRangeZ * 0.2, dist); 
-            }
-        `,
-        fragmentShader: `
-            uniform vec3 uColor; uniform float uOpacity; varying float vAlpha;
-            void main() {
-                vec2 coord = gl_PointCoord - vec2(0.5);
-                float dist = length(coord);
-                if (dist > 0.5) discard;
-                float strength = pow(1.0 - (dist * 2.0), 1.5); 
-                gl_FragColor = vec4(uColor, strength * uOpacity * vAlpha);
-            }
-        `
-    });
-
+    secondParticleMaterial = new THREE.ShaderMaterial({ depthWrite: false, blending: THREE.AdditiveBlending, vertexColors: false, transparent: true, uniforms: { uTime: { value: 0 }, uSpeed: { value: params.speed }, uRangeZ: { value: params.rangeZ }, uSize: { value: params.size }, uOpacity: { value: 0 }, uColor: { value: new THREE.Color(params.color) }}, vertexShader: `uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uSize; attribute vec3 aRandomness; varying float vAlpha; void main() { vec3 pos = position; float zOffset = uTime * uSpeed * 5.0 + aRandomness.z * 200.0; pos.z = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ; vec4 modelPosition = modelMatrix * vec4(pos, 1.0); vec4 viewPosition = viewMatrix * modelPosition; gl_Position = projectionMatrix * viewPosition; gl_PointSize = uSize * (1.0 / -viewPosition.z); float dist = abs(pos.z); vAlpha = smoothstep(uRangeZ, uRangeZ * 0.2, dist); }`, fragmentShader: `uniform vec3 uColor; uniform float uOpacity; varying float vAlpha; void main() { vec2 coord = gl_PointCoord - vec2(0.5); float dist = length(coord); if (dist > 0.5) discard; float strength = pow(1.0 - (dist * 2.0), 1.5); gl_FragColor = vec4(uColor, strength * uOpacity * vAlpha); }` });
     secondParticleSystem = new THREE.Points(geometry, secondParticleMaterial);
     scene.add(secondParticleSystem);
 }
-
 function initSecondParticleEffects() {
     if (!secondParticleMaterial) return;
-
-    gsap.fromTo(secondParticleMaterial.uniforms.uOpacity, 
-        { value: 0 },
-        {
-            value: 1, 
-            ease: "none",
-            scrollTrigger: {
-                trigger: "body",
-                start: "1000px top",  
-                end: "1800px top",    
-                scrub: 0.1,
-                onEnter: () => { runSecond = true; },
-                onLeaveBack: () => { runSecond = false; }
-            }
-        }
-    );
+    gsap.fromTo(secondParticleMaterial.uniforms.uOpacity, { value: 0 }, { value: 1, ease: "none", scrollTrigger: { trigger: "body", start: "1000px top", end: "1800px top", scrub: 0.1, onEnter: () => { runSecond = true; }, onLeaveBack: () => { runSecond = false; }}});
 }
 
-// ==========================================
-// 4. 第三粒子 (Third Particle)
-// ==========================================
 function initThirdParticle() {
     const params = config.thirdParticle;
     const geometry = new THREE.BufferGeometry();
-    const vertexCount = params.count * 2; 
-    const positions = new Float32Array(vertexCount * 3);
-    const randomness = new Float32Array(vertexCount * 3);
-    const sides = new Float32Array(vertexCount);
-    
+    const vertexCount = params.count * 2; const positions = new Float32Array(vertexCount * 3); const randomness = new Float32Array(vertexCount * 3); const sides = new Float32Array(vertexCount);
     for (let i = 0; i < params.count; i++) {
-        const x = (Math.random() - 0.5) * params.rangeXY * 2;
-        const y = (Math.random() - 0.5) * params.rangeXY * 2;
-        const z = (Math.random() - 0.5) * params.rangeZ * 2;
+        const x = (Math.random() - 0.5) * params.rangeXY * 2; const y = (Math.random() - 0.5) * params.rangeXY * 2; const z = (Math.random() - 0.5) * params.rangeZ * 2;
         const randX = Math.random(); const randY = Math.random(); const randZ = Math.random();
-
-        const iHead = i * 2;
-        positions[iHead * 3] = x; positions[iHead * 3 + 1] = y; positions[iHead * 3 + 2] = z;
-        randomness[iHead * 3] = randX; randomness[iHead * 3 + 1] = randY; randomness[iHead * 3 + 2] = randZ;
-        sides[iHead] = 0.0;
-
-        const iTail = i * 2 + 1;
-        positions[iTail * 3] = x; positions[iTail * 3 + 1] = y; positions[iTail * 3 + 2] = z;
-        randomness[iTail * 3] = randX; randomness[iTail * 3 + 1] = randY; randomness[iTail * 3 + 2] = randZ;
-        sides[iTail] = 1.0;
+        const iHead = i * 2; positions[iHead * 3] = x; positions[iHead * 3 + 1] = y; positions[iHead * 3 + 2] = z; randomness[iHead * 3] = randX; randomness[iHead * 3 + 1] = randY; randomness[iHead * 3 + 2] = randZ; sides[iHead] = 0.0;
+        const iTail = i * 2 + 1; positions[iTail * 3] = x; positions[iTail * 3 + 1] = y; positions[iTail * 3 + 2] = z; randomness[iTail * 3] = randX; randomness[iTail * 3 + 1] = randY; randomness[iTail * 3 + 2] = randZ; sides[iTail] = 1.0;
     }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3));
-    geometry.setAttribute('aSide', new THREE.BufferAttribute(sides, 1));
-
-    thirdParticleMaterial = new THREE.ShaderMaterial({
-        depthWrite: false, blending: THREE.AdditiveBlending, transparent: true,
-        uniforms: {
-            uTime: { value: 0 }, uSpeed: { value: params.speed }, uRangeZ: { value: params.rangeZ }, 
-            uStreakLength: { value: params.streakLength }, uOpacity: { value: 0 }, uColor: { value: new THREE.Color(params.color) }
-        },
-        vertexShader: `
-            uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uStreakLength;
-            attribute vec3 aRandomness; attribute float aSide; varying float vAlpha;
-            void main() {
-                vec3 pos = position;
-                float zOffset = uTime * uSpeed * 20.0 + aRandomness.z * 2000.0;
-                float currentZ = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ;
-                if (aSide > 0.5) {
-                    float stretch = uStreakLength * (1.0 + aRandomness.x);
-                    currentZ -= stretch;
-                    vAlpha = 0.0; 
-                } else { vAlpha = 1.0; }
-                pos.z = currentZ;
-                gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0);
-            }
-        `,
-        fragmentShader: `
-            uniform vec3 uColor; uniform float uOpacity; varying float vAlpha;
-            void main() { gl_FragColor = vec4(uColor, uOpacity * vAlpha); }
-        `
-    });
-
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3)); geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3)); geometry.setAttribute('aSide', new THREE.BufferAttribute(sides, 1));
+    thirdParticleMaterial = new THREE.ShaderMaterial({ depthWrite: false, blending: THREE.AdditiveBlending, transparent: true, uniforms: { uTime: { value: 0 }, uSpeed: { value: params.speed }, uRangeZ: { value: params.rangeZ }, uStreakLength: { value: params.streakLength }, uOpacity: { value: 0 }, uColor: { value: new THREE.Color(params.color) }}, vertexShader: `uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uStreakLength; attribute vec3 aRandomness; attribute float aSide; varying float vAlpha; void main() { vec3 pos = position; float zOffset = uTime * uSpeed * 20.0 + aRandomness.z * 2000.0; float currentZ = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ; if (aSide > 0.5) { float stretch = uStreakLength * (1.0 + aRandomness.x); currentZ -= stretch; vAlpha = 0.0; } else { vAlpha = 1.0; } pos.z = currentZ; gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0); }`, fragmentShader: `uniform vec3 uColor; uniform float uOpacity; varying float vAlpha; void main() { gl_FragColor = vec4(uColor, uOpacity * vAlpha); }` });
     thirdParticleSystem = new THREE.LineSegments(geometry, thirdParticleMaterial);
     scene.add(thirdParticleSystem);
 }
-
 function initThirdParticleEffects() {
     if (!thirdParticleMaterial) return;
+    gsap.fromTo(thirdParticleMaterial.uniforms.uOpacity, { value: 0 }, { value: 1, ease: "none", scrollTrigger: { trigger: "body", start: "1000px top", end: "1800px top", scrub: 0.1, onEnter: () => { runThird = true; }, onLeaveBack: () => { runThird = false; }}});
+}
 
-    gsap.fromTo(thirdParticleMaterial.uniforms.uOpacity, 
-        { value: 0 },
-        {
-            value: 1, 
-            ease: "none",
-            scrollTrigger: {
-                trigger: "body",
-                start: "1000px top",  
-                end: "1800px top",    
-                scrub: 0.1,
-                onEnter: () => { runThird = true; },
-                onLeaveBack: () => { runThird = false; }
+// -----------------------------------------------------------
+// Init Fourth Particle
+// -----------------------------------------------------------
+function initFourthParticle() {
+    const params = config.fourthParticle;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(params.count * 3);
+    const randomness = new Float32Array(params.count * 3);
+    for (let i = 0; i < params.count; i++) {
+        // 分佈設定
+        const i3 = i * 3; 
+        positions[i3] = (Math.random() - 0.2) * params.rangeXY * 2; 
+        positions[i3 + 1] = (Math.random() - 0.1) * params.rangeXY * 2; 
+        positions[i3 + 2] = (Math.random() - 0.3) * params.rangeZ * 2;
+        randomness[i3] = Math.random(); randomness[i3+1] = Math.random(); randomness[i3+2] = Math.random();
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3)); 
+    geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3));
+    
+    fourthParticleMaterial = new THREE.ShaderMaterial({ 
+        depthWrite: false, 
+        blending: THREE.AdditiveBlending, 
+        vertexColors: false, 
+        transparent: true, 
+        uniforms: { 
+            uTime: { value: 0 }, 
+            uSpeed: { value: params.speed }, // 初始速度 120
+            uRangeZ: { value: params.rangeZ }, 
+            uSize: { value: params.size }, 
+            uOpacity: { value: 1.0 }, // 修改：初始透明度 1.0 (不透明)
+            uColor: { value: new THREE.Color(params.color) }, 
+            uDirection: { value: 1.0 },
+            uVisibleRatio: { value: 0.0 } // 修改：初始可見數量 0
+        }, 
+        vertexShader: `
+            uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uSize; 
+            uniform float uDirection; 
+            uniform float uVisibleRatio; 
+            attribute vec3 aRandomness; 
+            varying float vAlpha; 
+            void main() { 
+                vec3 pos = position; 
+                float zOffset = uTime * uSpeed * 5.0 * uDirection + aRandomness.z * 200.0; 
+                pos.z = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ; 
+                vec4 modelPosition = modelMatrix * vec4(pos, 1.0); 
+                vec4 viewPosition = viewMatrix * modelPosition; 
+                gl_Position = projectionMatrix * viewPosition; 
+                
+                // 數量控制：如果隨機值 > 顯示比例，則大小設為 0
+                float isVisible = step(aRandomness.x, uVisibleRatio);
+                gl_PointSize = uSize * (1.0 / -viewPosition.z) * isVisible; 
+                
+                float dist = abs(pos.z); 
+                vAlpha = smoothstep(uRangeZ, uRangeZ * 0.2, dist); 
             }
-        }
-    );
+        `, 
+        fragmentShader: `
+            uniform vec3 uColor; uniform float uOpacity; varying float vAlpha; 
+            void main() { 
+                vec2 coord = gl_PointCoord - vec2(0.5); 
+                float dist = length(coord); 
+                if (dist > 0.5) discard; 
+                float strength = pow(1.0 - (dist * 2.0), 1.5); 
+                gl_FragColor = vec4(uColor, strength * uOpacity * vAlpha); 
+            }
+        ` 
+    });
+    fourthParticleSystem = new THREE.Points(geometry, fourthParticleMaterial);
+    scene.add(fourthParticleSystem);
+}
+
+// -----------------------------------------------------------
+// Init Fifth Particle
+// -----------------------------------------------------------
+function initFifthParticle() {
+    const params = config.fifthParticle;
+    const geometry = new THREE.BufferGeometry();
+    const vertexCount = params.count * 2; 
+    const positions = new Float32Array(vertexCount * 3); 
+    const randomness = new Float32Array(vertexCount * 3); 
+    const sides = new Float32Array(vertexCount);
+    for (let i = 0; i < params.count; i++) {
+        const x = (Math.random() - 0.5) * params.rangeXY * 2; 
+        const y = (Math.random() - 0.5) * params.rangeXY * 2; 
+        const z = (Math.random() - 0.5) * params.rangeZ * 2;
+        const randX = Math.random(); const randY = Math.random(); const randZ = Math.random();
+        const iHead = i * 2; positions[iHead * 3] = x; positions[iHead * 3 + 1] = y; positions[iHead * 3 + 2] = z; randomness[iHead * 3] = randX; randomness[iHead * 3 + 1] = randY; randomness[iHead * 3 + 2] = randZ; sides[iHead] = 0.0;
+        const iTail = i * 2 + 1; positions[iTail * 3] = x; positions[iTail * 3 + 1] = y; positions[iTail * 3 + 2] = z; randomness[iTail * 3] = randX; randomness[iTail * 3 + 1] = randY; randomness[iTail * 3 + 2] = randZ; sides[iTail] = 1.0;
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3)); 
+    geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3)); 
+    geometry.setAttribute('aSide', new THREE.BufferAttribute(sides, 1));
+    
+    fifthParticleMaterial = new THREE.ShaderMaterial({ 
+        depthWrite: false, 
+        blending: THREE.AdditiveBlending, 
+        transparent: true, 
+        uniforms: { 
+            uTime: { value: 0 }, 
+            uSpeed: { value: params.speed }, // 初始速度 140
+            uRangeZ: { value: params.rangeZ }, 
+            uStreakLength: { value: params.streakLength }, 
+            uOpacity: { value: 1.0 }, // 修改：初始透明度 1.0
+            uColor: { value: new THREE.Color(params.color) }, 
+            uDirection: { value: 1.0 },
+            uVisibleRatio: { value: 0.0 } // 修改：初始可見數量 0
+        }, 
+        vertexShader: `
+            uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uStreakLength; 
+            uniform float uDirection; 
+            uniform float uVisibleRatio; 
+            attribute vec3 aRandomness; attribute float aSide; 
+            varying float vAlpha; 
+            void main() { 
+                vec3 pos = position; 
+                float zOffset = uTime * uSpeed * 20.0 * uDirection + aRandomness.z * 2000.0; 
+                float currentZ = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ; 
+                if (aSide > 0.5) { 
+                    float stretch = uStreakLength * (1.0 + aRandomness.x) * uDirection; 
+                    currentZ -= stretch; 
+                    vAlpha = 0.0; 
+                } else { vAlpha = 1.0; } 
+                pos.z = currentZ; 
+
+                // 數量控制：如果隨機值 > 顯示比例，移出畫面
+                if(aRandomness.x > uVisibleRatio) {
+                    pos = vec3(999999.0);
+                }
+
+                gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0); 
+            }
+        `, 
+        fragmentShader: `
+            uniform vec3 uColor; uniform float uOpacity; varying float vAlpha; 
+            void main() { gl_FragColor = vec4(uColor, uOpacity * vAlpha); }
+        ` 
+    });
+    fifthParticleSystem = new THREE.LineSegments(geometry, fifthParticleMaterial);
+    scene.add(fifthParticleSystem);
 }
 
 // ==========================================
-// 5. 隧道光壁特效 (Tunnel Walls)
+// 7. 特效邏輯整合 (About + Competencies)
+// ==========================================
+function initCompetenciesEffects() {
+    const aboutWrapper = document.querySelector('.about-wrapper-outer');
+    const spacer1 = document.querySelector('.competencies-spacer-1');
+    const background2 = document.querySelector('.background-layer-2');
+
+    if (!aboutWrapper || !spacer1) return;
+    if (!fourthParticleMaterial || !fifthParticleMaterial) return;
+
+    // ---------------------------------------------
+    // A. 粒子進場：數量增加 + 條件加速
+    // ---------------------------------------------
+    ScrollTrigger.create({
+        trigger: aboutWrapper,
+        start: "top -5%",
+        end: "top -88%",
+        scrub: 0.1,
+        onEnter: () => {
+            runFourth = true; runFifth = true;
+        },
+        onUpdate: (self) => {
+            const p = self.progress;
+            // 1. 計算目前的顯示比例 (0 -> 1)
+            let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
+            
+            // 更新數量 (取代原本的 Opacity)
+            fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+            fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+            
+            // 2. 第四粒子加速邏輯
+            // 目標：Count 3000 -> 8000 時，Speed 120 -> 540
+            // 比例閾值：3000 / 8000 = 0.375
+            if (ratio < 0.375) {
+                fourthParticleMaterial.uniforms.uSpeed.value = config.fourthParticle.speed; // 120
+            } else {
+                // 正規化進度 (0 -> 1)，從 0.375 到 1.0
+                let speedProgress = (ratio - 0.375) / (1.0 - 0.375);
+                // 插值計算速度
+                let newSpeed = config.fourthParticle.speed + speedProgress * (config.fourthParticle.maxSpeed - config.fourthParticle.speed);
+                fourthParticleMaterial.uniforms.uSpeed.value = newSpeed;
+            }
+
+            // 3. 第五粒子加速邏輯
+            // 目標：Count 2 -> 10 時，Speed 140 -> 890
+            // 比例閾值：2 / 10 = 0.2
+            if (ratio < 0.2) {
+                fifthParticleMaterial.uniforms.uSpeed.value = config.fifthParticle.speed; // 140
+            } else {
+                let speedProgress = (ratio - 0.2) / (1.0 - 0.2);
+                let newSpeed = config.fifthParticle.speed + speedProgress * (config.fifthParticle.maxSpeed - config.fifthParticle.speed);
+                fifthParticleMaterial.uniforms.uSpeed.value = newSpeed;
+            }
+
+            // 4. 舊粒子(2, 3) 仍使用 opacity 淡出
+            let fadeOut = 1.0 - p;
+            if(secondParticleMaterial) secondParticleMaterial.uniforms.uOpacity.value = fadeOut;
+            if(thirdParticleMaterial) thirdParticleMaterial.uniforms.uOpacity.value = fadeOut;
+        },
+        onLeave: () => {
+            runSecond = false; runThird = false;
+            if(secondParticleMaterial) secondParticleMaterial.uniforms.uOpacity.value = 0;
+            if(thirdParticleMaterial) thirdParticleMaterial.uniforms.uOpacity.value = 0;
+        },
+        onEnterBack: () => { runSecond = true; runThird = true; },
+        onLeaveBack: () => {
+            runFourth = false; runFifth = false;
+            // 歸零
+            fourthParticleMaterial.uniforms.uVisibleRatio.value = 0;
+            fifthParticleMaterial.uniforms.uVisibleRatio.value = 0;
+        }
+    });
+
+    // ---------------------------------------------
+    // B. (已移除) 內聚坍塌與自動加速
+    // ---------------------------------------------
+    // 原本的 ScrollTrigger 已移除內容，不再改變 Direction 或額外加速
+
+    // ---------------------------------------------
+    // C. 粒子數量漸漸歸零 (uVisibleRatio) (-360px ~ -1400px)
+    // ---------------------------------------------
+    ScrollTrigger.create({
+        trigger: spacer1,
+        start: "top -60px",
+        end: "top -760px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            // progress 0 -> 1
+            // ratio 1 -> 0 (數量越來越少)
+            const ratio = 1.0 - self.progress;
+            
+            // 更新 Shader 中的變數
+            fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+            fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+            
+            // 保持透明度為 1
+            fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
+            fifthParticleMaterial.uniforms.uOpacity.value = 1.0;
+        }
+    });
+
+    // ---------------------------------------------
+    // D. 第二背景淡入 (Spacer 1 下滑 0~600px)
+    // ---------------------------------------------
+    if (background2) {
+        gsap.to(background2, {
+            opacity: 1, ease: "none",
+            scrollTrigger: { trigger: spacer1, start: "top 370", end: "top -400px", scrub: 0.1 }
+        });
+    }
+}
+
+// ==========================================
+// 8. 其他特效 (隧道、About、Text) - 保持不變
 // ==========================================
 function initTunnelEffects() {
     const walls = [
@@ -386,143 +500,76 @@ function initTunnelEffects() {
         { el: '.wall-4', start: 720, out: 2000, end: 2100, x: -20, y: -50 },
         { el: '.wall-5', start: 720, out: 2000, end: 2150, x: 10, y: 50 },
     ];
-
     walls.forEach(w => {
         const element = document.querySelector(w.el);
         if(!element) return;
-
         let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: `${w.start}px top`,
-                end: `${w.end}px top`,
-                scrub: 0.5, 
-            }
+            scrollTrigger: { trigger: "body", start: `${w.start}px top`, end: `${w.end}px top`, scrub: 0.5 }
         });
-
         tl.to(element, {
-            scale: 1, opacity: 1,
-            x: `${w.x * 0.3}vw`, y: `${w.y * 0.3}vh`,
-            duration: (w.out - w.start), ease: "power1.in"
-        })
-        .to(element, {
-            scale: 3, opacity: 0,
-            x: `${w.x}vw`, y: `${w.y}vh`,
-            duration: (w.end - w.out), ease: "power1.in"
+            scale: 1, opacity: 1, x: `${w.x * 0.3}vw`, y: `${w.y * 0.3}vh`, duration: (w.out - w.start), ease: "power1.in"
+        }).to(element, {
+            scale: 3, opacity: 0, x: `${w.x}vw`, y: `${w.y}vh`, duration: (w.end - w.out), ease: "power1.in"
         });
     });
 }
-
-// ==========================================
-// 6. About 區塊特效 (修正：從中心生長 + Pinning)
-// ==========================================
 function initAboutEffects() {
     const outerWrapper = document.querySelector('.about-wrapper-outer');
     const innerContent = document.querySelector('.about-content-inner');
-
     if (!outerWrapper || !innerContent) return;
-
-    // 1. 設定初始狀態：縮小且透明
     gsap.set(innerContent, { scale: 0.1, opacity: 0 });
-
-    // 2. 建立 ScrollTrigger 動畫
-    // 我們使用 "pin" (釘選) 效果，讓區塊在畫面中心停留，
-    // 使用者的滾動行為會轉化為 "放大" 動畫，而不是網頁滑動。
     let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: outerWrapper,
-            start: "top top",     // 當區塊頂部碰到視窗頂部時 (佔滿全螢幕)
-            end: "+=1200",        // 釘選 1200px 的滾動距離來播放生長動畫
-            pin: true,            // 【關鍵】鎖住畫面
-            scrub: 0.5,           // 綁定滾動條進度，帶點平滑
-            anticipatePin: 1      // 優化釘選效能
-        }
+        scrollTrigger: { trigger: outerWrapper, start: "top top", end: "+=1200", pin: true, scrub: 0.5, anticipatePin: 1 }
     });
-
-    // 3. 定義動畫過程
-    tl.to(innerContent, {
-        scale: 1,      // 放大至原尺寸
-        opacity: 1,    // 變為不透明
-        ease: "power2.out"
-    });
+    tl.to(innerContent, { scale: 1, opacity: 1, ease: "power2.out" });
 }
-
-// ==========================================
-// 7. 文字特效
-// ==========================================
 function initTextEffects() {
     const heroContainer = document.querySelector('.hero-container');
     const heroSection = document.querySelector('.hero-section');
-
     if (heroContainer) {
         gsap.set(heroContainer, { transformOrigin: "center center" });
         gsap.to(heroContainer, {
-            scale: 50,      
-            opacity: 0,     
-            ease: "power2.in",
-            scrollTrigger: {
-                trigger: "body",
-                start: "680px top", 
-                end: "2400px top",  
-                scrub: 0.1
-            }
+            scale: 50, opacity: 0, ease: "power2.in",
+            scrollTrigger: { trigger: "body", start: "680px top", end: "2400px top", scrub: 0.1 }
         });
     }
-    
     if (heroSection) {
         gsap.to(heroSection, {
             autoAlpha: 0,
-            scrollTrigger: {
-                trigger: "body",
-                start: "1000px top",
-                toggleActions: "play none none reverse"
-            }
+            scrollTrigger: { trigger: "body", start: "1000px top", toggleActions: "play none none reverse" }
         });
     }
 }
 
 // ==========================================
-// 8. 動畫渲染迴圈
+// 9. 動畫渲染迴圈
 // ==========================================
 function animate() {
     requestAnimationFrame(animate);
     time += 0.015;
 
     if (runFirst) updateFirstParticlePhysics();
-
-    if (runSecond && secondParticleMaterial) {
-        secondParticleMaterial.uniforms.uTime.value = time;
-    }
-
-    if (runThird && thirdParticleMaterial) {
-        thirdParticleMaterial.uniforms.uTime.value = time;
-    }
+    if (runSecond && secondParticleMaterial) secondParticleMaterial.uniforms.uTime.value = time;
+    if (runThird && thirdParticleMaterial) thirdParticleMaterial.uniforms.uTime.value = time;
+    if (runFourth && fourthParticleMaterial) fourthParticleMaterial.uniforms.uTime.value = time;
+    if (runFifth && fifthParticleMaterial) fifthParticleMaterial.uniforms.uTime.value = time;
 
     renderer.render(scene, camera);
 }
 
 function updateFirstParticlePhysics() {
     if (!firstParticleSystem) return;
-
     const isScrollUnbound = window.scrollY > 680;
-    
     let targetPoint = (isIdle || isScrollUnbound) ? new THREE.Vector3(0,0,0) : mouse3DVec;
-    
     if (!isScrollUnbound) {
         mousePath.unshift(targetPoint.clone());
         if (mousePath.length > config.firstParticle.pathLength) mousePath.pop();
     }
-
     const positions = firstParticleSystem.geometry.attributes.position.array;
     const basePositions = firstParticleSystem.geometry.userData.basePositions;
     const pConfig = config.firstParticle;
-
     for (let i = 0; i < pConfig.count; i++) {
-        let i3 = i * 3;
-        let pData = firstParticleData[i];
-        let cx = positions[i3]; let cy = positions[i3+1]; 
-        let tx, ty, s;
-
+        let i3 = i * 3; let pData = firstParticleData[i]; let cx = positions[i3]; let cy = positions[i3+1]; let tx, ty, s;
         if (isIdle || isScrollUnbound) {
             let bx = basePositions[i3]; let by = basePositions[i3+1];
             let dist = Math.sqrt(bx*bx + by*by);
@@ -538,12 +585,8 @@ function updateFirstParticlePhysics() {
             tx = pathPos.x + ox; ty = pathPos.y + oy;
             s = pData.speed;
         }
-
-        positions[i3] += (tx - cx) * s;
-        positions[i3+1] += (ty - cy) * s;
-        positions[i3+2] = 0; 
+        positions[i3] += (tx - cx) * s; positions[i3+1] += (ty - cy) * s; positions[i3+2] = 0; 
     }
-
     firstParticleSystem.geometry.attributes.position.needsUpdate = true;
 }
 
@@ -561,7 +604,6 @@ function onMouseMove(event) {
     let pos = camera.position.clone().add(dir.multiplyScalar(distance));
     mouse3DVec.copy(pos);
     mouse3DVec.z = 0;
-    
     isIdle = false;
     if (idleTimer) clearTimeout(idleTimer);
     idleTimer = setTimeout(() => { isIdle = true; }, config.firstParticle.idleTimeout);
