@@ -1,90 +1,172 @@
-/* 這個檔案放 competencies 頁面的 CSS 樣式 */
-/* css/page/competencies.css */
+/* 修改 competencies.css */
+
+.light-simulation-zone {
+  width: 100%;
+  height: 100%;
+  min-height: 720px;
+  position: fixed;
+  padding: 0px 0 80px 0;
+}
+
+.light-simulation-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.light-simulation-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.light-top-bg,
+.light-bottom-bg,
+.light-center-bg {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  pointer-events: none;
+}
+.light-top-bg svg,
+.light-bottom-bg svg,
+.light-center-bg svg {
+  width: auto;
+  height: 100%;
+  z-index: -10;
+  opacity: 0;
+}
+.light-center-bg svg {
+  opacity: 0;
+}
+/* 嵌入式光束容器 */
+.beam-container-embedded {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+
+  /* 底部柔和遮罩 (讓光束看起來像插在地板裡) */
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+
+  /* 稍微模糊，增加光暈感 */
+  filter: blur(2px);
+}
+
+.beam-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible; /* 允許光暈稍微溢出 */
+}
+
+/* RWD: 手機版調整 */
+@media (max-width: 768px) {
+  .light-simulation-box {
+    width: 90vw; /* 手機版寬度佔滿 90% */
+  }
+}
 
 /* --- 1. 過渡區塊高度設定 --- */
 .competencies-spacer-1 {
-    width: 100%;
-    height: 760px; /* 第四、五粒子歸0 留20給它 */
-    pointer-events: none;
+  width: 100%;
+  height: 960px;
+  /* 第四、五粒子歸0 留20給它 */
+  pointer-events: none;
 }
 
 .competencies-spacer-2 {
-    width: 100%;
-    height: calc(100vh - 0px); /* 撐開整個視窗高度 */
-    pointer-events: none;
+  width: 100%;
+  height: calc(100vh - 0px);
+  /* 撐開整個視窗高度 */
+  pointer-events: none;
+  min-height: 844px;
 }
 
 /* --- 2. 內容區塊佈局 --- */
 .competencies-section {
-    position: relative;
-    width: 100%;
-    /* 確保有足夠空間展示 */
-    min-height: 100vh; 
-    padding: 10vh 5vw;
-    display: flex;
-    justify-content: center;
-    z-index: 20; /* 確保內容在粒子之上 */
-    background: transparent;
+  position: relative;
+  width: 100%;
+  /* 確保有足夠空間展示 */
+  min-height: 100vh;
+  padding: 10vh 5vw;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+  /* 確保內容在粒子之上 */
+  background: transparent;
 }
 
 .competencies-container {
-    width: 100%;
-    max-width: 1200px;
-    display: grid;
-    /* 左側標題(30%) 右側內容(1fr) */
-    grid-template-columns: 30% 1fr; 
-    gap: 4rem;
-    align-items: start;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  /* 左側標題(30%) 右側內容(1fr) */
+  grid-template-columns: 30% 1fr;
+  gap: 4rem;
+  align-items: start;
 }
 
 /* --- 左側標題 --- */
 .comp-header {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
+
 /* 繼承 section-subtitle 的樣式並微調 */
 .comp-header .section-subtitle {
-    left: -1rem;
-    top: -1.5rem;
+  left: -1rem;
+  top: -1.5rem;
 }
 
 /* --- 右側內文 --- */
 .comp-body {
-    display: flex;
-    flex-direction: column;
-    gap: 5rem; /* 上下兩個區塊的間距 */
-    padding-top: 1rem; /* 與左側標題稍微錯開 */
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  /* 上下兩個區塊的間距 */
+  padding-top: 1rem;
+  /* 與左側標題稍微錯開 */
 }
 
 .comp-content-block {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .comp-inner-title {
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    font-weight: var(--fw-bold);
-    color: var(--color-primary);
-    letter-spacing: 0.05em;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
 }
 
 .comp-text {
-    font-size: var(--fs-body);
-    color: var(--color-text-secondary);
-    line-height: var(--lh-loose);
-    opacity: 0.8;
+  font-size: var(--fs-body);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-loose);
+  opacity: 0.8;
 }
 
 /* --- RWD --- */
 @media (max-width: 768px) {
-    .competencies-container {
-        grid-template-columns: 1fr; /* 手機版改為單欄 */
-        gap: 3rem;
-    }
-    
-    .comp-header {
-        margin-bottom: 2rem;
-    }
+  .competencies-container {
+    grid-template-columns: 1fr;
+    /* 手機版改為單欄 */
+    gap: 3rem;
+  }
+
+  .comp-header {
+    margin-bottom: 2rem;
+  }
 }

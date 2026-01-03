@@ -184,3 +184,22 @@ body {
         transform: rotate(25deg) scaleX(1.03);
     }
 }
+
+
+
+/* ★ 新增：光束專用畫布樣式 */
+.canvas-wrapper-light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 放在舊畫布(-2)之上，但在內容之下 */
+    z-index: -1; 
+}
+
+.canvas-wrapper-light canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
