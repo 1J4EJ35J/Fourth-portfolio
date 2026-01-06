@@ -53,7 +53,7 @@
 .about-wrapper-outer {
     position: relative;
     width: 100vw;
-    min-height: 700px;
+    min-height: 780px;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -85,7 +85,7 @@
     display: flex;
     flex-direction: column;
     gap: 3rem;
-    padding: 0 5vw;
+    padding: 0 clamp(10px, 5vw, 5vw);
 }
 
 
@@ -134,21 +134,13 @@
     display: flex;
     flex-direction: column;
     gap: .75rem;
-
 }
 
-.about-text .title-text {
-    font-size: var(--fs-small-title);
-    font-weight: var(--fw-regular);
-    color: var(--color-text-primary);
-    /* 標題用亮白 */
-    line-height: var(--lh-tight);
-    transform: skew(-12deg);
-}
+
 
 .about-text .job-title {
     font-size: clamp(1.75rem, 3vw, 2.4rem);
-    transform: skew(-12deg);
+    transform: skew(-9deg);
     font-weight: var(--fw-medium);
     line-height: var(--lh-tight);
 }
@@ -157,17 +149,8 @@
     font-size: clamp(2rem, 3vw, 2.9rem);
 }
 
-.about-text .article-container {
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-}
-
-.about-text .article-container .text {
-    font-size: var(--fs-body);
-    font-weight: var(--fw-regular);
-    color: var(--color-text-secondary);
-
+.about-text.article-zone .article-title-box .title-text {
+    transform: skew(-9deg);
 }
 
 /* RWD */

@@ -2,8 +2,8 @@
     /* --- 品牌核心色系 --- */
     /* 修改：從 Tiffany Blue 改為正藍/天空藍 (配合粒子 Hue: 0.6) */
     /* 舊: #00dbd3 */
-    --color-primary: #008cff; 
-    
+    --color-primary: #008cff;
+
     /* 次要色調：深海藍 (保持不變) */
     --color-secondary: #0a2e4f;
     /* 強調色：亮白色 (保持不變) */
@@ -13,13 +13,13 @@
 
     /* (其餘保持不變...) */
     --color-bg-main: #000000;
-    --color-bg-abyss-core: #101c2a; 
+    --color-bg-abyss-core: #101c2a;
     --color-bg-abyss-mid: #080b0e;
     --color-text-primary: #ffffff;
     --color-text-secondary: #b8cce4;
     --color-text-muted: #6a7a8f;
     --color-link-hover: var(--color-primary);
-    
+
     /* 修改：按鈕發光色也同步更新為藍色 */
     --color-btn-glow: rgba(0, 140, 255, 0.6);
 }

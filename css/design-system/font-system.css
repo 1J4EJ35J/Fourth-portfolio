@@ -13,12 +13,14 @@
     /* --- 字型家族 (Font Family) --- */
     /* 核心策略：英文字型放在前面，中文字型放在後面 */
     /* 這樣瀏覽器會先用 Montserrat 渲染英文，遇到中文自動切換成 Noto Sans TC */
-    --font-family-main: 'Work Sans', 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-family-main: 'Roboto', 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
     /* 如果有純內文區塊覺得 Montserrat 太寬，可以定義一個備用內文字型 */
     --font-family-body: 'Roboto', 'Noto Sans TC', sans-serif;
 
     /* --- 字重 (Font Weight) --- */
+    --fw-extralight: 200;
+    --fw-light: 300;
     --fw-regular: 400;
     --fw-medium: 500;
     --fw-semibold: 600;
@@ -29,10 +31,10 @@
     --fs-hero-title: clamp(2.5rem, 6.3vw, 6rem);
     --fs-section-title: clamp(1.8rem, 5vw, 2.25rem);
     --fs-subtitle: clamp(1.25rem, 3vw, 1.75rem);
-    --fs-small-title: clamp(1.1rem, 2vw, 1.25rem);
+    --fs-small-title: clamp(1.05rem, 2vw, 1.18rem);
     --fs-body: clamp(.9rem, 1.5vw, 1.1rem);
     --fs-small: clamp(0.875rem, 1vw, 1rem);
-
+    --fs-smaller: clamp(13.3px, 1vw, 14px);
     /* --- 行高 (Line Height) --- */
     --lh-tight: 1.2;
     --lh-normal: 1.47;
@@ -66,10 +68,11 @@ h3,
     /* 標題類預設稍微緊一點，更有力道 */
     letter-spacing: var(--ls-heading);
 }
-article{
+
+article {
     letter-spacing: var(--ls-article);
 }
+
 span {
     cursor: default;
 }
-

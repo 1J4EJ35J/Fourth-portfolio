@@ -43,7 +43,12 @@ let lightBounds = { top: 0, bottom: 0, floorY: 0, pixelScale: 1 };
 // --- 共用變數 ---
 let time = 0;
 let runFirst = true;
+let runSecond = false;
+let runThird = false;
+let runFourth = false;
+let runFifth = false;
 let firstParticleData = [];
+
 let mouse = new THREE.Vector2(9999, 9999);
 let mouse3DVec = new THREE.Vector3(0, 0, 0);
 let isIdle = true;
@@ -90,12 +95,12 @@ const config = {
     color: "#008cff",
   },
   fourthParticle: {
-    count: 18000,
-    rangeZ: 2500,
+    count: 8000,
+    rangeZ: 4500,
     rangeXY: 2500,
-    speed: 120.0,
-    maxSpeed: 240.0,
-    size: 4800.0 * window.devicePixelRatio,
+    speed: 130.0,
+    maxSpeed: 160.0,
+    size: 2300.0 * window.devicePixelRatio,
     color: "#008cff",
   },
   fifthParticle: {
@@ -116,18 +121,22 @@ const configBeam = {
 
   // SVG 路徑數據
   pathRight:
-    "M0.5 0.0078125C3.16667 143.008 10.2 430.008 17 496.008C25.5 578.508 84.5775 598.428 101 605.008C247 663.508 156 751.008 113 765.508C70 780.008 50.5 790.508 50.5 841.008C50.5 881.408 50.5 912.841 50.5 923.508",
+"M0.5 0.0078125C1.65413 61.898 17 410.008 17 431.008C17 452.008 14.8664 499.521 17 519.008C24.5 587.508 95.7826 581.99 149.5 587.508C500 623.508 397 758.008 164.5 774.508C119.235 777.72 50.5 807.508 50.5 864.008C50.5 904.408 50.5 912.841 50.5 923.508"
+
+,
   pathLeft:
-    "M180.704 0.0078125C178.038 143.008 171.004 430.008 164.204 496.008C155.704 578.508 96.6269 598.428 80.2043 605.008C-65.7957 663.508 25.2043 751.008 68.2043 765.508C111.204 780.008 130.704 790.508 130.704 841.008C130.704 881.408 130.704 912.841 130.704 923.508",
+"M119.986 0.0078125C119.155 44.5477 109.781 413.008 109.781 443.508C109.781 460.008 103.486 546.947 103.486 558.508C103.486 587.508 95.0459 613.147 59.7812 622.508C-21.2188 644.008 -14.9053 740.008 52.5947 763.008C82.7812 773.294 88.7812 783.008 88.7812 842.008C88.7812 882.408 88.7812 913.841 88.7812 924.508"
+
+,
 
   // --- 垂直下墜組 (Straight) ---
   // 光粒 1
   beam1: {
-    count: 700,
-    color: "#3adeff",
+    count: 110,
+    color: "#7df2ff",
     size: 10.0,
-    speed: 0.4,
-    thickness: 40.0, // ★ 實體粗細 (穩定半徑)
+    speed: 0.9,
+    thickness: 10.0, // ★ 實體粗細 (穩定半徑)
     noise: 3.0, // ★ 震動幅度 (調小，避免亂晃)
     opacity: 0.8,
     spread: 360,
@@ -151,24 +160,24 @@ const configBeam = {
   // --- 左弧線組 (Left Path) ---
   // 光粒 3 (核心)
   beam3: {
-    count: 1000,
-    color: "#0068f0",
-    size: 6.0,
-    speed: 0.8,
-    thickness: 60.0, // ★ 牆壁厚度
+    count: 1900,
+    color: "#008cff",
+    size: 8.0,
+    speed: 0.6,
+    thickness: 25.0, // ★ 牆壁厚度
     noise: 0.0,
     opacity: 0.8,
-    spread: 400,
+    spread: 600,
     blur: 0.6,
     rotationSpeed: 0.0,
   },
   // 光粒 4 (外暈)
   beam4: {
-    count: 1000,
-    color: "#00ffea",
+    count: 4000,
+    color: "#008cff",
     size: 8.0,
-    speed: 1,
-    thickness: 60.0, // ★ 更厚的霧氣層
+    speed: 1.2,
+    thickness: 25.0, // ★ 更厚的霧氣層
     noise: 0.0,
     opacity: 0.9,
     spread: 800,
@@ -179,26 +188,26 @@ const configBeam = {
   // --- 右弧線組 (Right Path) ---
   // 光粒 5 (核心)
   beam5: {
-    count: 1000,
-    color: "#008cff",
-    size: 10.0,
-    speed: 0.5,
-    thickness: 60.0, // ★ 牆壁厚度
+    count: 1900,
+    color: "#004aea",
+    size: 9.4,
+    speed: 0.9,
+    thickness: 90.0, // ★ 牆壁厚度
     noise: 0.0,
-    opacity: 0.8,
-    spread: 400,
-    blur: 0.6,
+    opacity: 0.6,
+    spread: 1800,
+    blur: .4,
     rotationSpeed: 0.0,
   },
   // 光粒 6 (外暈)
   beam6: {
-    count: 400,
-    color: "#008cff",
-    size: 10.0,
+    count: 100,
+    color: "#379ef3",
+    size: 14.0,
     speed: 0.01,
     thickness: 835.0, // ★ 更厚的霧氣層
     noise: 75.0,
-    opacity: 0.8,
+    opacity: 0.6,
     spread: 1520,
     blur: 0.9,
     rotationSpeed: 0.0,
@@ -820,7 +829,7 @@ function initFourthParticle() {
       uVisibleRatio: { value: 0.0 },
       uBendFactor: { value: 0.0 },
     },
-    vertexShader: `uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uSize; uniform float uDirection; uniform float uVisibleRatio; uniform float uBendFactor; attribute vec3 aRandomness; varying float vAlpha; void main() { vec3 pos = position; float zOffset = uTime * uSpeed * 5.0 * uDirection + aRandomness.z * 200.0; pos.z = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ; float progress = (pos.z + uRangeZ) / (uRangeZ * 2.0); float lift = pow(progress, 3.0) * 2000.0 * uBendFactor; pos.y += lift; pos.x += pos.x * (lift * 0.0001) * uBendFactor; vec4 modelPosition = modelMatrix * vec4(pos, 1.0); vec4 viewPosition = viewMatrix * modelPosition; gl_Position = projectionMatrix * viewPosition; float isVisible = step(aRandomness.x, uVisibleRatio); gl_PointSize = uSize * (1.0 / -viewPosition.z) * isVisible; float dist = abs(pos.z); vAlpha = smoothstep(uRangeZ, uRangeZ * 0.2, dist); }`,
+    vertexShader: `uniform float uTime; uniform float uSpeed; uniform float uRangeZ; uniform float uSize; uniform float uDirection; uniform float uVisibleRatio; uniform float uBendFactor; attribute vec3 aRandomness; varying float vAlpha; void main() { vec3 pos = position; float zOffset = uTime * uSpeed * 5.0 * uDirection + aRandomness.z * 200.0; pos.z = mod(pos.z + zOffset, uRangeZ * 2.0) - uRangeZ; float progress = (pos.z + uRangeZ) / (uRangeZ * 2.0); float lift = pow(progress, 3.0) * 2800.0 * uBendFactor; pos.y += lift; pos.x += pos.x * (lift * 0.0001) * uBendFactor; vec4 modelPosition = modelMatrix * vec4(pos, 1.0); vec4 viewPosition = viewMatrix * modelPosition; gl_Position = projectionMatrix * viewPosition; float isVisible = step(aRandomness.x, uVisibleRatio); gl_PointSize = uSize * (1.0 / -viewPosition.z) * isVisible; float dist = abs(pos.z); vAlpha = smoothstep(uRangeZ, uRangeZ * 0.2, dist); }`,
     fragmentShader: `uniform vec3 uColor; uniform float uOpacity; varying float vAlpha; void main() { vec2 coord = gl_PointCoord - vec2(0.5); float dist = length(coord); if (dist > 0.5) discard; float strength = pow(1.0 - (dist * 2.0), 1.5); gl_FragColor = vec4(uColor, strength * uOpacity * vAlpha); }`,
   });
   fourthParticleSystem = new THREE.Points(geometry, fourthParticleMaterial);
@@ -1183,7 +1192,7 @@ function createGlowingDot() {
     center
   );
   gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-  gradient.addColorStop(0.3, "rgba(43, 152, 211, 0.5)");
+  gradient.addColorStop(0.3, "#2b98d380");
   gradient.addColorStop(1, "rgba(28, 178, 153, .03)");
   context.fillStyle = gradient;
   context.fillRect(0, 0, size, size);
