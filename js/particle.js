@@ -101,7 +101,7 @@ let mousePath = [];
 const config = {
     // 舊背景粒子
     firstParticle: {
-        count: 150000,
+        count: 60000,//原本16W
         color: 0x008cff,
         size: 4.4,
         opacity: 0.7,
@@ -278,7 +278,7 @@ try {
 
     animate();
 
-    console.log("✅ V37 啟動：修復第五粒子初始化變數錯誤 | 完美運行");
+    console.log("✅ V39 啟動：全域粒子優化 | 確保隱藏時停止運算 | 完美運行");
 
 } catch (e) {
     console.error("❌ 錯誤:", e);
@@ -919,6 +919,8 @@ function initSecondParticleEffects() {
                 },
                 onLeaveBack: () => {
                     runSecond = false;
+                    // ★ 優化：回到上方時，強制將透明度歸零
+                    if (secondParticleMaterial) secondParticleMaterial.uniforms.uOpacity.value = 0.0;
                 },
             },
         }
@@ -1031,6 +1033,8 @@ function initThirdParticleEffects() {
                 },
                 onLeaveBack: () => {
                     runThird = false;
+                    // ★ 優化：回到上方時，強制將透明度歸零
+                    if (thirdParticleMaterial) thirdParticleMaterial.uniforms.uOpacity.value = 0.0;
                 },
             },
         }
@@ -1066,7 +1070,7 @@ function initFourthParticle() {
             uSpeed: { value: params.speed },
             uRangeZ: { value: params.rangeZ },
             uSize: { value: params.size },
-            uOpacity: { value: 1.0 },
+            uOpacity: { value: 0.0 }, // ★ 修復：初始為隱藏
             uColor: { value: new THREE.Color(params.color) },
             uDirection: { value: 1.0 },
             uVisibleRatio: { value: 0.0 },
@@ -1165,7 +1169,7 @@ function initFifthParticle() {
             uSpeed: { value: params.speed },
             uRangeZ: { value: params.rangeZ },
             uStreakLength: { value: params.streakLength },
-            uOpacity: { value: 1.0 },
+            uOpacity: { value: 0.0 }, // ★ 修復：初始為隱藏
             uColor: { value: new THREE.Color(params.color) },
             uDirection: { value: 1.0 },
             uVisibleRatio: { value: 0.0 },
@@ -1214,7 +1218,6 @@ function initFifthParticle() {
         `,
     });
 
-    // ★ 修正：將物件正確指派給 fifthParticleSystem (V36 這裡寫成了 fifthParticleMaterial)
     fifthParticleSystem = new THREE.LineSegments(geometry, fifthParticleMaterial);
     scene.add(fifthParticleSystem);
 }
@@ -1237,6 +1240,9 @@ function initCompetenciesEffects() {
         onEnter: () => {
             runFourth = true;
             runFifth = true;
+            // ★ 修復：進入時，確保粒子透明度開啟
+            if (fourthParticleMaterial) fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
+            if (fifthParticleMaterial) fifthParticleMaterial.uniforms.uOpacity.value = 1.0;
         },
         onUpdate: (self) => {
             const p = self.progress;
@@ -1289,10 +1295,14 @@ function initCompetenciesEffects() {
             if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
                 fourthParticleMaterial.uniforms.uVisibleRatio.value = 0;
                 fourthParticleMaterial.uniforms.uBendFactor.value = 0;
+                // ★ 修復：回到上方時，強制關閉透明度
+                fourthParticleMaterial.uniforms.uOpacity.value = 0.0;
             }
             if (fifthParticleMaterial && fifthParticleMaterial.uniforms) {
                 fifthParticleMaterial.uniforms.uVisibleRatio.value = 0;
                 fifthParticleMaterial.uniforms.uBendFactor.value = 0;
+                // ★ 修復：回到上方時，強制關閉透明度
+                fifthParticleMaterial.uniforms.uOpacity.value = 0.0;
             }
         },
     });
