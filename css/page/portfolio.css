@@ -3,13 +3,13 @@
 /* --- 1. 過渡區塊 (Spacers) --- */
 .portfolio-spacer-1 {
     width: 100%;
-    height: 400px;
+    height: 780px;
     pointer-events: none;
 }
 
 .portfolio-spacer-2 {
     width: 100%;
-    height: 200px;
+    height: 1900px;
     pointer-events: none;
 }
 

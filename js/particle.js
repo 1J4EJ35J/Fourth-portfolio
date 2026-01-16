@@ -73,6 +73,25 @@ let lightBounds = {
     pixelScale: 1
 };
 
+// --- System C: 大腦粒子 (Brain Particle Multi-Layer) ---
+// ★ 新增：三層大腦粒子系統
+let brainSystem1, brainSystem2, brainSystem3;
+
+// 儲存粒子數據
+let brainData1 = [];
+let brainData2 = [];
+let brainData3 = [];
+
+// 控制每一層的聚合進度 (0 = 散開, 1 = 完美圖像)
+let brainRatio1 = 0;
+let brainRatio2 = 0;
+let brainRatio3 = 0;
+
+// 全域開關
+let runBrainLayer1 = false;
+let runBrainLayer2 = false;
+let runBrainLayer3 = false;
+
 // --- 共用變數 ---
 let time = 0;
 
@@ -85,6 +104,9 @@ let runFifth = false;
 
 // 光束總開關
 let runBeams = false;
+
+// ★ 光束散開比例 (0.0 = 綁定, 1.0 = 完全散開)
+let beamScatterRatio = 0.0;
 
 let firstParticleData = [];
 let mouse = new THREE.Vector2(9999, 9999);
@@ -101,7 +123,7 @@ let mousePath = [];
 const config = {
     // 舊背景粒子
     firstParticle: {
-        count: 60000,//原本16W
+        count: 60000,
         color: 0x008cff,
         size: 4.4,
         opacity: 0.7,
@@ -116,6 +138,40 @@ const config = {
         rippleIntensity: 255,
         rippleSpeed: 1.7,
         rippleFrequency: 0.026,
+    },
+    // ★ 大腦粒子三層設定 (Yuri Artiukh 技術 - 絕對精細)
+    // 在此調整 blur 數值來控制模糊程度 (0.0 ~ 1.0)
+    brainLayer1: {
+        count: 6000,
+        color: "#008cff", // 顏色 (Network)
+        size: 7.5,
+        glow: 0,
+        blur: 1,        // ★ 模糊程度
+        opacity: 1,
+        zOffset: 0,      // 疊加層次 Z=15
+        scatterRange: 2500
+    },
+    brainLayer2: {
+        count: 700,     // 數量
+        color: "#005aa4", // 顏色 (Base)
+        size: 40.0,        // 大小
+        glow: 0,        // 光暈強度
+        blur: .3,        // ★ 模糊程度 (0=銳利, 1=極柔和)
+        opacity: 0.6,     // 不透明度
+        zOffset: 0,       // 疊加層次 Z=0
+        scatterRange: 2000
+    },
+    
+    brainLayer3: {
+        count: 2000,
+        color: "#008c9b", // 顏色 (Highlight)
+        size: 8.0,
+        glow: 0,
+        blur: 0,        // ★ 模糊程度 (高光層通常較模糊發光)
+        flashSpeed: 6.0,  // 閃爍頻率
+        opacity: .9,
+        zOffset: 10,      // 最上層 Z=30
+        scatterRange: 3000
     },
     secondParticle: {
         count: 4000,
@@ -157,91 +213,15 @@ const config = {
 const configBeam = {
     cameraZ: 1000,
     floorOffset: 80,
-
-    // ★ 漸層柔邊範圍 (300px 的隨機過渡區)
     fadeRange: 300,
-
-    // SVG 路徑數據
     pathRight: "M0.5 0.0078125C1.65413 61.898 17 410.008 17 431.008C17 452.008 14.8664 499.521 17 519.008C24.5 587.508 95.7826 581.99 149.5 587.508C500 623.508 397 758.008 164.5 774.508C119.235 777.72 50.5 807.508 50.5 864.008C50.5 904.408 50.5 912.841 50.5 923.508",
     pathLeft: "M119.986 0.0078125C119.155 44.5477 109.781 413.008 109.781 443.508C109.781 460.008 103.486 546.947 103.486 558.508C103.486 587.508 95.0459 613.147 59.7812 622.508C-21.2188 644.008 -14.9053 740.008 52.5947 763.008C82.7812 773.294 88.7812 783.008 88.7812 842.008C88.7812 882.408 88.7812 913.841 88.7812 924.508",
-
-    // --- 垂直下墜組 ---
-    beam1: {
-        count: 110,
-        color: "#7df2ff",
-        size: 10.0,
-        speed: 0.9,
-        thickness: 10.0,
-        noise: 3.0,
-        opacity: 0.8,
-        spread: 360,
-        blur: 0.8,
-        rotationSpeed: 1,
-    },
-    beam2: {
-        count: 0,
-        color: "#008cff",
-        size: 12.0,
-        speed: 1.0,
-        thickness: 30.0,
-        noise: 10.0,
-        opacity: 0.7,
-        spread: 0,
-        blur: 0.5,
-        rotationSpeed: -0.5,
-    },
-
-    // --- 左弧線組 ---
-    beam3: {
-        count: 1900,
-        color: "#008cff",
-        size: 8.0,
-        speed: 0.6,
-        thickness: 25.0,
-        noise: 0.0,
-        opacity: 0.8,
-        spread: 600,
-        blur: 0.6,
-        rotationSpeed: 0.0,
-    },
-    beam4: {
-        count: 4000,
-        color: "#008cff",
-        size: 8.0,
-        speed: 1.2,
-        thickness: 25.0,
-        noise: 0.0,
-        opacity: 0.9,
-        spread: 800,
-        blur: 1,
-        rotationSpeed: 0.0,
-    },
-
-    // --- 右弧線組 ---
-    beam5: {
-        count: 1900,
-        color: "#004aea",
-        size: 9.4,
-        speed: 0.9,
-        thickness: 90.0,
-        noise: 0.0,
-        opacity: 0.6,
-        spread: 1800,
-        blur: .4,
-        rotationSpeed: 0.0,
-    },
-    beam6: {
-        count: 100,
-        color: "#379ef3",
-        size: 14.0,
-        speed: 0.01,
-        thickness: 835.0,
-        noise: 75.0,
-        opacity: 0.6,
-        spread: 1520,
-        blur: 0.9,
-        rotationSpeed: 0.0,
-    },
+    beam1: { count: 110, color: "#7df2ff", size: 10.0, speed: 0.9, thickness: 10.0, noise: 3.0, opacity: 0.8, spread: 360, blur: 0.8, rotationSpeed: 1 },
+    beam2: { count: 0, color: "#008cff", size: 12.0, speed: 1.0, thickness: 30.0, noise: 10.0, opacity: 0.7, spread: 0, blur: 0.5, rotationSpeed: -0.5 },
+    beam3: { count: 1900, color: "#008cff", size: 8.0, speed: 0.6, thickness: 25.0, noise: 0.0, opacity: 0.8, spread: 600, blur: 0.6, rotationSpeed: 0.0 },
+    beam4: { count: 4000, color: "#008cff", size: 8.0, speed: 1.2, thickness: 25.0, noise: 0.0, opacity: 0.9, spread: 800, blur: 1, rotationSpeed: 0.0 },
+    beam5: { count: 1900, color: "#004aea", size: 9.4, speed: 0.9, thickness: 90.0, noise: 0.0, opacity: 0.6, spread: 1800, blur: .4, rotationSpeed: 0.0 },
+    beam6: { count: 100, color: "#379ef3", size: 14.0, speed: 0.01, thickness: 835.0, noise: 75.0, opacity: 0.6, spread: 1520, blur: 0.9, rotationSpeed: 0.0 },
 };
 
 
@@ -264,6 +244,9 @@ try {
     initFourthParticle();
     initFifthParticle();
 
+    // ★ 關鍵：初始化三層大腦粒子
+    initThreeLayerBrain();
+
     // 新光束粒子
     initBeamSystem();
 
@@ -273,12 +256,12 @@ try {
     initTextEffects();
     initCompetenciesEffects();
 
-    // 初始化光束的距離觸發器
+    // 初始化觸發器
     initBeamScrollTriggers();
 
     animate();
 
-    console.log("✅ V39 啟動：全域粒子優化 | 確保隱藏時停止運算 | 完美運行");
+    console.log("✅ V50 啟動：Yuri Artiukh 三層疊加 | 視窗 1920px 優化版");
 
 } catch (e) {
     console.error("❌ 錯誤:", e);
@@ -286,17 +269,12 @@ try {
 
 
 // ==========================================
-// 4. 場景初始化函數
+// 4. 場景初始化函數 (標準部分)
 // ==========================================
 
 function initSceneOld() {
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        5000
-    );
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
     camera.position.z = 750;
     renderer = new THREE.WebGLRenderer({
         antialias: false,
@@ -321,12 +299,7 @@ function initSceneOld() {
 
 function initSceneLight() {
     sceneLight = new THREE.Scene();
-    cameraLight = new THREE.PerspectiveCamera(
-        60,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        5000
-    );
+    cameraLight = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 5000);
     cameraLight.position.set(0, 0, configBeam.cameraZ);
     cameraLight.lookAt(0, 0, 0);
 
@@ -367,12 +340,37 @@ function onWindowResize() {
 
     updateLightLayout();
     ScrollTrigger.refresh();
+
+    // ★ 大腦粒子 RWD 鏡頭控制 (高階標準作法 - 1920px 優化)
+    updateBrainCamera();
 }
+
+function updateBrainCamera() {
+    const w = window.innerWidth;
+    
+    // ★ 修改：將基準寬度設定為 1920，並增加基礎距離 (800)
+    // 這會讓相機在 1920px 時保持較遠的距離 (Z=800)，使大腦看起來較小
+    const baseWidth = 1920; 
+    const baseZ = 800; 
+
+    if (w < 768) {
+        // 768px 以下：鎖定相機距離，避免過度縮小或穿幫
+        // 使用一個適合手機的固定值 (約 1200)
+        camera.position.z = 1200;
+    } else {
+        // 桌機版：依據 1920px 進行等比縮放
+        // 當 w = 1920 時，ratio = 1，z = 800 (舒適距離)
+        // 當 w = 1200 時，ratio = 1.6，z = 1280 (拉遠以容納畫面)
+        const ratio = baseWidth / w;
+        camera.position.z = Math.min(2500, baseZ * ratio);
+    }
+}
+
 window.addEventListener("resize", onWindowResize, false);
 
 
 // ==========================================
-// 5. 新：路徑與粒子系統
+// 5. 光束系統與輔助函式
 // ==========================================
 
 function parsePathToLUT(dString, steps = 1000) {
@@ -467,8 +465,6 @@ function createBeamSystem(cfg, type) {
 
         const angleRandom = (Math.random() - 0.5) * ((cfg.spread * Math.PI) / 180);
         const thicknessRandom = Math.random() - 0.5;
-        
-        // 隨機值：用於柔邊計算
         const fadeRandom = Math.random();
 
         initialData.push({
@@ -477,7 +473,7 @@ function createBeamSystem(cfg, type) {
             noiseOffset: Math.random() * 100,
             angleRandom: angleRandom,
             thicknessRandom: thicknessRandom,
-            fadeRandom: fadeRandom 
+            fadeRandom: fadeRandom
         });
     }
 
@@ -504,7 +500,9 @@ function createBeamSystem(cfg, type) {
         initialData: initialData,
         type: type,
         densityRatio: 0,
-        flowRatio: 0
+        flowRatio: 0,
+        dead: false,
+        originalCount: cfg.count
     };
     return system;
 }
@@ -529,19 +527,18 @@ function initBeamSystem() {
     sceneLight.add(beam6System);
 }
 
-// ★ 動畫更新：加入 Soft Edge 邏輯
 function updateBeam(system) {
     if (!system) return;
+    
+    if (system.userData.dead) return;
+
     const positions = system.geometry.attributes.position.array;
     const data = system.userData.initialData;
     const type = system.userData.type;
     const cfg = system.userData.config;
 
-    // 取得控制參數
     const densityRatio = system.userData.densityRatio;
     const flowRatio = system.userData.flowRatio;
-
-    // 取得設定檔中的漸層範圍 (預設 300)
     const fadeRange = configBeam.fadeRange || 300;
 
     let currentLUT = null;
@@ -558,29 +555,21 @@ function updateBeam(system) {
     }
 
     const timeRotation = (cfg.rotationSpeed || 0) * time;
-
-    // 1. 裁切線 (Cutoff Line)
     const totalHeight = lightBounds.top - lightBounds.floorY;
     const drawLimitY = lightBounds.top - (totalHeight * flowRatio);
-
-    // 2. 可見數量 (Visible Count)
     const visibleCount = Math.floor(cfg.count * densityRatio);
 
     for (let i = 0; i < cfg.count; i++) {
         const i3 = i * 3;
         const p = data[i];
 
-        // 運動運算
         p.y -= p.speed;
         if (p.y < lightBounds.floorY) {
             p.y = lightBounds.top + Math.random() * 100;
         }
 
-        // 3. 柔邊過濾邏輯 (Soft Edge)
-        // 計算該粒子的「有效閥值」= 基準線 + (隨機偏移 * 範圍)
         const effectiveLimit = drawLimitY + (p.fadeRandom * fadeRange);
 
-        // 綜合過濾：數量 OR 高度(含柔邊)
         if (i >= visibleCount || p.y < effectiveLimit) {
             positions[i3] = 99999;
             positions[i3 + 1] = 99999;
@@ -588,7 +577,8 @@ function updateBeam(system) {
             continue;
         }
 
-        // 查表半徑
+        let pathX = 0;
+        let pathZ = 0;
         let radius = 0;
         const distFromFloor3D = p.y - lightBounds.floorY;
         const distFromFloorPx = Math.max(
@@ -609,24 +599,28 @@ function updateBeam(system) {
             radius = Math.abs(rawVal) * lightBounds.pixelScale;
         }
 
-        // 厚度
         radius += p.thicknessRandom * (cfg.thickness || 0);
 
-        // 角度
         const finalAngle = baseAngle + p.angleRandom + timeRotation;
 
-        // 座標轉換
-        let finalX = radius * Math.cos(finalAngle);
-        let finalZ = radius * Math.sin(finalAngle);
+        pathX = radius * Math.cos(finalAngle);
+        pathZ = radius * Math.sin(finalAngle);
 
-        // 噪點
         const noise = Math.sin(time * 2 + p.noiseOffset) * cfg.noise;
-        finalX += noise;
-        finalZ += noise * 0.5;
+        pathX += noise;
+        pathZ += noise * 0.5;
 
-        positions[i3] = finalX;
+        let scatterX = 0;
+        let scatterZ = 0;
+        const scatterScale = 2500;
+        const driftSpeed = 0.3;
+
+        scatterX = Math.sin(i * 12.9898 + p.noiseOffset) * scatterScale + Math.sin(time * driftSpeed + i * 0.1) * 200;
+        scatterZ = Math.cos(i * 78.233 + p.noiseOffset) * scatterScale + Math.cos(time * driftSpeed + i * 0.1) * 200;
+
+        positions[i3] = pathX + (scatterX - pathX) * beamScatterRatio;
         positions[i3 + 1] = p.y;
-        positions[i3 + 2] = finalZ;
+        positions[i3 + 2] = pathZ + (scatterZ - pathZ) * beamScatterRatio;
     }
 
     system.geometry.attributes.position.needsUpdate = true;
@@ -638,7 +632,6 @@ function updateBeam(system) {
 // ==========================================
 
 function initBeamScrollTriggers() {
-    // 1. 全域總開關
     ScrollTrigger.create({
         trigger: ".competencies-spacer-1",
         start: "bottom 100px",
@@ -651,7 +644,59 @@ function initBeamScrollTriggers() {
         }
     });
 
-    // Helper Functions
+    ScrollTrigger.create({
+        trigger: ".portfolio-spacer-1",
+        start: "top 320px",
+        end: "top 100px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            beamScatterRatio = self.progress;
+        }
+    });
+
+    ScrollTrigger.create({
+        trigger: ".portfolio-spacer-1",
+        start: "top 80px",
+        end: "top -280px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            const opacity = 1.0 - self.progress;
+            const fadingBeams = [beam1System, beam3System, beam5System];
+            fadingBeams.forEach(sys => {
+                if(sys) {
+                    sys.material.opacity = opacity * (sys.userData.config.opacity || 1);
+                    if(opacity > 0) sys.userData.dead = false;
+                }
+            });
+
+            const unboundBeams = [beam4System, beam6System];
+            unboundBeams.forEach(sys => {
+                if(sys) {
+                    sys.material.opacity = opacity * (sys.userData.config.opacity || 1);
+                    if(opacity > 0) sys.userData.dead = false;
+                }
+            });
+        },
+        onLeave: () => {
+            const allTargets = [beam1System, beam3System, beam5System, beam4System, beam6System];
+            allTargets.forEach(sys => {
+                if(sys) {
+                    sys.userData.dead = true;
+                    sys.geometry.setDrawRange(0, 0);
+                }
+            });
+        },
+        onEnterBack: () => {
+            const allTargets = [beam1System, beam3System, beam5System, beam4System, beam6System];
+            allTargets.forEach(sys => {
+                if(sys) {
+                    sys.userData.dead = false;
+                    sys.geometry.setDrawRange(0, sys.userData.originalCount);
+                }
+            });
+        }
+    });
+
     const updateSystem = (sys1, sys2, prop, val) => {
         if (sys1) sys1.userData[prop] = val;
         if (sys2) sys2.userData[prop] = val;
@@ -661,7 +706,6 @@ function initBeamScrollTriggers() {
         if (sys2) sys2.material.opacity = val * (sys2.userData.config.opacity || 1);
     };
 
-    // 2. 光粒 1 & 2 (垂直)
     ScrollTrigger.create({
         trigger: ".competencies-spacer-2",
         start: "top 100px",
@@ -683,7 +727,6 @@ function initBeamScrollTriggers() {
         }
     });
 
-    // 3. 光粒 3 & 4 (左弧)
     ScrollTrigger.create({
         trigger: ".competencies-spacer-2",
         start: "top 0px",
@@ -705,7 +748,6 @@ function initBeamScrollTriggers() {
         }
     });
 
-    // 4. 光粒 5 & 6 (右弧)
     ScrollTrigger.create({
         trigger: ".competencies-spacer-2",
         start: "top -200px",
@@ -730,7 +772,7 @@ function initBeamScrollTriggers() {
 
 
 // ==========================================
-// 7. 舊粒子系統
+// 7. 舊粒子系統 (First ~ Fifth)
 // ==========================================
 
 function initFirstParticle() {
@@ -1228,7 +1270,7 @@ function initCompetenciesEffects() {
     const background2 = document.querySelector(".background-layer-2");
 
     if (!aboutWrapper || !spacer1) return;
-    
+
     // ★ 安全檢查：如果材質尚未初始化，退出以防止報錯
     if (!fourthParticleMaterial || !fifthParticleMaterial) return;
 
@@ -1246,12 +1288,12 @@ function initCompetenciesEffects() {
         },
         onUpdate: (self) => {
             const p = self.progress;
-            
+
             // ★ 安全檢查：確保 uniforms 存在才更新
             if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
                 let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
                 fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-                
+
                 if (ratio < 0.375) {
                     fourthParticleMaterial.uniforms.uSpeed.value = config.fourthParticle.speed;
                 } else {
@@ -1291,7 +1333,7 @@ function initCompetenciesEffects() {
         onLeaveBack: () => {
             runFourth = false;
             runFifth = false;
-            
+
             if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
                 fourthParticleMaterial.uniforms.uVisibleRatio.value = 0;
                 fourthParticleMaterial.uniforms.uBendFactor.value = 0;
@@ -1480,6 +1522,378 @@ function initTextEffects() {
 
 
 // ==========================================
+// 8. ★★★ 核心新功能：Yuri Artiukh 三層疊加絕對精細大腦 ★★★
+// ==========================================
+
+// ★★★ 絕對禁止隨機洗牌！改用「黃金比例步進 (Golden Ratio Stride)」★★★
+// 這能保證粒子均勻分佈且順序完全固定，不隨機，不洗牌，且徹底消除摩爾紋。
+function getDeterministicSamples(allPoints, maxCount) {
+    if (allPoints.length <= maxCount) {
+        return allPoints; // 數量不夠，全部回傳，保證不亂排
+    }
+
+    const result = [];
+    const total = allPoints.length;
+    
+    // 黃金比例 (Golden Ratio)
+    const phi = 1.618033988749895; 
+    
+    for (let i = 0; i < maxCount; i++) {
+        // 利用黃金比例計算確定性索引
+        // 這種方式可以產生均勻分佈的選點，完全沒有任何隨機性，也絕對不會有週期性條紋
+        const index = Math.floor((i * phi * total) % total);
+        
+        result.push(allPoints[index]);
+    }
+    return result;
+}
+
+// ★ 新增：產生大腦專屬模糊材質的函式 ★
+// blur: 0 (銳利) ~ 1 (柔和)
+function createBrainTexture(blur = 0.5) {
+    const size = 64;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    const center = size / 2;
+    
+    const gradient = ctx.createRadialGradient(center, center, 0, center, center, center);
+    
+    // 根據 blur 計算核心大小
+    // blur=0 -> core=0.5 (全實心)
+    // blur=1 -> core=0.0 (全漸層)
+    const coreSize = Math.max(0, 0.5 * (1 - blur));
+    
+    gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+    gradient.addColorStop(coreSize, "rgba(255, 255, 255, 1)"); // 實心核心
+    gradient.addColorStop(1, "rgba(255, 255, 255, 0)");       // 邊緣淡出
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, size, size);
+    
+    return new THREE.CanvasTexture(canvas);
+}
+
+// 載入單張圖片並採樣的輔助函式
+function sampleImage(url, maxCount, scatterRange, zOffset) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.crossOrigin = "Anonymous";
+
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const width = img.width;
+            const height = img.height;
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const imgData = ctx.getImageData(0, 0, width, height).data;
+            const points = [];
+
+            // ★ 修正：step = 1，確保讀取每一個像素，不跳過任何細節
+            const step = 1;
+
+            for (let y = 0; y < height; y += step) {
+                for (let x = 0; x < width; x += step) {
+                    const index = (y * width + x) * 4;
+                    const a = imgData[index + 3];
+
+                    // 只取非透明像素
+                    if (a > 10) {
+                        points.push({
+                            targetX: (x - width / 2),
+                            targetY: -(y - height / 2),
+                            targetZ: zOffset, // 層次深度
+                            initialX: (Math.random() - 0.5) * scatterRange,
+                            initialY: (Math.random() - 0.5) * scatterRange,
+                            initialZ: (Math.random() - 0.5) * 800
+                        });
+                    }
+                }
+            }
+
+            // ★★★ 絕對禁止 shuffleArray！改用黃金比例確定性取樣 ★★★
+            const finalPoints = getDeterministicSamples(points, maxCount);
+
+            resolve(finalPoints);
+        };
+
+        img.onerror = () => reject(`Failed to load ${url}`);
+    });
+}
+
+// 主初始化函式
+async function initThreeLayerBrain() {
+    console.log("🧠 開始初始化三層大腦粒子 (Golden Ratio Sampling & Custom Blur)...");
+
+    try {
+        // 並行載入三張圖片
+        const [data1, data2, data3] = await Promise.all([
+            sampleImage('./asset/img/brain01.png', config.brainLayer1.count, config.brainLayer1.scatterRange, config.brainLayer1.zOffset),
+            sampleImage('./asset/img/brain02.png', config.brainLayer2.count, config.brainLayer2.scatterRange, config.brainLayer2.zOffset),
+            sampleImage('./asset/img/brain03.png', config.brainLayer3.count, config.brainLayer3.scatterRange, config.brainLayer3.zOffset)
+        ]);
+
+        brainData1 = data1;
+        brainData2 = data2;
+        brainData3 = data3;
+
+        // 建立粒子系統
+        createBrainSystem1();
+        createBrainSystem2();
+        createBrainSystem3();
+
+        // 啟動 ScrollTriggers
+        initBrainScrollTriggers();
+
+        console.log(`✅ 大腦粒子載入完成: L1(${data1.length}), L2(${data2.length}), L3(${data3.length})`);
+
+    } catch (err) {
+        console.error("❌ 大腦圖片載入失敗:", err);
+    }
+}
+
+// 建立 Layer 1 (Base - Navy Blue)
+function createBrainSystem1() {
+    if (!brainData1.length) return;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(brainData1.length * 3);
+
+    for (let i = 0; i < brainData1.length; i++) {
+        const p = brainData1[i];
+        positions[i * 3] = p.initialX;
+        positions[i * 3 + 1] = p.initialY;
+        positions[i * 3 + 2] = p.initialZ;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    // ★ 使用自定義模糊材質
+    const texture = createBrainTexture(config.brainLayer1.blur);
+    const material = new THREE.PointsMaterial({
+        size: config.brainLayer1.size,
+        color: new THREE.Color(config.brainLayer1.color),
+        map: texture,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+        opacity: 0, // 初始隱藏
+        depthWrite: false
+    });
+
+    brainSystem1 = new THREE.Points(geometry, material);
+    scene.add(brainSystem1);
+}
+
+// 建立 Layer 2 (Network - Blue)
+function createBrainSystem2() {
+    if (!brainData2.length) return;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(brainData2.length * 3);
+
+    for (let i = 0; i < brainData2.length; i++) {
+        const p = brainData2[i];
+        positions[i * 3] = p.initialX;
+        positions[i * 3 + 1] = p.initialY;
+        positions[i * 3 + 2] = p.initialZ;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    // ★ 使用自定義模糊材質
+    const texture = createBrainTexture(config.brainLayer2.blur);
+    const material = new THREE.PointsMaterial({
+        size: config.brainLayer2.size,
+        color: new THREE.Color(config.brainLayer2.color),
+        map: texture,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false
+    });
+
+    brainSystem2 = new THREE.Points(geometry, material);
+    scene.add(brainSystem2);
+}
+
+// 建立 Layer 3 (Highlight - Cyan + Flashing)
+function createBrainSystem3() {
+    if (!brainData3.length) return;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(brainData3.length * 3);
+    const randomness = new Float32Array(brainData3.length); // 閃爍用
+
+    for (let i = 0; i < brainData3.length; i++) {
+        const p = brainData3[i];
+        positions[i * 3] = p.initialX;
+        positions[i * 3 + 1] = p.initialY;
+        positions[i * 3 + 2] = p.initialZ;
+        randomness[i] = Math.random();
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 1));
+
+    // ★ 使用自定義模糊材質
+    const texture = createBrainTexture(config.brainLayer3.blur);
+    const material = new THREE.ShaderMaterial({
+        uniforms: {
+            uTime: { value: 0 },
+            uColor: { value: new THREE.Color(config.brainLayer3.color) },
+            uTexture: { value: texture },
+            uOpacity: { value: 0 },
+            uFlashSpeed: { value: config.brainLayer3.flashSpeed },
+            uSize: { value: config.brainLayer3.size }
+        },
+        vertexShader: `
+            attribute float aRandomness;
+            varying float vRandom;
+            uniform float uSize;
+            void main() {
+                vRandom = aRandomness;
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                gl_Position = projectionMatrix * mvPosition;
+                gl_PointSize = uSize * (1.0 / -mvPosition.z) * 500.0; // 基礎大小校正
+            }
+        `,
+        fragmentShader: `
+            uniform sampler2D uTexture;
+            uniform vec3 uColor;
+            uniform float uOpacity;
+            uniform float uTime;
+            uniform float uFlashSpeed;
+            varying float vRandom;
+            void main() {
+                vec4 tex = texture2D(uTexture, gl_PointCoord);
+                if(tex.a < 0.1) discard;
+                
+                // 閃爍邏輯 (Sin wave based on time + random offset)
+                float flash = (sin(uTime * uFlashSpeed + vRandom * 10.0) + 1.0) * 0.5;
+                flash = 0.5 + flash * 0.5; // 限制最低亮度，避免全黑
+                
+                gl_FragColor = vec4(uColor, tex.a * uOpacity * flash);
+            }
+        `,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+
+    brainSystem3 = new THREE.Points(geometry, material);
+    scene.add(brainSystem3);
+}
+
+// 更新大腦粒子位置 (Lerp & 絕對靜止)
+function updateBrainParticles() {
+    // Layer 1
+    if (runBrainLayer1 && brainSystem1) {
+        const pos = brainSystem1.geometry.attributes.position.array;
+        for (let i = 0; i < brainData1.length; i++) {
+            const i3 = i * 3;
+            const p = brainData1[i];
+            // 完全依照 ScrollTrigger 的 ratio 進行插值，無任何 Random 或 Noise
+            pos[i3] = p.initialX + (p.targetX - p.initialX) * brainRatio1;
+            pos[i3 + 1] = p.initialY + (p.targetY - p.initialY) * brainRatio1;
+            pos[i3 + 2] = p.initialZ + (p.targetZ - p.initialZ) * brainRatio1;
+        }
+        brainSystem1.geometry.attributes.position.needsUpdate = true;
+    }
+
+    // Layer 2
+    if (runBrainLayer2 && brainSystem2) {
+        const pos = brainSystem2.geometry.attributes.position.array;
+        for (let i = 0; i < brainData2.length; i++) {
+            const i3 = i * 3;
+            const p = brainData2[i];
+            pos[i3] = p.initialX + (p.targetX - p.initialX) * brainRatio2;
+            pos[i3 + 1] = p.initialY + (p.targetY - p.initialY) * brainRatio2;
+            pos[i3 + 2] = p.initialZ + (p.targetZ - p.initialZ) * brainRatio2;
+        }
+        brainSystem2.geometry.attributes.position.needsUpdate = true;
+    }
+
+    // Layer 3 (位置更新 + 閃爍Time更新)
+    if (runBrainLayer3 && brainSystem3) {
+        const pos = brainSystem3.geometry.attributes.position.array;
+        for (let i = 0; i < brainData3.length; i++) {
+            const i3 = i * 3;
+            const p = brainData3[i];
+            pos[i3] = p.initialX + (p.targetX - p.initialX) * brainRatio3;
+            pos[i3 + 1] = p.initialY + (p.targetY - p.initialY) * brainRatio3;
+            pos[i3 + 2] = p.initialZ + (p.targetZ - p.initialZ) * brainRatio3;
+        }
+        brainSystem3.geometry.attributes.position.needsUpdate = true;
+        // 更新閃爍時間
+        brainSystem3.material.uniforms.uTime.value = time;
+    }
+}
+
+function initBrainScrollTriggers() {
+    const triggerEl = ".portfolio-spacer-1";
+
+    // Layer 1: Start 100px, End -340px
+    ScrollTrigger.create({
+        trigger: triggerEl,
+        start: "top -80px",
+        end: "top -340px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            brainRatio1 = self.progress;
+            if (brainSystem1) brainSystem1.material.opacity = self.progress * config.brainLayer1.opacity;
+        },
+        onEnter: () => {
+            runBrainLayer1 = true;
+        },
+        onLeaveBack: () => {
+            runBrainLayer1 = false;
+            if (brainSystem1) brainSystem1.material.opacity = 0;
+        }
+    });
+
+    // Layer 2: Start -150px, End -740px
+    ScrollTrigger.create({
+        trigger: triggerEl,
+        start: "top -200px",
+        end: "top -340px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            brainRatio2 = self.progress;
+            if (brainSystem2) brainSystem2.material.opacity = self.progress * config.brainLayer2.opacity;
+        },
+        onEnter: () => {
+            runBrainLayer2 = true;
+        },
+        onLeaveBack: () => {
+            runBrainLayer2 = false;
+            if (brainSystem2) brainSystem2.material.opacity = 0;
+        }
+    });
+
+    // Layer 3: Start -350px, End -940px
+    ScrollTrigger.create({
+        trigger: triggerEl,
+        start: "top -300px",
+        end: "top -340px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            brainRatio3 = self.progress;
+            if (brainSystem3) brainSystem3.material.uniforms.uOpacity.value = self.progress * config.brainLayer3.opacity;
+        },
+        onEnter: () => {
+            runBrainLayer3 = true;
+        },
+        onLeaveBack: () => {
+            runBrainLayer3 = false;
+            if (brainSystem3) brainSystem3.material.uniforms.uOpacity.value = 0;
+        }
+    });
+}
+
+
+// ==========================================
 // 9. 動畫渲染迴圈
 // ==========================================
 
@@ -1489,11 +1903,15 @@ function animate() {
 
     // 舊粒子
     if (runFirst) updateFirstParticlePhysics();
-    // ★ 安全檢查
     if (runSecond && secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uTime.value = time;
     if (runThird && thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uTime.value = time;
     if (runFourth && fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uTime.value = time;
     if (runFifth && fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uTime.value = time;
+
+    // ★ 更新大腦粒子 (僅在開啟時更新)
+    if (runBrainLayer1 || runBrainLayer2 || runBrainLayer3) {
+        updateBrainParticles();
+    }
 
     // ★ 更新光束 (6組獨立更新) - 僅在 runBeams = true 時更新
     if (runBeams) {
