@@ -241,8 +241,8 @@ function initBrainScrollTriggers() {
     // Layer 1 Control (Base)
     ScrollTrigger.create({
         trigger: triggerEl,
-        start: "top -320px",
-        end: "top -440px",
+        start: "top -620px",
+        end: "top -840px",
         scrub: 0.1,
         onUpdate: (self) => {
             brainRatio1 = self.progress;
@@ -265,7 +265,7 @@ function initBrainScrollTriggers() {
     ScrollTrigger.create({
         trigger: triggerEl,
         start: "top 100px",
-        end: "top -300px",
+        end: "top -330px",
         scrub: 0.1,
         onUpdate: (self) => {
             brainRatio2 = self.progress;
@@ -287,8 +287,8 @@ function initBrainScrollTriggers() {
     // Layer 3 Control (Highlight)
     ScrollTrigger.create({
         trigger: triggerEl,
-        start: "top -400px",
-        end: "top -480px",
+        start: "top -500px",
+        end: "top -780px",
         scrub: 0.1,
         onUpdate: (self) => {
             brainRatio3 = self.progress;
