@@ -4,10 +4,8 @@
 // 0. 核心庫註冊與虛擬捲軸 (Lenis) 設定
 // ==========================================
 
-// 註冊 GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// ★ 初始化 Lenis 虛擬捲軸
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -19,15 +17,12 @@ const lenis = new Lenis({
     touchMultiplier: 2,
 });
 
-// 將 Lenis 的滾動事件同步給 GSAP ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
 
-// 將 Lenis 的更新掛載到 GSAP 的計時器上
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
 });
 
-// 關閉 GSAP 的落後平滑化，避免衝突
 gsap.ticker.lagSmoothing(0);
 
 
@@ -35,24 +30,28 @@ gsap.ticker.lagSmoothing(0);
 // 1. 全域變數宣告
 // ==========================================
 
-// --- System A: 舊背景粒子 (不動) ---
+// --- System A: 舊背景粒子 ---
 let scene;
 let camera;
 let renderer;
 let container = document.getElementById("canvas-container");
 
-let firstParticleSystem, secondParticleSystem, secondParticleMaterial;
-let thirdParticleSystem, thirdParticleMaterial;
-let fourthParticleSystem, fourthParticleMaterial;
-let fifthParticleSystem, fifthParticleMaterial;
+let firstParticleSystem;
+let secondParticleSystem;
+let secondParticleMaterial;
+let thirdParticleSystem;
+let thirdParticleMaterial;
+let fourthParticleSystem;
+let fourthParticleMaterial;
+let fifthParticleSystem;
+let fifthParticleMaterial;
 
-// --- System B: 光束粒子 (6組獨立) ---
+// --- System B: 光束粒子 ---
 let sceneLight;
 let cameraLight;
 let rendererLight;
 let containerLight = document.getElementById("canvas-container-light");
 
-// 6 個獨立的光束粒子系統
 let beam1System;
 let beam2System;
 let beam3System;
@@ -60,12 +59,16 @@ let beam4System;
 let beam5System;
 let beam6System;
 
-// 路徑查表 (Look-Up Tables)
+// ★ 新增：大腦光粒7
+let brainBeam7System;
+let runBrainBeam7 = false;
+
+// 路徑查表
 let leftPathLUT = [];
 let rightPathLUT = [];
 let pathHeight = 0;
 
-// 視窗邊界計算
+// 視窗邊界
 let lightBounds = {
     top: 0,
     bottom: 0,
@@ -73,21 +76,19 @@ let lightBounds = {
     pixelScale: 1
 };
 
-// --- System C: 大腦粒子 (Brain Particle Multi-Layer) ---
-// ★ 新增：三層大腦粒子系統
-let brainSystem1, brainSystem2, brainSystem3;
+// --- System C: 大腦粒子 ---
+let brainSystem1;
+let brainSystem2;
+let brainSystem3;
 
-// 儲存粒子數據
 let brainData1 = [];
 let brainData2 = [];
 let brainData3 = [];
 
-// 控制每一層的聚合進度 (0 = 散開, 1 = 完美圖像)
 let brainRatio1 = 0;
 let brainRatio2 = 0;
 let brainRatio3 = 0;
 
-// 全域開關
 let runBrainLayer1 = false;
 let runBrainLayer2 = false;
 let runBrainLayer3 = false;
@@ -95,17 +96,13 @@ let runBrainLayer3 = false;
 // --- 共用變數 ---
 let time = 0;
 
-// 舊粒子開關
 let runFirst = true;
 let runSecond = false;
 let runThird = false;
 let runFourth = false;
 let runFifth = false;
-
-// 光束總開關
 let runBeams = false;
 
-// ★ 光束散開比例 (0.0 = 綁定, 1.0 = 完全散開)
 let beamScatterRatio = 0.0;
 
 let firstParticleData = [];
@@ -117,11 +114,10 @@ let mousePath = [];
 
 
 // ==========================================
-// 2. 參數設定 (Config)
+// 2. 參數設定 (Config - 嚴格斷行)
 // ==========================================
 
 const config = {
-    // 舊背景粒子
     firstParticle: {
         count: 60000,
         color: 0x008cff,
@@ -139,38 +135,35 @@ const config = {
         rippleSpeed: 1.7,
         rippleFrequency: 0.026,
     },
-    // ★ 大腦粒子三層設定 (Yuri Artiukh 技術 - 絕對精細)
-    // 在此調整 blur 數值來控制模糊程度 (0.0 ~ 1.0)
     brainLayer1: {
-        count: 6000,
-        color: "#008cff", // 顏色 (Network)
-        size: 7.5,
+        count: 8000,
+        color: "#008cff",
+        size: 5.5,
         glow: 0,
-        blur: 1,        // ★ 模糊程度
+        blur: 1,
         opacity: 1,
-        zOffset: 0,      // 疊加層次 Z=15
+        zOffset: 0,
         scatterRange: 2500
     },
     brainLayer2: {
-        count: 700,     // 數量
-        color: "#005aa4", // 顏色 (Base)
-        size: 40.0,        // 大小
-        glow: 0,        // 光暈強度
-        blur: .3,        // ★ 模糊程度 (0=銳利, 1=極柔和)
-        opacity: 0.6,     // 不透明度
-        zOffset: 0,       // 疊加層次 Z=0
+        count: 700,
+        color: "#005aa4",
+        size: 40.5,
+        glow: 0,
+        blur: .3,
+        opacity: 0.6,
+        zOffset: 0,
         scatterRange: 2000
     },
-    
     brainLayer3: {
         count: 2000,
-        color: "#008c9b", // 顏色 (Highlight)
+        color: "#008c9b",
         size: 8.0,
         glow: 0,
-        blur: 0,        // ★ 模糊程度 (高光層通常較模糊發光)
-        flashSpeed: 6.0,  // 閃爍頻率
+        blur: 0,
+        flashSpeed: 7.0,
         opacity: .9,
-        zOffset: 10,      // 最上層 Z=30
+        zOffset: 1,
         scatterRange: 3000
     },
     secondParticle: {
@@ -209,19 +202,96 @@ const config = {
     },
 };
 
-// ★ 光束粒子控制台
 const configBeam = {
     cameraZ: 1000,
     floorOffset: 80,
     fadeRange: 300,
     pathRight: "M0.5 0.0078125C1.65413 61.898 17 410.008 17 431.008C17 452.008 14.8664 499.521 17 519.008C24.5 587.508 95.7826 581.99 149.5 587.508C500 623.508 397 758.008 164.5 774.508C119.235 777.72 50.5 807.508 50.5 864.008C50.5 904.408 50.5 912.841 50.5 923.508",
     pathLeft: "M119.986 0.0078125C119.155 44.5477 109.781 413.008 109.781 443.508C109.781 460.008 103.486 546.947 103.486 558.508C103.486 587.508 95.0459 613.147 59.7812 622.508C-21.2188 644.008 -14.9053 740.008 52.5947 763.008C82.7812 773.294 88.7812 783.008 88.7812 842.008C88.7812 882.408 88.7812 913.841 88.7812 924.508",
-    beam1: { count: 110, color: "#7df2ff", size: 10.0, speed: 0.9, thickness: 10.0, noise: 3.0, opacity: 0.8, spread: 360, blur: 0.8, rotationSpeed: 1 },
-    beam2: { count: 0, color: "#008cff", size: 12.0, speed: 1.0, thickness: 30.0, noise: 10.0, opacity: 0.7, spread: 0, blur: 0.5, rotationSpeed: -0.5 },
-    beam3: { count: 1900, color: "#008cff", size: 8.0, speed: 0.6, thickness: 25.0, noise: 0.0, opacity: 0.8, spread: 600, blur: 0.6, rotationSpeed: 0.0 },
-    beam4: { count: 4000, color: "#008cff", size: 8.0, speed: 1.2, thickness: 25.0, noise: 0.0, opacity: 0.9, spread: 800, blur: 1, rotationSpeed: 0.0 },
-    beam5: { count: 1900, color: "#004aea", size: 9.4, speed: 0.9, thickness: 90.0, noise: 0.0, opacity: 0.6, spread: 1800, blur: .4, rotationSpeed: 0.0 },
-    beam6: { count: 100, color: "#379ef3", size: 14.0, speed: 0.01, thickness: 835.0, noise: 75.0, opacity: 0.6, spread: 1520, blur: 0.9, rotationSpeed: 0.0 },
+    beam1: {
+        count: 110,
+        color: "#7df2ff",
+        size: 10.0,
+        speed: 0.9,
+        thickness: 10.0,
+        noise: 3.0,
+        opacity: 0.8,
+        spread: 360,
+        blur: 0.8,
+        rotationSpeed: 1
+    },
+    beam2: {
+        count: 0,
+        color: "#008cff",
+        size: 12.0,
+        speed: 1.0,
+        thickness: 30.0,
+        noise: 10.0,
+        opacity: 0.7,
+        spread: 0,
+        blur: 0.5,
+        rotationSpeed: -0.5
+    },
+    beam3: {
+        count: 1900,
+        color: "#008cff",
+        size: 8.0,
+        speed: 0.6,
+        thickness: 25.0,
+        noise: 0.0,
+        opacity: 0.8,
+        spread: 600,
+        blur: 0.6,
+        rotationSpeed: 0.0
+    },
+    beam4: {
+        count: 4000,
+        color: "#008cff",
+        size: 8.0,
+        speed: 1.2,
+        thickness: 25.0,
+        noise: 0.0,
+        opacity: 0.9,
+        spread: 800,
+        blur: 1,
+        rotationSpeed: 0.0
+    },
+    beam5: {
+        count: 1900,
+        color: "#004aea",
+        size: 9.4,
+        speed: 0.9,
+        thickness: 90.0,
+        noise: 0.0,
+        opacity: 0.6,
+        spread: 1800,
+        blur: .4,
+        rotationSpeed: 0.0
+    },
+    beam6: {
+        count: 100,
+        color: "#379ef3",
+        size: 14.0,
+        speed: 0.01,
+        thickness: 835.0,
+        noise: 75.0,
+        opacity: 0.6,
+        spread: 1520,
+        blur: 0.9,
+        rotationSpeed: 0.0
+    },
+    brainBeam7: {
+        count: 2000,
+        color: "#10acb7",
+        size: 10.0,
+        speed: .01,
+        thickness: 200,
+        noise: 105.0,
+        opacity: 0.9,
+        spread: 0,
+        blur: 0.8,
+        rotationSpeed: 0.0
+    },
 };
 
 
@@ -244,24 +314,23 @@ try {
     initFourthParticle();
     initFifthParticle();
 
-    // ★ 關鍵：初始化三層大腦粒子
-    initThreeLayerBrain();
-
-    // 新光束粒子
-    initBeamSystem();
-
-    // 特效
+    // 特效 (先初始化，確保不遺失)
     initTunnelEffects();
     initAboutEffects();
     initTextEffects();
     initCompetenciesEffects();
 
-    // 初始化觸發器
+    // 新光束粒子 (含大腦光粒7)
+    initBeamSystem();
     initBeamScrollTriggers();
 
+    // ★ 關鍵：初始化三層大腦粒子
+    initThreeLayerBrain();
+
+    // 啟動動畫迴圈
     animate();
 
-    console.log("✅ V50 啟動：Yuri Artiukh 三層疊加 | 視窗 1920px 優化版");
+    console.log("✅ V62 啟動：完整修復版 | 嚴格斷行");
 
 } catch (e) {
     console.error("❌ 錯誤:", e);
@@ -269,13 +338,268 @@ try {
 
 
 // ==========================================
-// 4. 場景初始化函數 (標準部分)
+// 4. 動畫與特效函式 (移至上方以防截斷)
+// ==========================================
+
+function animate() {
+    requestAnimationFrame(animate);
+    time += 0.015;
+
+    // 舊粒子
+    if (runFirst) updateFirstParticlePhysics();
+    if (runSecond && secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uTime.value = time;
+    if (runThird && thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uTime.value = time;
+    if (runFourth && fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uTime.value = time;
+    if (runFifth && fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uTime.value = time;
+
+    // ★ 更新大腦粒子
+    if (runBrainLayer1 || runBrainLayer2 || runBrainLayer3) {
+        updateBrainParticles();
+    }
+
+    // ★ 更新光束 (6組獨立更新)
+    if (runBeams) {
+        if (beam1System) updateBeam(beam1System);
+        if (beam2System) updateBeam(beam2System);
+        if (beam3System) updateBeam(beam3System);
+        if (beam4System) updateBeam(beam4System);
+        if (beam5System) updateBeam(beam5System);
+        if (beam6System) updateBeam(beam6System);
+        if (brainBeam7System) updateBeam(brainBeam7System);
+    }
+
+    renderer.render(scene, camera);
+    rendererLight.render(sceneLight, cameraLight);
+}
+
+function initTunnelEffects() {
+    const walls = [
+        { el: ".wall-1", start: 700, out: 1400, end: 1500, x: 60, y: 10 },
+        { el: ".wall-2", start: 700, out: 1600, end: 1700, x: -60, y: 20 },
+        { el: ".wall-3", start: 700, out: 1800, end: 1900, x: 40, y: -20 },
+        { el: ".wall-4", start: 720, out: 2000, end: 2100, x: -20, y: -50 },
+        { el: ".wall-5", start: 720, out: 2000, end: 2150, x: 10, y: 50 },
+    ];
+
+    walls.forEach((w) => {
+        const element = document.querySelector(w.el);
+        if (!element) return;
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "body",
+                start: `${w.start}px top`,
+                end: `${w.end}px top`,
+                scrub: 0.5,
+            },
+        });
+        tl.to(element, {
+            scale: 1,
+            opacity: 1,
+            x: `${w.x * 0.3}vw`,
+            y: `${w.y * 0.3}vh`,
+            duration: w.out - w.start,
+            ease: "power1.in",
+        }).to(element, {
+            scale: 3,
+            opacity: 0,
+            x: `${w.x}vw`,
+            y: `${w.y}vh`,
+            duration: w.end - w.out,
+            ease: "power1.in",
+        });
+    });
+}
+
+function initAboutEffects() {
+    const outerWrapper = document.querySelector(".about-wrapper-outer");
+    const innerContent = document.querySelector(".about-content-inner");
+    if (!outerWrapper || !innerContent) return;
+
+    gsap.set(innerContent, {
+        scale: 0.1,
+        opacity: 0
+    });
+
+    let tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: outerWrapper,
+            start: "top top",
+            end: "+=1200",
+            pin: true,
+            scrub: 0.5,
+            anticipatePin: 1,
+        },
+    });
+    tl.to(innerContent, {
+        scale: 1,
+        opacity: 1,
+        ease: "power2.out"
+    });
+}
+
+function initTextEffects() {
+    const heroContainer = document.querySelector(".hero-container");
+    const heroSection = document.querySelector(".hero-section");
+
+    if (heroContainer) {
+        gsap.set(heroContainer, {
+            transformOrigin: "center center"
+        });
+        gsap.to(heroContainer, {
+            scale: 50,
+            opacity: 0,
+            ease: "power2.in",
+            scrollTrigger: {
+                trigger: "body",
+                start: "680px top",
+                end: "2400px top",
+                scrub: 0.1,
+            },
+        });
+    }
+
+    if (heroSection) {
+        gsap.to(heroSection, {
+            autoAlpha: 0,
+            scrollTrigger: {
+                trigger: "body",
+                start: "1000px top",
+                toggleActions: "play none none reverse",
+            },
+        });
+    }
+}
+
+function initCompetenciesEffects() {
+    const aboutWrapper = document.querySelector(".about-wrapper-outer");
+    const spacer1 = document.querySelector(".competencies-spacer-1");
+    const background2 = document.querySelector(".background-layer-2");
+
+    if (!aboutWrapper || !spacer1) return;
+    if (!fourthParticleMaterial || !fifthParticleMaterial) return;
+
+    ScrollTrigger.create({
+        trigger: aboutWrapper,
+        start: "top -25%",
+        end: "top -145%",
+        scrub: 0.1,
+        onEnter: () => {
+            runFourth = true;
+            runFifth = true;
+            if (fourthParticleMaterial) fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
+            if (fifthParticleMaterial) fifthParticleMaterial.uniforms.uOpacity.value = 1.0;
+        },
+        onUpdate: (self) => {
+            const p = self.progress;
+
+            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
+                let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
+                fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+                if (ratio < 0.375) {
+                    fourthParticleMaterial.uniforms.uSpeed.value = config.fourthParticle.speed;
+                } else {
+                    let speedProgress = (ratio - 0.375) / (1.0 - 0.375);
+                    let newSpeed = config.fourthParticle.speed + speedProgress * (config.fourthParticle.maxSpeed - config.fourthParticle.speed);
+                    fourthParticleMaterial.uniforms.uSpeed.value = newSpeed;
+                }
+            }
+
+            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) {
+                let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
+                fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+                if (ratio < 0.2) {
+                    fifthParticleMaterial.uniforms.uSpeed.value = config.fifthParticle.speed;
+                } else {
+                    let speedProgress = (ratio - 0.2) / (1.0 - 0.2);
+                    let newSpeed = config.fifthParticle.speed + speedProgress * (config.fifthParticle.maxSpeed - config.fifthParticle.speed);
+                    fifthParticleMaterial.uniforms.uSpeed.value = newSpeed;
+                }
+            }
+
+            let fadeOut = 1.0 - p;
+            if (secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uOpacity.value = fadeOut;
+            if (thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uOpacity.value = fadeOut;
+        },
+        onLeave: () => {
+            runSecond = false;
+            runThird = false;
+            if (secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uOpacity.value = 0;
+            if (thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uOpacity.value = 0;
+        },
+        onEnterBack: () => {
+            runSecond = true;
+            runThird = true;
+        },
+        onLeaveBack: () => {
+            runFourth = false;
+            runFifth = false;
+            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
+                fourthParticleMaterial.uniforms.uVisibleRatio.value = 0;
+                fourthParticleMaterial.uniforms.uBendFactor.value = 0;
+                fourthParticleMaterial.uniforms.uOpacity.value = 0.0;
+            }
+            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) {
+                fifthParticleMaterial.uniforms.uVisibleRatio.value = 0;
+                fifthParticleMaterial.uniforms.uBendFactor.value = 0;
+                fifthParticleMaterial.uniforms.uOpacity.value = 0.0;
+            }
+        },
+    });
+
+    ScrollTrigger.create({
+        trigger: spacer1,
+        start: "top -80px",
+        end: "top -680px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            const ratio = 1.0 - self.progress;
+            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
+            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
+            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uOpacity.value = 1.0;
+        },
+    });
+
+    ScrollTrigger.create({
+        trigger: spacer1,
+        start: "top 97%",
+        end: "top -120px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            const p = self.progress;
+            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uBendFactor.value = p;
+            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uBendFactor.value = p;
+        },
+        onLeaveBack: () => {
+            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uBendFactor.value = 0;
+            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uBendFactor.value = 0;
+        },
+    });
+
+    if (background2) {
+        gsap.to(background2, {
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: spacer1,
+                start: "top 370",
+                end: "top -400px",
+                scrub: 0.1,
+            },
+        });
+    }
+}
+
+
+// ==========================================
+// 5. 場景初始化函數
 // ==========================================
 
 function initSceneOld() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
     camera.position.z = 750;
+    
     renderer = new THREE.WebGLRenderer({
         antialias: false,
         alpha: true
@@ -295,6 +619,9 @@ function initSceneOld() {
     for (let i = 0; i < config.firstParticle.pathLength; i++) {
         mousePath.push(new THREE.Vector3(0, 0, 0));
     }
+
+    // ★ 初始化後立即執行 RWD 計算
+    updateBrainCamera();
 }
 
 function initSceneLight() {
@@ -341,36 +668,36 @@ function onWindowResize() {
     updateLightLayout();
     ScrollTrigger.refresh();
 
-    // ★ 大腦粒子 RWD 鏡頭控制 (高階標準作法 - 1920px 優化)
     updateBrainCamera();
 }
 
 function updateBrainCamera() {
+    if (!camera) return;
+
     const w = window.innerWidth;
-    
-    // ★ 修改：將基準寬度設定為 1920，並增加基礎距離 (800)
-    // 這會讓相機在 1920px 時保持較遠的距離 (Z=800)，使大腦看起來較小
     const baseWidth = 1920; 
     const baseZ = 800; 
 
+    let effectiveWidth = w;
+
     if (w < 768) {
-        // 768px 以下：鎖定相機距離，避免過度縮小或穿幫
-        // 使用一個適合手機的固定值 (約 1200)
         camera.position.z = 1200;
-    } else {
-        // 桌機版：依據 1920px 進行等比縮放
-        // 當 w = 1920 時，ratio = 1，z = 800 (舒適距離)
-        // 當 w = 1200 時，ratio = 1.6，z = 1280 (拉遠以容納畫面)
-        const ratio = baseWidth / w;
-        camera.position.z = Math.min(2500, baseZ * ratio);
+        return;
+    } else if (w >= 768 && w <= 1440) {
+        effectiveWidth = 1440;
+    } else if (w > 1660 && w <= 1920) {
+        effectiveWidth = 1660;
     }
+
+    const ratio = baseWidth / effectiveWidth;
+    camera.position.z = Math.min(2500, baseZ * ratio);
 }
 
 window.addEventListener("resize", onWindowResize, false);
 
 
 // ==========================================
-// 5. 光束系統與輔助函式
+// 6. 光束系統與輔助函式
 // ==========================================
 
 function parsePathToLUT(dString, steps = 1000) {
@@ -525,6 +852,13 @@ function initBeamSystem() {
 
     beam6System = createBeamSystem(configBeam.beam6, "right");
     sceneLight.add(beam6System);
+
+    // ★ 新增：初始化大腦光粒7
+    brainBeam7System = createBeamSystem(configBeam.brainBeam7, "right");
+    // 預設關閉
+    brainBeam7System.userData.densityRatio = 0;
+    brainBeam7System.material.opacity = 0;
+    sceneLight.add(brainBeam7System);
 }
 
 function updateBeam(system) {
@@ -626,11 +960,6 @@ function updateBeam(system) {
     system.geometry.attributes.position.needsUpdate = true;
 }
 
-
-// ==========================================
-// 6. 光束的 ScrollTriggers
-// ==========================================
-
 function initBeamScrollTriggers() {
     ScrollTrigger.create({
         trigger: ".competencies-spacer-1",
@@ -650,18 +979,36 @@ function initBeamScrollTriggers() {
         end: "top 100px",
         scrub: 0.1,
         onUpdate: (self) => {
-            beamScatterRatio = self.progress;
+            const p = self.progress;
+            beamScatterRatio = p;
+
+            if (brainBeam7System) {
+                brainBeam7System.userData.densityRatio = p;
+                brainBeam7System.material.opacity = p * (brainBeam7System.userData.config.opacity || 1);
+            }
+        },
+        onEnter: () => {
+            runBrainBeam7 = true;
+        },
+        onLeaveBack: () => {
+            runBrainBeam7 = false;
+            if (brainBeam7System) {
+                brainBeam7System.userData.densityRatio = 0;
+                brainBeam7System.material.opacity = 0;
+            }
         }
     });
 
     ScrollTrigger.create({
         trigger: ".portfolio-spacer-1",
-        start: "top 80px",
-        end: "top -280px",
+        start: "top -20px",
+        end: "top -320px",
         scrub: 0.1,
         onUpdate: (self) => {
             const opacity = 1.0 - self.progress;
-            const fadingBeams = [beam1System, beam3System, beam5System];
+            
+            // ★ 修改：光粒6 (beam6System) 加入死亡名單
+            const fadingBeams = [beam1System, beam3System, beam5System, beam6System];
             fadingBeams.forEach(sys => {
                 if(sys) {
                     sys.material.opacity = opacity * (sys.userData.config.opacity || 1);
@@ -669,7 +1016,7 @@ function initBeamScrollTriggers() {
                 }
             });
 
-            const unboundBeams = [beam4System, beam6System];
+            const unboundBeams = [beam4System];
             unboundBeams.forEach(sys => {
                 if(sys) {
                     sys.material.opacity = opacity * (sys.userData.config.opacity || 1);
@@ -678,6 +1025,7 @@ function initBeamScrollTriggers() {
             });
         },
         onLeave: () => {
+            // ★ 修改：光粒6 死亡
             const allTargets = [beam1System, beam3System, beam5System, beam4System, beam6System];
             allTargets.forEach(sys => {
                 if(sys) {
@@ -766,13 +1114,18 @@ function initBeamScrollTriggers() {
         scrub: 0,
         onUpdate: (self) => {
             updateSystem(beam5System, beam6System, 'flowRatio', self.progress);
+            
+            // brainBeam7 獨立流動控制
+            if(brainBeam7System) {
+                brainBeam7System.userData.flowRatio = self.progress;
+            }
         }
     });
 }
 
 
 // ==========================================
-// 7. 舊粒子系統 (First ~ Fifth)
+// 7. 舊粒子系統
 // ==========================================
 
 function initFirstParticle() {
@@ -1264,269 +1617,101 @@ function initFifthParticle() {
     scene.add(fifthParticleSystem);
 }
 
-function initCompetenciesEffects() {
-    const aboutWrapper = document.querySelector(".about-wrapper-outer");
-    const spacer1 = document.querySelector(".competencies-spacer-1");
-    const background2 = document.querySelector(".background-layer-2");
+function updateFirstParticlePhysics() {
+    if (!firstParticleSystem) return;
+    const isScrollUnbound = window.scrollY > 680;
+    let targetPoint =
+        isIdle || isScrollUnbound ? new THREE.Vector3(0, 0, 0) : mouse3DVec;
 
-    if (!aboutWrapper || !spacer1) return;
-
-    // ★ 安全檢查：如果材質尚未初始化，退出以防止報錯
-    if (!fourthParticleMaterial || !fifthParticleMaterial) return;
-
-    ScrollTrigger.create({
-        trigger: aboutWrapper,
-        start: "top -25%",
-        end: "top -145%",
-        scrub: 0.1,
-        onEnter: () => {
-            runFourth = true;
-            runFifth = true;
-            // ★ 修復：進入時，確保粒子透明度開啟
-            if (fourthParticleMaterial) fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
-            if (fifthParticleMaterial) fifthParticleMaterial.uniforms.uOpacity.value = 1.0;
-        },
-        onUpdate: (self) => {
-            const p = self.progress;
-
-            // ★ 安全檢查：確保 uniforms 存在才更新
-            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
-                let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
-                fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-
-                if (ratio < 0.375) {
-                    fourthParticleMaterial.uniforms.uSpeed.value = config.fourthParticle.speed;
-                } else {
-                    let speedProgress = (ratio - 0.375) / (1.0 - 0.375);
-                    let newSpeed = config.fourthParticle.speed + speedProgress * (config.fourthParticle.maxSpeed - config.fourthParticle.speed);
-                    fourthParticleMaterial.uniforms.uSpeed.value = newSpeed;
-                }
-            }
-
-            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) {
-                let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
-                fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-
-                if (ratio < 0.2) {
-                    fifthParticleMaterial.uniforms.uSpeed.value = config.fifthParticle.speed;
-                } else {
-                    let speedProgress = (ratio - 0.2) / (1.0 - 0.2);
-                    let newSpeed = config.fifthParticle.speed + speedProgress * (config.fifthParticle.maxSpeed - config.fifthParticle.speed);
-                    fifthParticleMaterial.uniforms.uSpeed.value = newSpeed;
-                }
-            }
-
-            let fadeOut = 1.0 - p;
-            if (secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uOpacity.value = fadeOut;
-            if (thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uOpacity.value = fadeOut;
-        },
-        onLeave: () => {
-            runSecond = false;
-            runThird = false;
-            if (secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uOpacity.value = 0;
-            if (thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uOpacity.value = 0;
-        },
-        onEnterBack: () => {
-            runSecond = true;
-            runThird = true;
-        },
-        onLeaveBack: () => {
-            runFourth = false;
-            runFifth = false;
-
-            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
-                fourthParticleMaterial.uniforms.uVisibleRatio.value = 0;
-                fourthParticleMaterial.uniforms.uBendFactor.value = 0;
-                // ★ 修復：回到上方時，強制關閉透明度
-                fourthParticleMaterial.uniforms.uOpacity.value = 0.0;
-            }
-            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) {
-                fifthParticleMaterial.uniforms.uVisibleRatio.value = 0;
-                fifthParticleMaterial.uniforms.uBendFactor.value = 0;
-                // ★ 修復：回到上方時，強制關閉透明度
-                fifthParticleMaterial.uniforms.uOpacity.value = 0.0;
-            }
-        },
-    });
-
-    ScrollTrigger.create({
-        trigger: spacer1,
-        start: "top -80px",
-        end: "top -680px",
-        scrub: 0.1,
-        onUpdate: (self) => {
-            const ratio = 1.0 - self.progress;
-            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
-            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uOpacity.value = 1.0;
-        },
-    });
-
-    ScrollTrigger.create({
-        trigger: spacer1,
-        start: "top 97%",
-        end: "top -120px",
-        scrub: 0.1,
-        onUpdate: (self) => {
-            const p = self.progress;
-            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uBendFactor.value = p;
-            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uBendFactor.value = p;
-        },
-        onLeaveBack: () => {
-            if (fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uBendFactor.value = 0;
-            if (fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uBendFactor.value = 0;
-        },
-    });
-
-    if (background2) {
-        gsap.to(background2, {
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: spacer1,
-                start: "top 370",
-                end: "top -400px",
-                scrub: 0.1,
-            },
-        });
-    }
-}
-
-function initTunnelEffects() {
-    const walls = [{
-        el: ".wall-1",
-        start: 700,
-        out: 1400,
-        end: 1500,
-        x: 60,
-        y: 10
-    }, {
-        el: ".wall-2",
-        start: 700,
-        out: 1600,
-        end: 1700,
-        x: -60,
-        y: 20
-    }, {
-        el: ".wall-3",
-        start: 700,
-        out: 1800,
-        end: 1900,
-        x: 40,
-        y: -20
-    }, {
-        el: ".wall-4",
-        start: 720,
-        out: 2000,
-        end: 2100,
-        x: -20,
-        y: -50
-    }, {
-        el: ".wall-5",
-        start: 720,
-        out: 2000,
-        end: 2150,
-        x: 10,
-        y: 50
-    }, ];
-
-    walls.forEach((w) => {
-        const element = document.querySelector(w.el);
-        if (!element) return;
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: `${w.start}px top`,
-                end: `${w.end}px top`,
-                scrub: 0.5,
-            },
-        });
-        tl.to(element, {
-            scale: 1,
-            opacity: 1,
-            x: `${w.x * 0.3}vw`,
-            y: `${w.y * 0.3}vh`,
-            duration: w.out - w.start,
-            ease: "power1.in",
-        }).to(element, {
-            scale: 3,
-            opacity: 0,
-            x: `${w.x}vw`,
-            y: `${w.y}vh`,
-            duration: w.end - w.out,
-            ease: "power1.in",
-        });
-    });
-}
-
-function initAboutEffects() {
-    const outerWrapper = document.querySelector(".about-wrapper-outer");
-    const innerContent = document.querySelector(".about-content-inner");
-    if (!outerWrapper || !innerContent) return;
-
-    gsap.set(innerContent, {
-        scale: 0.1,
-        opacity: 0
-    });
-
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: outerWrapper,
-            start: "top top",
-            end: "+=1200",
-            pin: true,
-            scrub: 0.5,
-            anticipatePin: 1,
-        },
-    });
-    tl.to(innerContent, {
-        scale: 1,
-        opacity: 1,
-        ease: "power2.out"
-    });
-}
-
-function initTextEffects() {
-    const heroContainer = document.querySelector(".hero-container");
-    const heroSection = document.querySelector(".hero-section");
-
-    if (heroContainer) {
-        gsap.set(heroContainer, {
-            transformOrigin: "center center"
-        });
-        gsap.to(heroContainer, {
-            scale: 50,
-            opacity: 0,
-            ease: "power2.in",
-            scrollTrigger: {
-                trigger: "body",
-                start: "680px top",
-                end: "2400px top",
-                scrub: 0.1,
-            },
-        });
+    if (!isScrollUnbound) {
+        mousePath.unshift(targetPoint.clone());
+        if (mousePath.length > config.firstParticle.pathLength) mousePath.pop();
     }
 
-    if (heroSection) {
-        gsap.to(heroSection, {
-            autoAlpha: 0,
-            scrollTrigger: {
-                trigger: "body",
-                start: "1000px top",
-                toggleActions: "play none none reverse",
-            },
-        });
+    const positions = firstParticleSystem.geometry.attributes.position.array;
+    const basePositions = firstParticleSystem.geometry.userData.basePositions;
+    const pConfig = config.firstParticle;
+
+    for (let i = 0; i < pConfig.count; i++) {
+        let i3 = i * 3;
+        let pData = firstParticleData[i];
+        let cx = positions[i3];
+        let cy = positions[i3 + 1];
+        let tx, ty, s;
+
+        if (isIdle || isScrollUnbound) {
+            let bx = basePositions[i3];
+            let by = basePositions[i3 + 1];
+            let dist = Math.sqrt(bx * bx + by * by);
+            let ripple = Math.sin(
+                time * pConfig.rippleSpeed - dist * pConfig.rippleFrequency
+            );
+            let scale = (dist + ripple * pConfig.rippleIntensity) / dist;
+            tx = bx * scale;
+            ty = by * scale;
+            s = pConfig.returnSpeed;
+        } else {
+            let targetIndex = Math.min(pData.pathIndex, mousePath.length - 1);
+            let pathPos = mousePath[targetIndex] || mousePath[0];
+            let ox = Math.cos(pData.angle) * pData.scatterRadius;
+            let oy = Math.sin(pData.angle) * pData.scatterRadius;
+            tx = pathPos.x + ox;
+            ty = pathPos.y + oy;
+            s = pData.speed;
+        }
+        positions[i3] += (tx - cx) * s;
+        positions[i3 + 1] += (ty - cy) * s;
+        positions[i3 + 2] = 0;
     }
+    firstParticleSystem.geometry.attributes.position.needsUpdate = true;
 }
 
+function onMouseMove(event) {
+    event.preventDefault();
+    let x = (event.clientX / window.innerWidth) * 2 - 1;
+    let y = -(event.clientY / window.innerHeight) * 2 + 1;
+    let vector = new THREE.Vector3(x, y, 0.5);
+    vector.unproject(camera);
+    let dir = vector.sub(camera.position).normalize();
+    let distance = -camera.position.z / dir.z;
+    let pos = camera.position.clone().add(dir.multiplyScalar(distance));
+    mouse3DVec.copy(pos);
+    mouse3DVec.z = 0;
+    isIdle = false;
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+        isIdle = true;
+    }, config.firstParticle.idleTimeout);
+}
+
+function createGlowingDot() {
+    const size = 64;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const context = canvas.getContext("2d");
+    const center = size / 2;
+    const gradient = context.createRadialGradient(
+        center,
+        center,
+        0,
+        center,
+        center,
+        center
+    );
+    gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+    gradient.addColorStop(0.3, "rgba(43, 152, 211, 0.5)");
+    gradient.addColorStop(1, "rgba(28, 178, 153, .03)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, size, size);
+    return new THREE.CanvasTexture(canvas);
+}
 
 // ==========================================
 // 8. ★★★ 核心新功能：Yuri Artiukh 三層疊加絕對精細大腦 ★★★
 // ==========================================
 
 // ★★★ 絕對禁止隨機洗牌！改用「黃金比例步進 (Golden Ratio Stride)」★★★
-// 這能保證粒子均勻分佈且順序完全固定，不隨機，不洗牌，且徹底消除摩爾紋。
 function getDeterministicSamples(allPoints, maxCount) {
     if (allPoints.length <= maxCount) {
         return allPoints; // 數量不夠，全部回傳，保證不亂排
@@ -1540,7 +1725,6 @@ function getDeterministicSamples(allPoints, maxCount) {
     
     for (let i = 0; i < maxCount; i++) {
         // 利用黃金比例計算確定性索引
-        // 這種方式可以產生均勻分佈的選點，完全沒有任何隨機性，也絕對不會有週期性條紋
         const index = Math.floor((i * phi * total) % total);
         
         result.push(allPoints[index]);
@@ -1549,7 +1733,6 @@ function getDeterministicSamples(allPoints, maxCount) {
 }
 
 // ★ 新增：產生大腦專屬模糊材質的函式 ★
-// blur: 0 (銳利) ~ 1 (柔和)
 function createBrainTexture(blur = 0.5) {
     const size = 64;
     const canvas = document.createElement("canvas");
@@ -1561,8 +1744,6 @@ function createBrainTexture(blur = 0.5) {
     const gradient = ctx.createRadialGradient(center, center, 0, center, center, center);
     
     // 根據 blur 計算核心大小
-    // blur=0 -> core=0.5 (全實心)
-    // blur=1 -> core=0.0 (全漸層)
     const coreSize = Math.max(0, 0.5 * (1 - blur));
     
     gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
@@ -1659,7 +1840,9 @@ async function initThreeLayerBrain() {
 
 // 建立 Layer 1 (Base - Navy Blue)
 function createBrainSystem1() {
-    if (!brainData1.length) return;
+    if (!brainData1.length) {
+        return;
+    }
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData1.length * 3);
 
@@ -1690,7 +1873,9 @@ function createBrainSystem1() {
 
 // 建立 Layer 2 (Network - Blue)
 function createBrainSystem2() {
-    if (!brainData2.length) return;
+    if (!brainData2.length) {
+        return;
+    }
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData2.length * 3);
 
@@ -1721,7 +1906,9 @@ function createBrainSystem2() {
 
 // 建立 Layer 3 (Highlight - Cyan + Flashing)
 function createBrainSystem3() {
-    if (!brainData3.length) return;
+    if (!brainData3.length) {
+        return;
+    }
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData3.length * 3);
     const randomness = new Float32Array(brainData3.length); // 閃爍用
@@ -1788,21 +1975,21 @@ function createBrainSystem3() {
 
 // 更新大腦粒子位置 (Lerp & 絕對靜止)
 function updateBrainParticles() {
-    // Layer 1
+    // Layer 1 (Base) - 取消運動，直接鎖定在 Target
     if (runBrainLayer1 && brainSystem1) {
         const pos = brainSystem1.geometry.attributes.position.array;
         for (let i = 0; i < brainData1.length; i++) {
             const i3 = i * 3;
             const p = brainData1[i];
-            // 完全依照 ScrollTrigger 的 ratio 進行插值，無任何 Random 或 Noise
-            pos[i3] = p.initialX + (p.targetX - p.initialX) * brainRatio1;
-            pos[i3 + 1] = p.initialY + (p.targetY - p.initialY) * brainRatio1;
-            pos[i3 + 2] = p.initialZ + (p.targetZ - p.initialZ) * brainRatio1;
+            // ★ 修改：不再插值，直接鎖定在目標位置
+            pos[i3]     = p.targetX;
+            pos[i3 + 1] = p.targetY;
+            pos[i3 + 2] = p.targetZ;
         }
         brainSystem1.geometry.attributes.position.needsUpdate = true;
     }
 
-    // Layer 2
+    // Layer 2 (Network) - 維持原本的插值運動
     if (runBrainLayer2 && brainSystem2) {
         const pos = brainSystem2.geometry.attributes.position.array;
         for (let i = 0; i < brainData2.length; i++) {
@@ -1815,15 +2002,16 @@ function updateBrainParticles() {
         brainSystem2.geometry.attributes.position.needsUpdate = true;
     }
 
-    // Layer 3 (位置更新 + 閃爍Time更新)
+    // Layer 3 (Highlight) - 取消運動，直接鎖定在 Target，保留閃爍
     if (runBrainLayer3 && brainSystem3) {
         const pos = brainSystem3.geometry.attributes.position.array;
         for (let i = 0; i < brainData3.length; i++) {
             const i3 = i * 3;
             const p = brainData3[i];
-            pos[i3] = p.initialX + (p.targetX - p.initialX) * brainRatio3;
-            pos[i3 + 1] = p.initialY + (p.targetY - p.initialY) * brainRatio3;
-            pos[i3 + 2] = p.initialZ + (p.targetZ - p.initialZ) * brainRatio3;
+            // ★ 修改：不再插值，直接鎖定在目標位置
+            pos[i3]     = p.targetX;
+            pos[i3 + 1] = p.targetY;
+            pos[i3 + 2] = p.targetZ;
         }
         brainSystem3.geometry.attributes.position.needsUpdate = true;
         // 更新閃爍時間
@@ -1837,182 +2025,69 @@ function initBrainScrollTriggers() {
     // Layer 1: Start 100px, End -340px
     ScrollTrigger.create({
         trigger: triggerEl,
-        start: "top -80px",
-        end: "top -340px",
+        start: "top -320px",
+        end: "top -440px",
         scrub: 0.1,
         onUpdate: (self) => {
             brainRatio1 = self.progress;
-            if (brainSystem1) brainSystem1.material.opacity = self.progress * config.brainLayer1.opacity;
+            if (brainSystem1) {
+                brainSystem1.material.opacity = self.progress * config.brainLayer1.opacity;
+            }
         },
         onEnter: () => {
             runBrainLayer1 = true;
         },
         onLeaveBack: () => {
             runBrainLayer1 = false;
-            if (brainSystem1) brainSystem1.material.opacity = 0;
+            if (brainSystem1) {
+                brainSystem1.material.opacity = 0;
+            }
         }
     });
 
     // Layer 2: Start -150px, End -740px
     ScrollTrigger.create({
         trigger: triggerEl,
-        start: "top -200px",
-        end: "top -340px",
+        start: "top 100px",
+        end: "top -300px",
         scrub: 0.1,
         onUpdate: (self) => {
             brainRatio2 = self.progress;
-            if (brainSystem2) brainSystem2.material.opacity = self.progress * config.brainLayer2.opacity;
+            if (brainSystem2) {
+                brainSystem2.material.opacity = self.progress * config.brainLayer2.opacity;
+            }
         },
         onEnter: () => {
             runBrainLayer2 = true;
         },
         onLeaveBack: () => {
             runBrainLayer2 = false;
-            if (brainSystem2) brainSystem2.material.opacity = 0;
+            if (brainSystem2) {
+                brainSystem2.material.opacity = 0;
+            }
         }
     });
 
     // Layer 3: Start -350px, End -940px
     ScrollTrigger.create({
         trigger: triggerEl,
-        start: "top -300px",
-        end: "top -340px",
+        start: "top -400px",
+        end: "top -480px",
         scrub: 0.1,
         onUpdate: (self) => {
             brainRatio3 = self.progress;
-            if (brainSystem3) brainSystem3.material.uniforms.uOpacity.value = self.progress * config.brainLayer3.opacity;
+            if (brainSystem3) {
+                brainSystem3.material.uniforms.uOpacity.value = self.progress * config.brainLayer3.opacity;
+            }
         },
         onEnter: () => {
             runBrainLayer3 = true;
         },
         onLeaveBack: () => {
             runBrainLayer3 = false;
-            if (brainSystem3) brainSystem3.material.uniforms.uOpacity.value = 0;
+            if (brainSystem3) {
+                brainSystem3.material.uniforms.uOpacity.value = 0;
+            }
         }
     });
-}
-
-
-// ==========================================
-// 9. 動畫渲染迴圈
-// ==========================================
-
-function animate() {
-    requestAnimationFrame(animate);
-    time += 0.015;
-
-    // 舊粒子
-    if (runFirst) updateFirstParticlePhysics();
-    if (runSecond && secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uTime.value = time;
-    if (runThird && thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uTime.value = time;
-    if (runFourth && fourthParticleMaterial && fourthParticleMaterial.uniforms) fourthParticleMaterial.uniforms.uTime.value = time;
-    if (runFifth && fifthParticleMaterial && fifthParticleMaterial.uniforms) fifthParticleMaterial.uniforms.uTime.value = time;
-
-    // ★ 更新大腦粒子 (僅在開啟時更新)
-    if (runBrainLayer1 || runBrainLayer2 || runBrainLayer3) {
-        updateBrainParticles();
-    }
-
-    // ★ 更新光束 (6組獨立更新) - 僅在 runBeams = true 時更新
-    if (runBeams) {
-        if (beam1System) updateBeam(beam1System);
-        if (beam2System) updateBeam(beam2System);
-        if (beam3System) updateBeam(beam3System);
-        if (beam4System) updateBeam(beam4System);
-        if (beam5System) updateBeam(beam5System);
-        if (beam6System) updateBeam(beam6System);
-    }
-
-    renderer.render(scene, camera);
-    rendererLight.render(sceneLight, cameraLight);
-}
-
-function updateFirstParticlePhysics() {
-    if (!firstParticleSystem) return;
-    const isScrollUnbound = window.scrollY > 680;
-    let targetPoint =
-        isIdle || isScrollUnbound ? new THREE.Vector3(0, 0, 0) : mouse3DVec;
-
-    if (!isScrollUnbound) {
-        mousePath.unshift(targetPoint.clone());
-        if (mousePath.length > config.firstParticle.pathLength) mousePath.pop();
-    }
-
-    const positions = firstParticleSystem.geometry.attributes.position.array;
-    const basePositions = firstParticleSystem.geometry.userData.basePositions;
-    const pConfig = config.firstParticle;
-
-    for (let i = 0; i < pConfig.count; i++) {
-        let i3 = i * 3;
-        let pData = firstParticleData[i];
-        let cx = positions[i3];
-        let cy = positions[i3 + 1];
-        let tx, ty, s;
-
-        if (isIdle || isScrollUnbound) {
-            let bx = basePositions[i3];
-            let by = basePositions[i3 + 1];
-            let dist = Math.sqrt(bx * bx + by * by);
-            let ripple = Math.sin(
-                time * pConfig.rippleSpeed - dist * pConfig.rippleFrequency
-            );
-            let scale = (dist + ripple * pConfig.rippleIntensity) / dist;
-            tx = bx * scale;
-            ty = by * scale;
-            s = pConfig.returnSpeed;
-        } else {
-            let targetIndex = Math.min(pData.pathIndex, mousePath.length - 1);
-            let pathPos = mousePath[targetIndex] || mousePath[0];
-            let ox = Math.cos(pData.angle) * pData.scatterRadius;
-            let oy = Math.sin(pData.angle) * pData.scatterRadius;
-            tx = pathPos.x + ox;
-            ty = pathPos.y + oy;
-            s = pData.speed;
-        }
-        positions[i3] += (tx - cx) * s;
-        positions[i3 + 1] += (ty - cy) * s;
-        positions[i3 + 2] = 0;
-    }
-    firstParticleSystem.geometry.attributes.position.needsUpdate = true;
-}
-
-function onMouseMove(event) {
-    event.preventDefault();
-    let x = (event.clientX / window.innerWidth) * 2 - 1;
-    let y = -(event.clientY / window.innerHeight) * 2 + 1;
-    let vector = new THREE.Vector3(x, y, 0.5);
-    vector.unproject(camera);
-    let dir = vector.sub(camera.position).normalize();
-    let distance = -camera.position.z / dir.z;
-    let pos = camera.position.clone().add(dir.multiplyScalar(distance));
-    mouse3DVec.copy(pos);
-    mouse3DVec.z = 0;
-    isIdle = false;
-    if (idleTimer) clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => {
-        isIdle = true;
-    }, config.firstParticle.idleTimeout);
-}
-
-function createGlowingDot() {
-    const size = 64;
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    const context = canvas.getContext("2d");
-    const center = size / 2;
-    const gradient = context.createRadialGradient(
-        center,
-        center,
-        0,
-        center,
-        center,
-        center
-    );
-    gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-    gradient.addColorStop(0.3, "rgba(43, 152, 211, 0.5)");
-    gradient.addColorStop(1, "rgba(28, 178, 153, .03)");
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, size, size);
-    return new THREE.CanvasTexture(canvas);
 }
