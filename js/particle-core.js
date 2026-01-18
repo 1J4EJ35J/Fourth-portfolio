@@ -84,18 +84,22 @@ let lightBounds = {
 let brainSystem1;
 let brainSystem2;
 let brainSystem3;
+let brainSystem4; // ★ 新增
 
 let brainData1 = [];
 let brainData2 = [];
 let brainData3 = [];
+let brainData4 = []; // ★ 新增
 
 let brainRatio1 = 0;
 let brainRatio2 = 0;
 let brainRatio3 = 0;
+let brainRatio4 = 0; // ★ 新增
 
 let runBrainLayer1 = false;
 let runBrainLayer2 = false;
 let runBrainLayer3 = false;
+let runBrainLayer4 = false; // ★ 新增
 
 // --- System D: 沙粒系統 (The Spirit) ---
 let sandSystem;
@@ -148,7 +152,7 @@ const config = {
         rippleFrequency: 0.026,
     },
     brainLayer1: {
-        count: 8000,
+        count: 10000,
         color: "#008cff",
         size: 5.5,
         glow: 0,
@@ -168,14 +172,26 @@ const config = {
         scatterRange: 2000
     },
     brainLayer3: {
-        count: 2000,
-        color: "#008c9b",
+        count: 3000,
+        color: "#188fb6",
         size: 8.0,
         glow: 0,
         blur: 0,
         flashSpeed: 7.0,
         opacity: .9,
-        zOffset: 1,
+        zOffset: 0,
+        scatterRange: 3000
+    },
+    // ★ 新增 Layer 4 (完全複製 Layer 3 參數)
+    brainLayer4: {
+        count: 2500,
+        color: "#4bedff",
+        size:6.0,
+        glow: 0,
+        blur: .8,
+        flashSpeed: .0,
+        opacity: .7,
+        zOffset: 15,
         scatterRange: 3000
     },
     sandParticle: {

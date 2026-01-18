@@ -32,8 +32,8 @@ function animate() {
     }
 
     // --- B. 更新大腦粒子 (Brain) ---
-    // 未來沙粒系統開關也將在此判斷
-    if (runBrainLayer1 || runBrainLayer2 || runBrainLayer3) {
+    // ★ 修改：加入 runBrainLayer4 判斷
+    if (runBrainLayer1 || runBrainLayer2 || runBrainLayer3 || runBrainLayer4) {
         updateBrainParticles();
     }
 
@@ -166,7 +166,6 @@ function initTextEffects() {
     }
 }
 
-// ★★★ 核心修正：完整還原 Fourth & Fifth Particle 的三段式 ScrollTrigger ★★★
 function initCompetenciesEffects() {
     const aboutWrapper = document.querySelector(".about-wrapper-outer");
     const spacer1 = document.querySelector(".competencies-spacer-1");
@@ -174,9 +173,7 @@ function initCompetenciesEffects() {
 
     if (!aboutWrapper || !spacer1) return;
     
-    // -------------------------------------------------------------
-    // Trigger 1: 進場 (Entry) - 開啟運算、透明度設為1、數量從0到1、速度變化
-    // -------------------------------------------------------------
+    // Trigger 1: 進場
     ScrollTrigger.create({
         trigger: aboutWrapper,
         start: "top -25%",
@@ -191,12 +188,9 @@ function initCompetenciesEffects() {
         onUpdate: (self) => {
             const p = self.progress;
 
-            // 控制 Fourth Particle (背景方塊)
             if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
                 let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
                 fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-                
-                // 速度分段控制
                 if (ratio < 0.375) {
                     fourthParticleMaterial.uniforms.uSpeed.value = config.fourthParticle.speed;
                 } else {
@@ -206,11 +200,9 @@ function initCompetenciesEffects() {
                 }
             }
 
-            // 控制 Fifth Particle (線條)
             if (fifthParticleMaterial && fifthParticleMaterial.uniforms) {
                 let ratio = THREE.MathUtils.clamp(p / 0.72, 0, 1);
                 fifthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
-                
                 if (ratio < 0.2) {
                     fifthParticleMaterial.uniforms.uSpeed.value = config.fifthParticle.speed;
                 } else {
@@ -220,13 +212,11 @@ function initCompetenciesEffects() {
                 }
             }
 
-            // 同步淡出 Second & Third
             let fadeOut = 1.0 - p;
             if (secondParticleMaterial && secondParticleMaterial.uniforms) secondParticleMaterial.uniforms.uOpacity.value = fadeOut;
             if (thirdParticleMaterial && thirdParticleMaterial.uniforms) thirdParticleMaterial.uniforms.uOpacity.value = fadeOut;
         },
         onLeave: () => {
-            // 離開時關閉 Second/Third，但 Fourth/Fifth 保持開啟 (因為進入下一階段)
             runSecond = false;
             runThird = false;
             if (secondParticleMaterial) secondParticleMaterial.uniforms.uOpacity.value = 0;
@@ -237,7 +227,6 @@ function initCompetenciesEffects() {
             runThird = true;
         },
         onLeaveBack: () => {
-            // ★ 回到頂部時：完全關閉 Fourth/Fifth，並重置所有狀態
             runFourth = false;
             runFifth = false;
             if (fourthParticleMaterial) {
@@ -253,16 +242,14 @@ function initCompetenciesEffects() {
         },
     });
 
-    // -------------------------------------------------------------
-    // Trigger 2: 離場遞減 (Exit/Reduction) - 數量從1到0，但保持透明度1
-    // -------------------------------------------------------------
+    // Trigger 2: 離場遞減
     ScrollTrigger.create({
         trigger: spacer1,
         start: "top -80px",
         end: "top -680px",
         scrub: 0.1,
         onUpdate: (self) => {
-            const ratio = 1.0 - self.progress; // 隨捲動減少
+            const ratio = 1.0 - self.progress; 
             if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
                 fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
                 fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
@@ -274,9 +261,7 @@ function initCompetenciesEffects() {
         },
     });
 
-    // -------------------------------------------------------------
-    // Trigger 3: 彎曲特效 (Bend Effect)
-    // -------------------------------------------------------------
+    // Trigger 3: 彎曲特效
     ScrollTrigger.create({
         trigger: spacer1,
         start: "top 97%",
@@ -293,9 +278,7 @@ function initCompetenciesEffects() {
         },
     });
 
-    // -------------------------------------------------------------
     // Trigger 4: 背景層淡入
-    // -------------------------------------------------------------
     if (background2) {
         gsap.to(background2, {
             opacity: 1,
@@ -343,7 +326,7 @@ function onMouseMove(event) {
 // ==========================================
 
 try {
-    console.log("🚀 V64 啟動：6檔案模組化架構 (修正版)");
+    console.log("🚀 V64+ 啟動：Brain Layer 4 新增完成");
 
     // 1. 基礎建設 (Core)
     initSceneOld();
@@ -372,9 +355,7 @@ try {
     initBeamSystem();
     initBeamScrollTriggers();
 
-    // 6. 大腦系統 (Brain)
-    // 這裡使用 await 的概念，但因為不在 async function 內，
-    // initThreeLayerBrain 本身是 async，會自動在背景載入圖片
+    // 6. 大腦系統 (Brain) - 現在會載入 4 層
     initThreeLayerBrain();
 
     // 7. 啟動引擎
