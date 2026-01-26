@@ -1,0 +1,154 @@
+/* social-platform.scss - Organized Version */
+
+.social-platform {
+    .tech-section {
+        .title-zone {
+
+            &:has(.-number-02),
+            &:has(.-number-05) {
+                justify-content: space-between;
+            }
+        }
+
+        .tech-section-number-zone {
+
+            /* Base Styles for each number variant */
+            &.-number-01 {
+                .tech-section-number-container {
+                    opacity: 0.5;
+                }
+
+                .tech-section-number {
+                    margin-top: -1.8rem;
+                    font-size: clamp(148px, 15vw, 10rem);
+                }
+            }
+
+            &.-number-02 {
+                .tech-section-number-container {
+                    margin-top: 40px;
+                    opacity: .3;
+                }
+
+                .tech-section-number {
+                    color: var(--color-text-secondary);
+                    font-size: clamp(120px, 20vw, 14rem);
+                }
+            }
+
+            &.-number-03 {
+                .tech-section-number-container {
+                    width: fit-content;
+                    opacity: .3;
+                    margin-top: -20px;
+                }
+
+                .tech-section-number {
+                    color: var(--color-text-secondary);
+                    font-size: clamp(100px, 20vw, 13rem);
+                    width: fit-content;
+                }
+            }
+
+            &.-number-04 {
+                .tech-section-number-container {
+                    width: fit-content;
+                    opacity: .5;
+                    margin-top: -20px;
+                }
+
+                .tech-section-number {
+                    color: var(--color-neon);
+                    font-size: clamp(100px, 18vw, 10rem);
+                    width: fit-content;
+                }
+            }
+
+            &.-number-05 {
+                .tech-section-number-container {
+                    margin-top: 40px;
+                    opacity: .5;
+                }
+
+                .tech-section-number {
+                    color: var(--color-neon);
+                    font-size: clamp(120px, 20vw, 14rem);
+                }
+            }
+
+            &.-number-06 {
+                .tech-section-number-container {
+                    margin-top: -55px;
+                    opacity: .4;
+                }
+
+                .tech-section-number {
+                    color: var(--color-neon);
+                    font-size: clamp(148px, 15vw, 10rem);
+                }
+            }
+        }
+    }
+}
+
+/* ==========================================================================
+   ★ RWD MEDIA QUERIES (Organized at Bottom)
+   ========================================================================== */
+
+/* --- 991px --- */
+@media (max-width: 991px) {
+    .social-platform .tech-section .tech-section-number-zone {
+        &.-number-02 .tech-section-number-container {
+            margin-top: 0px;
+        }
+    }
+}
+
+/* --- 640px --- */
+@media (max-width: 640px) {
+    .social-platform .tech-section .tech-section-number-zone {
+        &.-number-01 {
+            .tech-section-number-container {
+                margin-top: 40px;
+            }
+
+            .tech-section-number {
+                font-size: clamp(98px, 15vw, 10rem);
+            }
+        }
+
+        &.-number-02 {
+            .tech-section-number {
+                font-size: clamp(130px, 20vw, 14rem);
+                position: absolute;
+                right: 0;
+                top: -40px;
+            }
+        }
+
+        &.-number-03 {
+            .tech-section-number-container {
+                margin-top: -30px;
+            }
+
+            .tech-section-number {
+                font-size: clamp(80px, 20vw, 14rem);
+            }
+        }
+
+        &.-number-04 {
+            .tech-section-number-container {
+                margin-top: -65px;
+            }
+        }
+
+        &.-number-06 {
+            width: fit-content;
+
+            .tech-section-number {
+                font-size: clamp(108px, 15vw, 10rem);
+                width: 130px;
+            }
+        }
+    }
+}

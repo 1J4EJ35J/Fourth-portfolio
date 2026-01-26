@@ -1,0 +1,181 @@
+@charset "UTF-8";
+/* hud-nav.scss */
+/* --- 1. HUD 導航 --- */
+.go-to-top.btn.style-icon-btn.btn-liquid-glass {
+  position: fixed;
+  bottom: 30vh;
+  right: 5px;
+  z-index: 40;
+}
+
+.hud-nav {
+  position: fixed;
+  bottom: 3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  width: 100%;
+}
+.hud-nav .nav {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.hud-nav .nav ul {
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+}
+.hud-nav .nav ul li .nav-btn {
+  -webkit-backdrop-filter: initial;
+          backdrop-filter: initial;
+}
+.hud-nav .nav .nav-btn {
+  padding: 0.25rem 1.25rem;
+}
+.hud-nav .nav .ts-hidden {
+  display: none;
+}
+.hud-nav .hud-nav-container {
+  width: -moz-fit-content;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.hud-nav .hud-link {
+  text-decoration: none;
+  color: var(--color-neon);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  display: flex;
+  gap: 5px;
+  transition: all 0.3s;
+}
+.hud-nav .hud-link:hover {
+  text-shadow: 0 0 10px var(--color-neon);
+}
+.hud-nav .hud-status {
+  width: 100%;
+  display: flex;
+  padding: 0 0px;
+  align-items: center;
+}
+.hud-nav .hud-status-zone {
+  font-size: 0.8rem;
+  color: var(--color-neon);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  position: relative;
+  max-width: 1440px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hud-nav .hud-status-zone .status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-neon-2);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-neon);
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+.hud-nav .menu-toggle {
+  display: none;
+}
+.hud-nav .menu-toggle .menu-close-btn {
+  display: none;
+}
+.hud-nav .menu-toggle .menu-open-btn {
+  display: block;
+}
+.hud-nav .btn.style-01.btn-liquid-glass.menu-toggle {
+  width: calc(55px + 46vw);
+  transition: all 0.4s ease-in-out;
+}
+
+/* ==========================================================================
+   ★ RWD MEDIA QUERIES (Organized at Bottom)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .hud-nav .menu-toggle {
+    display: flex;
+    z-index: 100;
+  }
+  .hud-nav .menu-toggle.active .menu-close-btn {
+    display: block;
+  }
+  .hud-nav .menu-toggle.active .menu-open-btn {
+    display: none;
+  }
+  .hud-nav .btn.style-01.btn-liquid-glass.menu-toggle.active {
+    width: calc(55px + 46vw + 45px + 3rem);
+    position: absolute;
+  }
+  .hud-nav .nav {
+    position: fixed;
+    top: 101%;
+    left: 0;
+    width: 100vw;
+    height: 0;
+    z-index: 99;
+    display: block;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+  }
+  .hud-nav .nav .ts-hidden {
+    display: block;
+  }
+  .hud-nav .nav ul {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 120px;
+    gap: 0rem;
+    background: rgba(10, 46, 79, 0.7);
+  }
+  .hud-nav .nav ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  .hud-nav .nav ul li .nav-btn {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+  }
+  .hud-nav .nav ul li .nav-btn:hover {
+    border-radius: 0;
+  }
+  .hud-nav .hud-nav-container:has(.menu-toggle.active) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .hud-nav .hud-nav-container:has(.menu-toggle.active) .nav {
+    display: block;
+    pointer-events: unset;
+    top: 0;
+    height: 100%;
+  }
+}/*# sourceMappingURL=hud-nav.css.map */

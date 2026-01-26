@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="運動APP後台管理系統 UI/UX 重構案例" />
+    <title>運動APP後台管理系統 | System Archive</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="" />
+    <link rel="icon" type="image/png" sizes="16x16" href="" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/component/scrollbar/scrollbar.css" />
+    <link rel="stylesheet" href="../component/layout/layout.css" />
+    <link rel="stylesheet" href="../component/hud-nav/hud-nav.css" />
+
+    <link rel="stylesheet" href="./sports-admin.css" />
+</head>
+
+<body>
+    <div class="background-layer theme-abyss"></div>
+    <div class="light-beams">
+        <div class="beam beam-1"></div>
+        <div class="beam beam-2"></div>
+    </div>
+    <div class="cyber-grid-bg"></div>
+
+    <nav class="hud-nav">
+        <div class="hud-nav-container">
+            <a href="../../index.html" class="btn style-icon-btn btn-liquid-glass">
+                <div class="liquid-light"></div>
+                <i class="fa-solid fa-angle-left icon-controller"></i>
+            </a>
+            <button class="btn style-01 btn-liquid-glass menu-toggle">
+                <div class="liquid-light"></div>
+                <span class="btn-text">Menu</span>
+                <i class="fa-solid fa-bars icon-controller menu-open-btn"></i>
+                <i class="fa-solid fa-xmark icon-controller menu-close-btn"></i>
+            </button>
+            <nav class="nav">
+                <ul>
+                    <li class="ts-hidden">
+                        <a href="#ts-01" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">專案背景</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#ts-02" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">流程革新</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#ts-03" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">設計模組化</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#ts-04" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">資訊架構</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#ts-05" class="nav-btn">
+                            <div class="liquid-light"></div>
+                            <span class="text">視覺整合</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </nav>
+
+    <a href="#go-to-top" class="go-to-top btn style-icon-btn btn-liquid-glass">
+        <div class="liquid-light"></div>
+        <i class="fa-solid fa-angle-up icon-controller"></i>
+    </a>
+
+    <main class="case-content sports-admin">
+        <div class="case-content-zone scrollbar-style01">
+            <div class="case-content-inner scrollbar-style01-inner">
+
+                <header class="cyber-hero">
+                    <div class="breakout-zone">
+                        <div class="breakout-container">
+                            <h1 class="glitch-title" data-text="SPORTS ADMIN">
+                                運動APP後台<br>管理系統
+                            </h1>
+                            <h2 class="sub-glitch">UI/UX REFACTORING & DESIGN SYSTEM</h2>
+
+                            <div class="hero-grid">
+                                <div class="hero-intro">
+                                    <p class="initial-text">// INITIALIZING MISSION BRIEF...</p>
+                                    <p class="tech-text">
+                                        挑戰將預估156天極限壓縮至92天內，針對企業後台進行 UI/UX 重構。透過建立模組化設計系統與導入 Git
+                                        協作流程，解決介面與操作流程不一致痛點，<strong>成功提升團隊開發效率41%，完美達成介面設計100%一致性。</strong>
+                                    </p>
+                                </div>
+                                <div class="hero-visual holo-frame">
+                                    <img src="./img/br-01.webp" alt="Sports Admin Hero UI" class="holo-img">
+                                    <div class="corner c-tl"></div>
+                                    <div class="corner c-tr"></div>
+                                    <div class="corner c-bl"></div>
+                                    <div class="corner c-br"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <article class="cyber-article">
+                    <section class="tech-section">
+                        <div class="linking-box" id="ts-01"></div>
+                        <div class="default-zone">
+                            <div class="title-zone">
+                                <div class="tech-section-number-zone -number-01">
+                                    <div class="tech-section-number-container">
+                                        <span class="tech-section-number">01</span>
+                                    </div>
+                                </div>
+                                <div class="title-container">
+                                    <div class="section-label">// PROJECT_CONTEXT</div>
+                                    <h2 class="tech-heading">UI RWD / SAAS ERP</h2>
+                                </div>
+                            </div>
+
+                            <div class="default-container">
+                                <div class="asym-grid">
+                                    <div class="panel-left">
+                                        <div class="tech-panel">
+                                            <div class="panel-header">
+                                                <i class="fa-solid fa-database icon-controller"></i>
+                                                <span class="panel-title">專案簡介</span>
+                                            </div>
+                                            <div class="panel-body">
+                                                <p class="list-top-article-content">針對企業內部高流量後台進行 UI/UX
+                                                    重構。本專案挑戰在於預估156天極限壓縮時程內（92天），整合舊有功能並同步開發新需求。</p>
+                                                <ul class="list-container">
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p><strong>挑戰：</strong>整合既有舊系統與新功能需求，重建程式碼搬運導致的視覺風格與佈局混亂。
+                                                        </p>
+                                                    </li>
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p><strong>目標：</strong>在有限資源下，重整 UI 架構並優化操作體驗，使後台系統邏輯與視覺保持一致。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tech-panel">
+                                            <div class="panel-header">
+                                                <i class="fa-solid fa-people-group icon-controller"></i>
+                                                <span class="panel-title">專案成員</span>
+                                            </div>
+                                            <div class="panel-body">
+                                                <p>UI/UX設計師 x1 → 我</p>
+                                                <p>全端工程師 x2</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-right">
+                                        <div class="tech-panel">
+                                            <div class="panel-header">
+                                                <i class="fa-solid fa-user-astronaut icon-controller"></i>
+                                                <span class="panel-title">我的角色與貢獻</span>
+                                            </div>
+                                            <div class="data-list">
+                                                <div class="data-item article">
+                                                    <p>我是部門唯一UI/UX設計師，主導介面設計一致性與操作邏輯，同時確保專案開發效率提升。我跳脫單純的設計交付，直接參與前端架構開發：
+                                                    </p>
+                                                </div>
+                                                <div class="data-item">
+                                                    <span class="data-id">TASK_01</span>
+                                                    <div class="data-content">
+                                                        <h4>建立設計系統</h4>
+                                                        <p>使用 Figma 定義規範，並將其轉譯為標準規格化的 SCSS 元件庫。</p>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item active">
+                                                    <span class="data-id">TASK_02</span>
+                                                    <div class="data-content">
+                                                        <h4>Git 協作開發</h4>
+                                                        <p>進入 MVC
+                                                            架構，透過本地分支建立、推送程式碼與解決衝突，減少來回溝通成本，提升整體開發效率41%。</p>
+                                                    </div>
+                                                </div>
+                                                <div class="data-item">
+                                                    <span class="data-id">TASK_03</span>
+                                                    <div class="data-content">
+                                                        <h4>全局 UI/UX 實作落地</h4>
+                                                        <p>直接優化 Razor View (.cshtml) 結構，確保設計稿 100% 還原，並解決 RWD
+                                                            響應式佈局問題，真正參與設計落地。
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="terminal-box">
+                                                <span class="cmd">>
+                                                    *基於職業倫理，模糊處理並化名公司和專案名稱，揭示內容為已修改的虛構資料。</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tech-section">
+                        <div class="linking-box" id="ts-02"></div>
+                        <div class="default-zone">
+                            <div class="title-zone">
+                                <div class="title-container">
+                                    <div class="section-label">// WORKFLOW_REVOLUTION</div>
+                                    <h2 class="tech-heading">我主導的流程革新：<br>設計系統與Git整合</h2>
+                                </div>
+                                <div class="tech-section-number-zone -number-02">
+                                    <div class="tech-section-number-container">
+                                        <span class="tech-section-number">02</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="default-container">
+                                <div class="dashboard-layout">
+                                    <div class="tech-panel full">
+                                        <div class="panel-header"><i class="fa-solid fa-route"></i> 設計主導 UI 實作流程</div>
+                                        <div class="panel-body">
+                                            <p>為了將本次專案的高效合作模式延續至未來維護，我將協作經驗系統化。經量化評估，此流程使整體開發效率提升約 41%。</p>
+                                            <div class="holo-frame swimlane img-container">
+                                                <img src="./img/png/br-27.png" alt="Workflow Swimlane Diagram"
+                                                    class="holo-img img-controller">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tech-panel">
+                                        <div class="panel-header warning"><i class="fa-solid fa-handshake"></i> 明確定義協作邊界
+                                        </div>
+                                        <div class="panel-body">
+                                            <p class="list-top-article-content">為了讓工程師安心放權，我制定了嚴格的「程式碼修改白名單」：</p>
+                                            <ul class="list-container">
+                                                <li class="item-box">
+                                                    <div class="bullet-points dot">●</div>
+                                                    <p><strong>UI/UX設計師權責：</strong>解決「同一元件多種樣式」雜訊，模組化按鈕、表單、Popup，確保 100%
+                                                        統一。
+                                                    </p>
+                                                </li>
+                                                <li class="item-box">
+                                                    <div class="bullet-points dot">●</div>
+                                                    <p><strong>工程師權責：</strong>負責功能與資料邏輯。</p>
+                                                </li>
+                                                <li class="item-box">
+                                                    <div class="bullet-points dot">●</div>
+                                                    <p><strong>協作機制：</strong>若調整樣式需更動結構邏輯，我會留下註解並開單通知工程師。</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </section>
+                    <section class="tech-section">
+                        <div class="linking-box" id="ts-03"></div>
+                        <div class="breakout-zone">
+                            <div class="title-zone">
+                                <div class="tech-section-number-zone -number-03">
+                                    <div class="tech-section-number-container">
+                                        <span class="tech-section-number">03</span>
+                                    </div>
+                                </div>
+                                <div class="title-container">
+                                    <div class="section-label">// Execution</div>
+                                    <h2 class="tech-heading">實踐：<br>Git同步與模組化SCSS架構</h2>
+                                </div>
+                            </div>
+
+                            <div class="breakout-container">
+                                <div class="ide-container">
+                                    <div class="ide-sidebar">
+                                        <div class="file active"><i class="fa-brands fa-html5"></i> _layout.cshtml
+                                        </div>
+                                        <div class="file"><i class="fa-brands fa-sass"></i> main.scss</div>
+                                        <div class="file"><i class="fa-solid fa-code-branch"></i> git-graph</div>
+                                    </div>
+                                    <div class="ide-content">
+                                        <div class="tech-panel transparent">
+                                            <h3 class="neon-subtitle ">
+                                                新流程實踐
+                                            </h3>
+                                            <p class="list-top-article-content">
+                                                在泳道圖標準化流程下，我直接掌管專案的視覺層代碼，確保「設計語言」與「程式語言」的無縫接軌。
+                                            </p>
+                                            <ul class="list-container">
+                                                <li class="item-box">
+                                                    <div class="bullet-points dot">●</div>
+                                                    <p>Git 透過分支管理與 pull、merge、push以及cherry-pick
+                                                        等基礎技巧，實現設計與功能的並行開發，大幅縮短功能上線前的UI修正週期。</p>
+                                                </li>
+                                                <li class="item-box">
+                                                    <div class="bullet-points dot">●</div>
+                                                    <p>SCSS架構主導：
+                                                        避免多人維護常見的「視覺偏移 (Visual Drift)」與樣式衝突，我建立了嚴謹的分層管理機制：</p>
+                                                    <ul class="list-container">
+                                                        <li class="item-box">
+                                                            <div class="bullet-points num">1.</div>
+                                                            <p>設計系統：
+                                                                定義全域變數，確保設計一致性。
+                                                            </p>
+                                                        </li>
+                                                        <li class="item-box">
+                                                            <div class="bullet-points num">2.</div>
+                                                            <p>Component 元件：
+                                                                封裝按鈕、表單、彈窗等可複用元件，落實Component-First思維。
+                                                            </p>
+                                                        </li>
+                                                        <li class="item-box">
+                                                            <div class="bullet-points num">3.</div>
+                                                            <p>
+                                                                頁面樣式 ：
+                                                                頁面的佈局樣式檔案獨立，並嚴格限制其影響範圍。
+                                                            </p>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="code-visuals img-zone column-1">
+                                                        <div class="img-container holo-frame">
+                                                            <img src="./img/png/br-26.png" alt="Code 1"
+                                                                class="img-controller">
+                                                            <div class="corner c-tl"></div>
+                                                            <div class="corner c-tr"></div>
+                                                            <div class="corner c-bl"></div>
+                                                            <div class="corner c-br"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="item-box">
+                                                    <div class="bullet-points star">★</div>
+                                                    <p><strong>成效：
+                                                            確立了 CSS
+                                                            為「視覺邏輯」的核心地位。由設計師統一維護，不僅消除了傳統流程中的「轉譯落差」，更確保了程式碼的潔淨度與可擴充性。</strong>若調整樣式需更動到結構邏輯，我會留下註解並開單通知工程師。
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                            <h3 class="neon-subtitle">Git 模組化SCSS架構展示</h3>
+                                            <div class="column-1 img-zone">
+                                                <div class="git-visual holo-frame img-container">
+                                                    <img src="./img/png/br-23.png" alt="Git Flow"
+                                                        class="holo-img img-controller">
+                                                </div>
+                                                <div class="git-visual holo-frame img-container">
+                                                    <img src="./img/png/br-25.png" alt="Git Flow"
+                                                        class="holo-img img-controller">
+                                                </div>
+                                            </div>
+                                            <div class="logic-visuals-zone">
+                                                <h3 class="neon-subtitle">模組化實例展示</h3>
+                                                <div class="logic-visuals-container">
+                                                    <p>Popup 模組化：
+                                                        針對舊系統中樣式破裂且無法關閉的彈跳視窗，我重構了 HTML 結構並套用標準化 CSS。這不僅修復了 UI 錯誤，更讓未來的
+                                                        Popup
+                                                        開發時間縮短至原本的 30%。</p>
+                                                    <div class="logic-visuals column-2 beforeAndAfter">
+                                                        <div class="visual-card wide">
+                                                            <span class="card-label">// BEFORE</span>
+                                                            <div class="img-container">
+                                                                <img src="./img/png/br-04.png" alt="Comparison"
+                                                                    class="tech-img img-controller">
+                                                            </div>
+                                                        </div>
+                                                        <div class="visual-card video-zone">
+                                                            <div class="card-video-title">
+                                                                <span class="card-label">// 優化AFTER</span>
+                                                                <div class="rec-indicator">
+                                                                    <div class="rec-dot"></div>
+                                                                    <span>Play</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="holo-frame video-mode">
+                                                                <video loop autoplay muted playsinline preload="auto"
+                                                                    class="holo-video">
+                                                                    <source src="./video/webm/R-05 nq.webm">
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="visual-card video-zone">
+                                                        <div class="card-video-title">
+                                                            <span class="card-label">// Popup component</span>
+                                                            <div class="rec-indicator">
+                                                                <div class="rec-dot"></div>
+                                                                <span>Play</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="holo-frame video-mode">
+                                                            <video loop autoplay muted playsinline preload="auto"
+                                                                class="holo-video">
+                                                                <source src="./video/webm/R-02 nq.webm">
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="logic-visuals-zone">
+                                                <h3 class="neon-subtitle">Git協作與部署實例展示</h3>
+                                                <div class="logic-visuals-container">
+                                                    <div class="visual-card video-zone">
+                                                        <div class="card-video-title">
+                                                            <span class="card-label">// 透過視覺化Git工具，管理UI更新</span>
+                                                            <div class="rec-indicator">
+                                                                <div class="rec-dot"></div>
+                                                                <span>Play</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="holo-frame video-mode">
+                                                            <video loop autoplay muted playsinline preload="auto"
+                                                                class="holo-video">
+                                                                <source src="./video/webm/R-04.webm">
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="tech-section">
+                        <div class="linking-box" id="ts-04"></div>
+                        <div class="breakout-zone">
+                            <div class="title-zone">
+                                <div class="tech-section-number-zone -number-03">
+                                    <div class="tech-section-number-container">
+                                        <span class="tech-section-number">04</span>
+                                    </div>
+                                </div>
+                                <div class="title-container">
+                                    <div class="section-label">// IA_STRATEGY</div>
+                                    <h2 class="tech-heading">資訊架構<br>與響應式設計策略</h2>
+                                </div>
+                            </div>
+
+                            <div class="breakout-container">
+                                <div class="tech-panel full">
+                                    <div class="panel-header"><i class="fa-solid fa-desktop"></i> 桌面端：優化高密度資料呈現</div>
+                                    <div class="panel-body">
+                                        <ul class="list-container">
+                                            <li class="item-box">
+                                                <div class="bullet-points dot">●</div>
+                                                <p><strong>導航體驗：</strong>固定 Sidebar 寬度並導入階層式選單。</p>
+                                            </li>
+                                            <li class="item-box">
+                                                <div class="bullet-points dot">●</div>
+                                                <p><strong>表格易讀性：</strong>保留欄位最佳寬度並搭配水平滾動 (Horizontal Scroll)，優先展示重要數據。
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <div class="logic-visuals-container column-2">
+                                            <div class="holo-frame"><img src="./img/png/br-08.png" alt="Desktop UI 1"
+                                                    class="holo-img"></div>
+                                            <div class="holo-frame"><img src="./img/png/br-09.png" alt="Desktop UI 2"
+                                                    class="holo-img"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tech-panel full">
+                                    <div class="panel-header"><i class="fa-solid fa-mobile-screen"></i> 移動端：Table to
+                                        Card 響應式轉換</div>
+                                    <div class="panel-body">
+                                        <p>當螢幕小於 767px 時，自動將複雜的表格資料轉換為卡片式 (Card UI) 排列，符合移動裝置垂直瀏覽習慣。</p>
+                                        <div class="logic-visuals-container column-2">
+                                            <div class="holo-frame"><img src="./img/png/br-07.png" alt="Mobile UI 1"
+                                                    class="holo-img"></div>
+                                            <div class="holo-frame"><img src="./img/png/br-10.png" alt="Mobile UI 2"
+                                                    class="holo-img"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tech-panel full">
+                                    <div class="panel-header"><i class="fa-solid fa-filter"></i> 邏輯統一：標準化篩選模組</div>
+                                    <div class="panel-body">
+                                        <p>選定擴充性最佳的「統一篩選側欄」模組。將觸發按鈕固定於 Header，側欄容器共用，內容動態注入。</p>
+                                        <div class="logic-visuals-container column-2">
+                                            <div class="holo-frame"><img src="./img/png/br-11.png" alt="Filter Module 1"
+                                                    class="holo-img"></div>
+                                            <div class="holo-frame"><img src="./img/png/br-11-1.png"
+                                                    alt="Filter Module 2" class="holo-img"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tech-section">
+                        <div class="linking-box" id="ts-05"></div>
+                        <div class="default-zone">
+                            <div class="title-zone">
+                                <div class="title-container">
+                                    <div class="section-label">// VISUAL_INTEGRATION</div>
+                                    <h2 class="tech-heading">套件與原生元件重構：<br>極致視覺統合</h2>
+                                </div>
+                                <div class="tech-section-number-zone -number-04">
+                                    <div class="tech-section-number-container">
+                                        <span class="tech-section-number">05</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="default-container">
+                                <div class="conversation-layout">
+                                    <div class="conversation-zone">
+                                        <div class="conversation-container accent">
+                                            <div class="conversation-header"><i class="fa-solid fa-code"></i>
+                                                突破技術限制：SweetAlert2</div>
+                                            <div class="conversation-body">
+                                                <p>面臨樣式被封裝在 JS 中的難題。我直接進入 JS 檔案調整參數與 Class，將風格迥異的套件客製化為標準元件。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="visual-full">
+                                        <div class="holo-frame"><img src="./img/png/br-14.png"
+                                                alt="SweetAlert2 Customization" class="holo-img"></div>
+                                    </div>
+                                </div>
+
+                                <h3 class="neon-subtitle">表單與功能元件的全面統合</h3>
+                                <p>針對 select2 多選擇套件、TinyMCE 文章編輯器等進行標準化。透過全域 CSS 覆寫消除視覺差異。</p>
+
+                                <div class="logic-visuals-container column-2">
+                                    <div class="holo-frame"><img src="./img/png/br-16.png" alt="Component 1"
+                                            class="holo-img">
+                                    </div>
+                                    <div class="holo-frame"><img src="./img/png/br-15.png" alt="Component 2"
+                                            class="holo-img">
+                                    </div>
+                                </div>
+                                <div class="logic-visuals-container column-2">
+                                    <div class="holo-frame"><img src="./img/png/br-19.png" alt="Component 3"
+                                            class="holo-img">
+                                    </div>
+                                    <div class="holo-frame"><img src="./img/png/br-13.png" alt="Component 4"
+                                            class="holo-img">
+                                    </div>
+                                </div>
+                                <div class="logic-visuals-container column-3">
+                                    <div class="holo-frame"><img src="./img/png/br-18.png" alt="Component 5"
+                                            class="holo-img">
+                                    </div>
+                                    <div class="holo-frame"><img src="./img/png/br-17.png" alt="Component 6"
+                                            class="holo-img">
+                                    </div>
+                                    <div class="holo-frame"><img src="./img/png/br-20.png" alt="Component 7"
+                                            class="holo-img">
+                                    </div>
+                                </div>
+
+                                <h3 class="neon-subtitle">原生元件重構</h3>
+                                <p>摒棄原生 Select 標籤，重寫符合 Design System 的下拉選單結構，克服瀏覽器渲染差異。</p>
+                                <div class="logic-visuals-container column-2">
+                                    <div class="holo-frame"><img src="./img/png/br-21.png" alt="Native Select 1"
+                                            class="holo-img">
+                                    </div>
+                                    <div class="holo-frame"><img src="./img/png/br-22.png" alt="Native Select 2"
+                                            class="holo-img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tech-section">
+                        <div class="linking-box" id="ts-06"></div>
+                        <div class="default-zone">
+                            <div class="title-zone">
+                                <div class="tech-section-number-zone -number-05">
+                                    <div class="tech-section-number-container">
+                                        <span class="tech-section-number">06</span>
+                                    </div>
+                                </div>
+                                <div class="title-container">
+                                    <div class="section-label">// FINAL_REPORT</div>
+                                    <h2 class="tech-heading">總結：<br>設計與開發的橋樑</h2>
+                                </div>
+                            </div>
+
+                            <div class="default-container">
+                                <div class="conclusion-card">
+                                    <div class="card-glow"></div>
+                                    <div class="card-content">
+                                        <p>這個專案不僅是一次介面重構，更是協作模式的革新。透過 Git 同步開發與程式碼實作，成功打破「設計交付 vs 工程實作」的高牆。</p>
+                                        <ul class="achievement-list">
+                                            <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span><strong>降低溝通成本：</strong>直接修正 UI 細節，減少來回確認時間。</span>
+                                            </li>
+                                            <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span><strong>消除落地落差：</strong>確保最終產品視覺與互動細節分毫不差。</span>
+                                            </li>
+                                            <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span><strong>提升團隊效率：</strong>工程師專注邏輯，設計師全權掌握視覺品質。</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script src="../works.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+</body>
+
+</html>

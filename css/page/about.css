@@ -110,7 +110,7 @@
     overflow: hidden;
 }
 
-.img-container {
+.about-container .img-container {
     width: 100%;
     height: fit-content;
     /* 直式照片比例 */

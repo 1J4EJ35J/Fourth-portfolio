@@ -1,0 +1,43 @@
+/* scrollbar.scss */
+
+/* =========================================
+   Custom Scrollbar System (跨瀏覽器通用版)
+   ========================================= */
+
+.scrollbar-style01 {
+
+    /* 2. Webkit 核心屬性 (Chrome, Edge, Safari) */
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 4px;
+    }
+
+    /* 設定滾動條的「軌道」 (Track) */
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 0px;
+        margin-block: 4px;
+    }
+
+    /* 設定滾動條的「滑塊」 (Thumb) */
+    &::-webkit-scrollbar-thumb {
+        background-color: #00bbff;
+        border-radius: 0px;
+        border: 1px solid transparent;
+        background-clip: content-box;
+
+        &:hover {
+            background-color: #008cff;
+            border: 1px solid transparent;
+        }
+
+        &:active {
+            background-color: #008cff;
+        }
+    }
+}
+
+.scrollbar-style01-inner {
+    width: inherit;
+    height: fit-content;
+}

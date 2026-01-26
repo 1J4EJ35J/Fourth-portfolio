@@ -1,0 +1,103 @@
+@charset "UTF-8";
+/* nav.scss */
+/* --- 下方導覽列設計 --- */
+.nav {
+  position: fixed;
+  bottom: 3vh;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0rem;
+  border-radius: 50px;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  overflow: hidden;
+  background: rgba(0, 140, 255, 0.02);
+  border: 1px solid rgba(0, 140, 255, 0.3);
+  color: var(--color-primary);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 0 4px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
+  padding: 0.3rem 0.5rem;
+}
+.nav ul li {
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.nav ul:hover {
+  box-shadow: 0 0 0px rgba(30, 154, 255, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.nav .nav-btn {
+  display: block;
+  padding: 0.25rem 2rem;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  outline: 1px solid rgba(0, 140, 255, 0);
+  outline-offset: -1px;
+  backdrop-filter: initial;
+  -webkit-backdrop-filter: initial;
+  transition: all 0.4s ease-out;
+}
+.nav .nav-btn .text {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: all 0.3s ease;
+  position: relative;
+  font-family: var(--font-family-main);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+.nav .nav-btn:hover {
+  border-radius: 50px;
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+  background: rgba(0, 140, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform: scale(1.02);
+}
+.nav .nav-btn:hover .liquid-light {
+  opacity: 1;
+  left: 60%;
+  transition: left 0.7s ease-in-out;
+}
+.nav .nav-btn:hover .text,
+.nav .nav-btn:hover .icon-controller {
+  color: var(--color-text-primary);
+  text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
+}
+
+/* ==========================================================================
+   ★ RWD MEDIA QUERIES (Organized at Bottom)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .nav ul {
+    gap: 1.5rem;
+  }
+}/*# sourceMappingURL=nav.css.map */

@@ -13,7 +13,7 @@
     /* --- 字型家族 (Font Family) --- */
     /* 核心策略：英文字型放在前面，中文字型放在後面 */
     /* 這樣瀏覽器會先用 Montserrat 渲染英文，遇到中文自動切換成 Noto Sans TC */
-    --font-family-main: 'Roboto', 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-family-main: 'Orbitron', 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
     /* 如果有純內文區塊覺得 Montserrat 太寬，可以定義一個備用內文字型 */
     --font-family-body: 'Roboto', 'Noto Sans TC', sans-serif;
@@ -31,8 +31,8 @@
     --fs-hero-title: clamp(2.5rem, 6.3vw, 6rem);
     --fs-section-title: clamp(1.8rem, 5vw, 2.25rem);
     --fs-subtitle: clamp(1.25rem, 3vw, 1.75rem);
-    --fs-small-title: clamp(1.05rem, 2vw, 1.18rem);
-    --fs-body: clamp(.9rem, 1.5vw, 1.1rem);
+    --fs-small-title: clamp(1.05rem, 1.7vw, 1.18rem);
+    --fs-body: clamp(.95rem, 2vw, 1.1rem);
     --fs-small: clamp(0.875rem, 1vw, 1rem);
     --fs-smaller: clamp(13.3px, 1vw, 14px);
     /* --- 行高 (Line Height) --- */
