@@ -62,26 +62,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    // ==========================================
-    // 2. Go To Top 回到頂部功能
-    // ==========================================
-
-    const goToTopBtn = document.querySelector('.go-to-top.btn');
-    
-    // 依照指令：目標滾動容器為 .case-content-zone .scrollbar-style01
-    const targetScrollContainer = document.querySelector('.case-content-zone.scrollbar-style01');
-
-    if (goToTopBtn && targetScrollContainer) {
-        goToTopBtn.addEventListener('click', function(e) {
-            e.preventDefault(); // 防止預設錨點行為
-
-            // 將指定容器平滑捲動至頂部 (Top: 0)
-            targetScrollContainer.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
 });

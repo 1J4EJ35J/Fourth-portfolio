@@ -10,14 +10,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="" />
     <link rel="icon" type="image/png" sizes="16x16" href="" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="stylesheet" href="../../css/component/scrollbar/scrollbar.css" />
     <link rel="stylesheet" href="../component/layout/layout.css" />
     <link rel="stylesheet" href="../component/hud-nav/hud-nav.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 
     <link rel="stylesheet" href="./sports-admin.css" />
+
 </head>
 
 <body>
@@ -115,7 +115,7 @@
                 </header>
 
                 <article class="cyber-article">
-                    <section class="tech-section">
+                    <section class="tech-section ts-01">
                         <div class="linking-box" id="ts-01"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -214,7 +214,7 @@
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-02">
                         <div class="linking-box" id="ts-02"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -235,9 +235,9 @@
                                         <div class="panel-header"><i class="fa-solid fa-route"></i> 設計主導 UI 實作流程</div>
                                         <div class="panel-body">
                                             <p>為了將本次專案的高效合作模式延續至未來維護，我將協作經驗系統化。經量化評估，此流程使整體開發效率提升約 41%。</p>
-                                            <div class="holo-frame swimlane img-container">
+                                            <div class="holo-frame img-container">
                                                 <img src="./img/png/br-27.png" alt="Workflow Swimlane Diagram"
-                                                    class="holo-img img-controller">
+                                                    class="holo-img img-controller" id="swimlane">
                                             </div>
                                         </div>
                                     </div>
@@ -267,9 +267,10 @@
                                 </div>
                             </div>
                     </section>
-                    <section class="tech-section">
+
+                    <section class="tech-section ts-03">
                         <div class="linking-box" id="ts-03"></div>
-                        <div class="breakout-zone">
+                        <div class="default-zone">
                             <div class="title-zone">
                                 <div class="tech-section-number-zone -number-03">
                                     <div class="tech-section-number-container">
@@ -282,7 +283,7 @@
                                 </div>
                             </div>
 
-                            <div class="breakout-container">
+                            <div class="default-container">
                                 <div class="ide-container">
                                     <div class="ide-sidebar">
                                         <div class="file active"><i class="fa-brands fa-html5"></i> _layout.cshtml
@@ -292,7 +293,7 @@
                                     </div>
                                     <div class="ide-content">
                                         <div class="tech-panel transparent">
-                                            <h3 class="neon-subtitle ">
+                                            <h3 class="neon-subtitle -mt">
                                                 新流程實踐
                                             </h3>
                                             <p class="list-top-article-content">
@@ -359,24 +360,28 @@
                                                         class="holo-img img-controller">
                                                 </div>
                                             </div>
-                                            <div class="logic-visuals-zone">
+                                            <div class="logic-visuals-zone comparison img-wrapper">
                                                 <h3 class="neon-subtitle">模組化實例展示</h3>
                                                 <div class="logic-visuals-container">
                                                     <p>Popup 模組化：
                                                         針對舊系統中樣式破裂且無法關閉的彈跳視窗，我重構了 HTML 結構並套用標準化 CSS。這不僅修復了 UI 錯誤，更讓未來的
                                                         Popup
                                                         開發時間縮短至原本的 30%。</p>
-                                                    <div class="logic-visuals column-2 beforeAndAfter">
+                                                    <div class="logic-visuals virtical beforeAndAfter">
                                                         <div class="visual-card wide">
-                                                            <span class="card-label">// BEFORE</span>
-                                                            <div class="img-container">
+                                                            <span class="card-label">// BEFORE 內容破裂，無法關閉</span>
+                                                            <div class="img-container holo-frame">
                                                                 <img src="./img/png/br-04.png" alt="Comparison"
                                                                     class="tech-img img-controller">
                                                             </div>
                                                         </div>
                                                         <div class="visual-card video-zone">
+                                                            <div class="corner c-tl"></div>
+                                                            <div class="corner c-tr"></div>
+                                                            <div class="corner c-bl"></div>
+                                                            <div class="corner c-br"></div>
                                                             <div class="card-video-title">
-                                                                <span class="card-label">// 優化AFTER</span>
+                                                                <span class="card-label">// 優化 AFTER</span>
                                                                 <div class="rec-indicator">
                                                                     <div class="rec-dot"></div>
                                                                     <span>Play</span>
@@ -388,45 +393,46 @@
                                                                     class="holo-video">
                                                                     <source src="./video/webm/R-05 nq.webm">
                                                                 </video>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="visual-card video-zone">
-                                                        <div class="card-video-title">
-                                                            <span class="card-label">// Popup component</span>
-                                                            <div class="rec-indicator">
-                                                                <div class="rec-dot"></div>
-                                                                <span>Play</span>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="holo-frame video-mode">
-                                                            <video loop autoplay muted playsinline preload="auto"
-                                                                class="holo-video">
-                                                                <source src="./video/webm/R-02 nq.webm">
-                                                            </video>
+                                                            </div>
+                                                        </div>
+                                                        <div class="visual-card video-zone">
+                                                            <div class="card-video-title">
+                                                                <span class="card-label">// Popup component</span>
+                                                                <div class="rec-indicator">
+                                                                    <div class="rec-dot"></div>
+                                                                    <span>Play</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="holo-frame video-mode">
+                                                                <video loop autoplay muted playsinline preload="auto"
+                                                                    class="holo-video">
+                                                                    <source src="./video/webm/R-02 nq.webm">
+                                                                </video>
+                                                            </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
-                                            <div class="logic-visuals-zone">
-                                                <h3 class="neon-subtitle">Git協作與部署實例展示</h3>
-                                                <div class="logic-visuals-container">
-                                                    <div class="visual-card video-zone">
-                                                        <div class="card-video-title">
-                                                            <span class="card-label">// 透過視覺化Git工具，管理UI更新</span>
-                                                            <div class="rec-indicator">
-                                                                <div class="rec-dot"></div>
-                                                                <span>Play</span>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="holo-frame video-mode">
-                                                            <video loop autoplay muted playsinline preload="auto"
-                                                                class="holo-video">
-                                                                <source src="./video/webm/R-04.webm">
-                                                            </video>
+                                            <h3 class="neon-subtitle">Git協作與部署實例展示</h3>
+                                            <div class="logic-visuals-container">
+                                                <div class="visual-card video-zone">
+                                                    <div class="card-video-title">
+                                                        <span class="card-label">// 透過視覺化Git工具，管理UI更新</span>
+                                                        <div class="rec-indicator">
+                                                            <div class="rec-dot"></div>
+                                                            <span>Play</span>
                                                         </div>
+                                                    </div>
+
+                                                    <div class="holo-frame video-mode">
+                                                        <video loop autoplay muted playsinline preload="auto"
+                                                            class="holo-video">
+                                                            <source src="./video/webm/R-04.webm">
+                                                        </video>
                                                     </div>
                                                 </div>
                                             </div>
@@ -436,11 +442,12 @@
                             </div>
                         </div>
                     </section>
-                    <section class="tech-section">
+
+                    <section class="tech-section ts-04">
                         <div class="linking-box" id="ts-04"></div>
                         <div class="breakout-zone">
                             <div class="title-zone">
-                                <div class="tech-section-number-zone -number-03">
+                                <div class="tech-section-number-zone -number-04">
                                     <div class="tech-section-number-container">
                                         <span class="tech-section-number">04</span>
                                     </div>
@@ -453,24 +460,52 @@
 
                             <div class="breakout-container">
                                 <div class="tech-panel full">
-                                    <div class="panel-header"><i class="fa-solid fa-desktop"></i> 桌面端：優化高密度資料呈現</div>
+                                    <div class="panel-header">
+                                        <i class="fa-solid fa-desktop"></i>
+                                        桌面端：優化高密度資料呈現
+                                    </div>
                                     <div class="panel-body">
+                                        <p class="list-top-article-content">
+                                            針對後台系統資訊過載的問題，我重新定義了版面配置優先級。
+                                        </p>
                                         <ul class="list-container">
                                             <li class="item-box">
                                                 <div class="bullet-points dot">●</div>
-                                                <p><strong>導航體驗：</strong>固定 Sidebar 寬度並導入階層式選單。</p>
+                                                <p>
+                                                    <strong>導航體驗：</strong>
+                                                    固定 Sidebar 寬度並導入階層式選單，確保導航文字不因內容擠壓而換行，維持清晰的導引功能。
+                                                </p>
                                             </li>
                                             <li class="item-box">
                                                 <div class="bullet-points dot">●</div>
-                                                <p><strong>表格易讀性：</strong>保留欄位最佳寬度並搭配水平滾動 (Horizontal Scroll)，優先展示重要數據。
+                                                <p>
+                                                    <strong>表格易讀性：</strong>
+                                                    捨棄強行縮放表格的作法，改為保留欄位最佳寬度並搭配水平滾動 (Horizontal
+                                                    Scroll)，優先展示重要數據，降低使用者閱讀壓力。
                                                 </p>
                                             </li>
                                         </ul>
-                                        <div class="logic-visuals-container column-2">
-                                            <div class="holo-frame"><img src="./img/png/br-08.png" alt="Desktop UI 1"
-                                                    class="holo-img"></div>
-                                            <div class="holo-frame"><img src="./img/png/br-09.png" alt="Desktop UI 2"
-                                                    class="holo-img"></div>
+                                        <div class="comparison img-wrapper">
+                                            <div class="logic-visuals-container horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-08.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="visual-card wide">
+                                                    <div class="corner c-tl"></div>
+                                                    <div class="corner c-tr"></div>
+                                                    <div class="corner c-bl"></div>
+                                                    <div class="corner c-br"></div>
+                                                    <span class="card-label">// 優化 After</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-09.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -479,114 +514,502 @@
                                     <div class="panel-header"><i class="fa-solid fa-mobile-screen"></i> 移動端：Table to
                                         Card 響應式轉換</div>
                                     <div class="panel-body">
-                                        <p>當螢幕小於 767px 時，自動將複雜的表格資料轉換為卡片式 (Card UI) 排列，符合移動裝置垂直瀏覽習慣。</p>
-                                        <div class="logic-visuals-container column-2">
-                                            <div class="holo-frame"><img src="./img/png/br-07.png" alt="Mobile UI 1"
-                                                    class="holo-img"></div>
-                                            <div class="holo-frame"><img src="./img/png/br-10.png" alt="Mobile UI 2"
-                                                    class="holo-img"></div>
+                                        <p class="list-top-article-content">
+                                            為了讓使用者能隨時隨地透過平板或手機操作後台，我制定了明確的RWD策略。
+                                        </p>
+                                        <ul class="list-container">
+                                            <li class="item-box">
+                                                <div class="bullet-points dot">●</div>
+                                                <p>
+                                                    <strong>移動裝置體驗：</strong>
+                                                    當螢幕小於 767px 時，自動將複雜的表格資料轉換為 卡片式 (Card UI)
+                                                    排列。這符合移動裝置的垂直瀏覽習慣，確保資訊在窄螢幕上依然清晰可讀。
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <div class="comparison img-wrapper">
+                                            <div class="logic-visuals-container horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-07.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper Swiper-1">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="visual-card wide swiper-slide">
+                                                            <span class="card-label">
+                                                                // 優化 After
+                                                            </span>
+                                                            <div class="img-container holo-frame">
+                                                                <img src="./img/png/br-10.png" alt="Comparison"
+                                                                    class="tech-img img-controller">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="visual-card video-zone swiper-slide">
+                                                            <div class="card-video-title">
+                                                                <span class="card-label">// 優化 After</span>
+                                                                <div class="rec-indicator">
+                                                                    <div class="rec-dot"></div>
+                                                                    <span>Play</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="holo-frame video-mode">
+                                                                <video loop="" autoplay="" muted="" playsinline=""
+                                                                    preload="auto" class="holo-video">
+                                                                    <source src="./video/webm/R-06 nq.webm">
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="swiper-button-next"></div>
+                                                    <div class="swiper-button-prev"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="tech-panel full">
-                                    <div class="panel-header"><i class="fa-solid fa-filter"></i> 邏輯統一：標準化篩選模組</div>
+                                    <div class="panel-header">
+                                        <i class="fa-solid fa-cubes"></i>
+                                        邏輯統一：標準化篩選模組
+                                    </div>
                                     <div class="panel-body">
-                                        <p>選定擴充性最佳的「統一篩選側欄」模組。將觸發按鈕固定於 Header，側欄容器共用，內容動態注入。</p>
-                                        <div class="logic-visuals-container column-2">
-                                            <div class="holo-frame"><img src="./img/png/br-11.png" alt="Filter Module 1"
-                                                    class="holo-img"></div>
-                                            <div class="holo-frame"><img src="./img/png/br-11-1.png"
-                                                    alt="Filter Module 2" class="holo-img"></div>
+                                        <p class="list-top-article-content">
+                                            解決舊系統中篩選功能散落、邏輯不一的問題。
+                                        </p>
+                                        <ul class="list-container">
+                                            <li class="item-box">
+                                                <div class="bullet-points dot">●</div>
+                                                <p><strong>架構決策：</strong>
+                                                    考量設計落地性，我主動規劃了兩套實作方案（共用入口 vs
+                                                    各頁獨立按鈕）並發起技術評估。經與工程師討論後，選定擴充性最佳的「統一篩選側欄」模組。
+                                                </p>
+                                            </li>
+                                            <li class="item-box">
+                                                <div class="bullet-points dot">●</div>
+                                                <p><strong>設計落地：</strong>
+                                                    將觸發按鈕固定於 Header，側欄容器共用，內容則由各頁面動態注入。這不僅統一了全站的操作心智模型，也讓程式碼結構更易於維護與擴充。
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <div class="comparison img-wrapper">
+                                            <div class="logic-visuals-container horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-11.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper Swiper-1">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="visual-card wide swiper-slide">
+                                                            <span class="card-label">
+                                                                // 優化 After
+                                                            </span>
+                                                            <div class="img-container holo-frame">
+                                                                <img src="./img/png/br-11-1.png" alt="Comparison"
+                                                                    class="tech-img img-controller">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="visual-card video-zone swiper-slide">
+                                                            <div class="card-video-title">
+                                                                <span class="card-label">// 優化 After</span>
+                                                                <div class="rec-indicator">
+                                                                    <div class="rec-dot"></div>
+                                                                    <span>Play</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="holo-frame video-mode">
+                                                                <video loop="" autoplay="" muted="" playsinline=""
+                                                                    preload="auto" class="holo-video">
+                                                                    <source src="./video/webm/R-02 nq.webm">
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="swiper-button-next"></div>
+                                                    <div class="swiper-button-prev"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-05">
                         <div class="linking-box" id="ts-05"></div>
-                        <div class="default-zone">
+                        <div class="breakout-zone">
                             <div class="title-zone">
                                 <div class="title-container">
                                     <div class="section-label">// VISUAL_INTEGRATION</div>
                                     <h2 class="tech-heading">套件與原生元件重構：<br>極致視覺統合</h2>
                                 </div>
-                                <div class="tech-section-number-zone -number-04">
+                                <div class="tech-section-number-zone -number-05">
                                     <div class="tech-section-number-container">
                                         <span class="tech-section-number">05</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="default-container">
+                            <div class="breakout-container">
                                 <div class="conversation-layout">
                                     <div class="conversation-zone">
-                                        <div class="conversation-container accent">
+                                        <div class="conversation-container">
                                             <div class="conversation-header"><i class="fa-solid fa-code"></i>
                                                 突破技術限制：SweetAlert2</div>
                                             <div class="conversation-body">
-                                                <p>面臨樣式被封裝在 JS 中的難題。我直接進入 JS 檔案調整參數與 Class，將風格迥異的套件客製化為標準元件。</p>
+                                                <h4 class="neon-subtitle">
+                                                    JS 套件深度客製
+                                                </h4>
+                                                <p class="list-top-article-content">
+                                                    在整合第三方提示套件 SweetAlert2 時，面臨樣式與結構被封裝在 JavaScript 中，導致標準 CSS 覆蓋失效的難題。
+                                                </p>
+                                                <ul class="list-container">
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 1]
+
+                                                        </p>
+                                                        <p>
+                                                            <strong>協作解決：</strong>我主動提出視覺整合需求，並與工程師協作。由工程師協助梳理JS設定檔結構，創造出讓我能介入的維護空間。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 2]
+
+                                                        </p>
+                                                        <p>
+                                                            <strong>直接實作：</strong>我直接進入 JS 檔案中調整樣式參數與 Class 設定，
+                                                            「客製化」為符合設計系統規範的標準元件。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            ★結果：
+                                                        </p>
+                                                        <p>
+                                                            成功將原本風格迥異的套件樣式統一，實現了<strong>真正意義上的參與設計落地</strong>。
+                                                        </p>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="visual-full">
-                                        <div class="holo-frame"><img src="./img/png/br-14.png"
-                                                alt="SweetAlert2 Customization" class="holo-img"></div>
+                                </div>
+                                <h3 class="neon-subtitle">前後對比 － SweetAlert2</h3>
+                                <div class="comparison img-wrapper">
+                                    <div class="logic-visuals horizontal beforeAndAfter">
+                                        <div class="visual-card wide">
+                                            <span class="card-label">// BEFORE 樣式不符設計系統</span>
+                                            <div class="img-container holo-frame">
+                                                <img src="./img/png/br-14.png" alt="Comparison"
+                                                    class="tech-img img-controller">
+                                            </div>
+                                        </div>
+                                        <div class="visual-card video-zone">
+                                            <div class="corner c-tl"></div>
+                                            <div class="corner c-tr"></div>
+                                            <div class="corner c-bl"></div>
+                                            <div class="corner c-br"></div>
+                                            <div class="card-video-title">
+                                                <span class="card-label">// 優化 AFTER</span>
+                                                <div class="rec-indicator">
+                                                    <div class="rec-dot"></div>
+                                                    <span>Play</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="holo-frame video-mode">
+                                                <video loop autoplay muted playsinline preload="auto"
+                                                    class="holo-video">
+                                                    <source src="./video/webm/R-09 nq.webm">
+                                                </video>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <h3 class="neon-subtitle">表單與功能元件的全面統合</h3>
-                                <p>針對 select2 多選擇套件、TinyMCE 文章編輯器等進行標準化。透過全域 CSS 覆寫消除視覺差異。</p>
+                                <div class="conversation-layout">
+                                    <div class="conversation-zone">
+                                        <div class="conversation-container accent">
+                                            <div class="conversation-header">
+                                                <i class="fa-brands fa-css"></i>
+                                                廣泛覆蓋：select2、TinyMCE、flatpickr、pagination
+                                            </div>
+                                            <div class="conversation-body">
+                                                <h4 class="neon-subtitle">
+                                                    表單與功能元件的全面統合
+                                                </h4>
+                                                <p class="list-top-article-content">
+                                                    針對後台常見的視覺樣式衝突套件：TinyMCE HTML文章編輯器、flatpickr日期時間工具、select2
+                                                    多選擇工具等常見的第三方套件，我也逐一進行了標準化處理。
+                                                </p>
+                                                <ul class="list-container">
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 1]
 
-                                <div class="logic-visuals-container column-2">
-                                    <div class="holo-frame"><img src="./img/png/br-16.png" alt="Component 1"
-                                            class="holo-img">
-                                    </div>
-                                    <div class="holo-frame"><img src="./img/png/br-15.png" alt="Component 2"
-                                            class="holo-img">
+                                                        </p>
+                                                        <p>
+                                                            <strong>全局整合：</strong>
+                                                            我不僅處理了單一元件，更將所有第三方套件的控制項與導航頁碼納入規範。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 2]
+                                                        </p>
+                                                        <p>
+                                                            <strong>視覺一致：</strong>
+                                                            透過全域 CSS 覆寫，消除不同套件原生的樣式差異（如邊框顏色、圓角、選取狀態、按鈕、文字顏色）。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            ★結果：
+                                                        </p>
+                                                        <p>
+                                                            使用者在操作任何功能時，都能獲得一致性的視覺回饋。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="logic-visuals-container column-2">
-                                    <div class="holo-frame"><img src="./img/png/br-19.png" alt="Component 3"
-                                            class="holo-img">
+                                <h3 class="neon-subtitle">前後對比 － 全局統整</h3>
+                                <div class="swiper Swiper-1">
+                                    <div class="swiper-wrapper">
+                                        <div class="comparison img-wrapper swiper-slide">
+                                            <div class="logic-visuals horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE select2樣式與設計不符</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-16.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="visual-card video-zone">
+                                                    <div class="corner c-tl"></div>
+                                                    <div class="corner c-tr"></div>
+                                                    <div class="corner c-bl"></div>
+                                                    <div class="corner c-br"></div>
+                                                    <div class="card-video-title">
+                                                        <span class="card-label">// AFTER select2樣式修改符合全局</span>
+                                                        <div class="rec-indicator">
+                                                            <div class="rec-dot"></div>
+                                                            <span>Play</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="holo-frame video-mode">
+                                                        <video loop autoplay muted playsinline preload="auto"
+                                                            class="holo-video">
+                                                            <source src="./video/webm/R-11 nq.webm">
+                                                        </video>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comparison img-wrapper swiper-slide">
+                                            <div class="logic-visuals horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE TinyMCE與設計系統衝突</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-15.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="visual-card wide">
+                                                    <div class="corner c-tl"></div>
+                                                    <div class="corner c-tr"></div>
+                                                    <div class="corner c-bl"></div>
+                                                    <div class="corner c-br"></div>
+                                                    <span class="card-label">// After 覆寫TinyMCE樣式保持視覺一致</span>
+                                                    <div class="img-container holo-frame">
+
+                                                        <img src="./img/png/br-19.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comparison img-wrapper swiper-slide">
+                                            <div class="logic-visuals horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE flatpickr樣式衝突</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-13.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="visual-card wide">
+                                                    <div class="corner c-tl"></div>
+                                                    <div class="corner c-tr"></div>
+                                                    <div class="corner c-bl"></div>
+                                                    <div class="corner c-br"></div>
+                                                    <span class="card-label">// After 優化flatpickr符合設計規範</span>
+                                                    <div class="img-container holo-frame">
+
+                                                        <img src="./img/png/br-18.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comparison img-wrapper swiper-slide">
+                                            <div class="logic-visuals horizontal beforeAndAfter">
+                                                <div class="visual-card wide">
+                                                    <span class="card-label">// BEFORE pagination與設計系統衝突</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-17.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                                <div class="visual-card wide">
+                                                    <div class="corner c-tl"></div>
+                                                    <div class="corner c-tr"></div>
+                                                    <div class="corner c-bl"></div>
+                                                    <div class="corner c-br"></div>
+                                                    <span class="card-label">// After pagination與全局一致</span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-20.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="holo-frame"><img src="./img/png/br-13.png" alt="Component 4"
-                                            class="holo-img">
-                                    </div>
-                                </div>
-                                <div class="logic-visuals-container column-3">
-                                    <div class="holo-frame"><img src="./img/png/br-18.png" alt="Component 5"
-                                            class="holo-img">
-                                    </div>
-                                    <div class="holo-frame"><img src="./img/png/br-17.png" alt="Component 6"
-                                            class="holo-img">
-                                    </div>
-                                    <div class="holo-frame"><img src="./img/png/br-20.png" alt="Component 7"
-                                            class="holo-img">
-                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
                                 </div>
 
-                                <h3 class="neon-subtitle">原生元件重構</h3>
-                                <p>摒棄原生 Select 標籤，重寫符合 Design System 的下拉選單結構，克服瀏覽器渲染差異。</p>
-                                <div class="logic-visuals-container column-2">
-                                    <div class="holo-frame"><img src="./img/png/br-21.png" alt="Native Select 1"
-                                            class="holo-img">
+                                <div class="conversation-layout">
+                                    <div class="conversation-zone">
+                                        <div class="conversation-container">
+                                            <div class="conversation-header">
+                                                <i class="fa-brands fa-windows"></i>
+                                                摒棄原生標籤：&lt; select &gt;
+                                            </div>
+                                            <div class="conversation-body">
+                                                <h4 class="neon-subtitle">
+                                                    原生元件重構&nbsp;&nbsp;突破瀏覽器限制
+                                                </h4>
+                                                <p class="list-top-article-content">
+                                                    為了克服作業系統渲染差異帶來的視覺斷層，<strong>我主動針對原生 &lt; select
+                                                        &gt;進行核心架構重建</strong>，並建立Style Component提升
+                                                    重構效率與後續維護。
+                                                </p>
+                                                <ul class="list-container">
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 1]
+
+                                                        </p>
+                                                        <p>
+                                                            <strong>評估會議：</strong>
+                                                            主動發起會議，提供HTML、CSS修改實例與工程師討論進行技術與時間成本評估，確保重構不消耗專案資源。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 2]
+                                                        </p>
+                                                        <p>
+                                                            <strong>核心重構：</strong>
+                                                            摒棄原生標籤，重新編寫符合 Design System 的下拉選單結構。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            [STEP 3]
+                                                        </p>
+                                                        <p>
+                                                            <strong>無縫協作：
+                                                            </strong>我直接交付包含清楚註解與狀態樣式 (如.active) 的 .cshtml
+                                                            程式碼，讓後端工程師只需專注於資料綁定與點擊邏輯。
+                                                        </p>
+                                                    </li>
+                                                    <li class="step-box">
+                                                        <p class="step-indicator">
+                                                            ★結果：
+                                                        </p>
+                                                        <p>
+                                                            克服網站中常見的選擇單視覺風格衝突，成功實現了全站一致的高客製化選單體驗。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="holo-frame"><img src="./img/png/br-22.png" alt="Native Select 2"
-                                            class="holo-img">
+                                </div>
+                                <h3 class="neon-subtitle">前後對比 － &lt; select &gt;</h3>
+                                <div class="comparison img-wrapper">
+                                    <div class="logic-visuals horizontal beforeAndAfter">
+                                        <div class="visual-card wide">
+                                            <span class="card-label">// BEFORE 元件樣式與設計系統不符</span>
+                                            <div class="img-container holo-frame">
+                                                <img src="./img/png/br-21.png" alt="Comparison"
+                                                    class="tech-img img-controller">
+                                            </div>
+                                        </div>
+                                        <div class="swiper Swiper-1">
+                                            <div class="swiper-wrapper">
+                                                <div class="visual-card wide swiper-slide">
+                                                    <span class="card-label">
+                                                        // 優化 After
+                                                    </span>
+                                                    <div class="img-container holo-frame">
+                                                        <img src="./img/png/br-22.png" alt="Comparison"
+                                                            class="tech-img img-controller">
+                                                    </div>
+
+                                                </div>
+                                                <div class="visual-card video-zone swiper-slide">
+                                                    <div class="card-video-title">
+                                                        <span class="card-label">// 優化 After</span>
+                                                        <div class="rec-indicator">
+                                                            <div class="rec-dot"></div>
+                                                            <span>Play</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="holo-frame video-mode">
+                                                        <video loop="" autoplay="" muted="" playsinline=""
+                                                            preload="auto" class="holo-video">
+                                                            <source src="./video/webm/R-08 nq.webm">
+                                                        </video>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-button-next"></div>
+                                            <div class="swiper-button-prev"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-06">
                         <div class="linking-box" id="ts-06"></div>
                         <div class="default-zone">
                             <div class="title-zone">
-                                <div class="tech-section-number-zone -number-05">
+                                <div class="tech-section-number-zone -number-06">
                                     <div class="tech-section-number-container">
                                         <span class="tech-section-number">06</span>
                                     </div>
@@ -601,19 +1024,23 @@
                                 <div class="conclusion-card">
                                     <div class="card-glow"></div>
                                     <div class="card-content">
-                                        <p>這個專案不僅是一次介面重構，更是協作模式的革新。透過 Git 同步開發與程式碼實作，成功打破「設計交付 vs 工程實作」的高牆。</p>
+                                        <p>
+                                            這個專案不僅是一次介面重構，更是協作模式的革新。透過 Git 同步開發與程式碼實作，成功打破「設計交付 vs 工程實作」的高牆。
+
+                                            我跳脫了傳統設計師的角色邊界，透過 Git 同步開發 與 程式碼實作，成功打破了「設計交付 vs 工程實作」的高牆，並具體解決了三大問題：
+                                        </p>
                                         <ul class="achievement-list">
                                             <li>
                                                 <i class="fa-solid fa-check-circle"></i>
-                                                <span><strong>降低溝通成本：</strong>直接修正 UI 細節，減少來回確認時間。</span>
+                                                <span><strong>降低溝通成本：</strong>直接修正 UI 細節，減少來回確認與製作標註文件的時間。</span>
                                             </li>
                                             <li>
                                                 <i class="fa-solid fa-check-circle"></i>
-                                                <span><strong>消除落地落差：</strong>確保最終產品視覺與互動細節分毫不差。</span>
+                                                <span><strong>消除落地落差：</strong>確保最終產品的視覺與互動細節，與設計稿分毫不差。</span>
                                             </li>
                                             <li>
                                                 <i class="fa-solid fa-check-circle"></i>
-                                                <span><strong>提升團隊效率：</strong>工程師專注邏輯，設計師全權掌握視覺品質。</span>
+                                                <span><strong>提升團隊效率：</strong>讓工程師專注於後端邏輯，讓設計師全權掌握視覺品質。</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -627,8 +1054,23 @@
         </div>
     </main>
 
-    <script src="../works.js"></script>
+
+    <script src="../../js/particle-core.js"></script>
+    <script src="../../js/navegation.js"></script>
+    <script src="../js/works.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".Swiper-1", {
+            pagination: {
+                el: ".swiper-pagination",
+                type: "progressbar",
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
 </body>
 
 </html>

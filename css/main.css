@@ -2,6 +2,8 @@
 @import url("./design-system/color-system.css");
 @import url("./design-system/font-system.css");
 
+@import url("../asset/fontawsome/css/all.css");
+
 @import url("./component/button/button.css");
 @import url("./component/particle/particle.css");
 @import url("./component/nav/nav.css");

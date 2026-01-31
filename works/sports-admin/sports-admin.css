@@ -6,11 +6,10 @@
 /* --- 本頁專屬佈局邏輯 --- */
 .sports-admin {
   /* 1. 3欄網格系統 */
-  /* 2. Tech Card (新增：帶說明的圖文卡片) */
   /* 3. 特殊元件微調 */
   /* --- 4. 垂直節奏系統 (間距補償) --- */
 }
-.sports-admin .tech-section .title-zone:has(.-number-02), .sports-admin .tech-section .title-zone:has(.-number-04) {
+.sports-admin .tech-section .title-zone:has(.-number-02), .sports-admin .tech-section .title-zone:has(.-number-05) {
   justify-content: space-between;
 }
 .sports-admin .tech-section .tech-section-number-zone {
@@ -46,11 +45,11 @@
   width: -moz-fit-content;
   width: fit-content;
   opacity: 0.5;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 .sports-admin .tech-section .tech-section-number-zone.-number-04 .tech-section-number {
   color: var(--color-text-secondary);
-  font-size: clamp(120px, 20vw, 16rem);
+  font-size: clamp(100px, 20vw, 12rem);
   width: -moz-fit-content;
   width: fit-content;
 }
@@ -60,7 +59,7 @@
 }
 .sports-admin .tech-section .tech-section-number-zone.-number-05 .tech-section-number {
   color: var(--color-neon);
-  font-size: clamp(100px, 17vw, 10rem);
+  font-size: clamp(140px, 17vw, 16rem);
 }
 .sports-admin .tech-section .tech-section-number-zone.-number-06 .tech-section-number-container {
   margin-top: -55px;
@@ -77,7 +76,7 @@
 .sports-admin .tech-section .logic-visuals-zone .logic-visuals-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 10px;
 }
 .sports-admin .column-3 {
   display: grid;
@@ -86,6 +85,49 @@
 }
 .sports-admin .data-item.article {
   padding-left: 0.75rem;
+}
+.sports-admin .img-wrapper .beforeAndAfter .img-container {
+  height: 100%;
+}
+.sports-admin .ts-02 .panel-body .holo-frame.img-container {
+  margin-top: 12px;
+}
+.sports-admin .ts-02 .holo-frame.img-container {
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  width: 100%;
+}
+.sports-admin .ts-02 .holo-frame.img-container .img-controller {
+  width: auto;
+  max-width: 100%;
+  max-height: 760px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.sports-admin .ts-03 .column-2.beforeAndAfter {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.sports-admin .ts-04 .img-zone {
+  margin-top: 12px;
+}
+.sports-admin .ts-04 .img-wrapper {
+  margin-top: 12px;
+}
+.sports-admin .ts-05 .conversation-layout {
+  max-width: 100%;
+}
+.sports-admin .ts-05 .conversation-layout .conversation-container {
+  margin-bottom: 0;
+}
+.sports-admin .ts-05 .conversation-layout .conversation-container.accent {
+  max-width: 92%;
+}
+.sports-admin .ts-05 .conversation-layout:not(:first-of-type) {
+  margin-top: clamp(80px, 10vw, 110px);
 }
 .sports-admin .tech-card {
   display: flex;
@@ -150,23 +192,16 @@
 }
 .sports-admin .tech-panel.full {
   width: 100%;
+  margin-bottom: 32px;
+}
+.sports-admin .tech-panel.full:last-of-type {
+  margin-bottom: 0;
 }
 .sports-admin .ide-content.raw-mode {
   padding: 0;
 }
 .sports-admin .panel-body p:last-child {
   margin-bottom: 0;
-}
-.sports-admin .panel-body .holo-frame.img-container {
-  margin-top: 1.5rem;
-  max-height: 760px;
-  display: flex;
-}
-.sports-admin .panel-body .holo-frame.img-container .img-controller {
-  width: auto;
-  height: inherit;
-  -o-object-fit: contain;
-     object-fit: contain;
 }
 .sports-admin .default-container .conversation-layout .visual-full,
 .sports-admin .breakout-container .conversation-layout .visual-full {

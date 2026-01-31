@@ -19,11 +19,6 @@
     <meta property="og:url" content="" />
     <meta property="og:type" content="website" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-
-
-
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="stylesheet" href="../../css/component/scrollbar/scrollbar.css" />
     <link rel="stylesheet" href="../component/layout/layout.css" />
@@ -132,7 +127,7 @@
                 </header>
 
                 <article class="cyber-article">
-                    <section class="tech-section">
+                    <section class="tech-section ts-01">
                         <div class="linking-box" id="ts-01"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -250,7 +245,7 @@
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-02">
                         <div class="linking-box" id="ts-02"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -273,13 +268,13 @@
                             <div class="default-container">
                                 <div class="split-layout">
                                     <div class="visual-side">
-                                        <div class="holo-frame small">
+                                        <div class="holo-frame img-container flex-column">
                                             <img src="./img/png/vc-03.png" alt="Challenge 1"
                                                 class="holo-img img-controller">
 
                                             <span class="img-caption">ERR: NATIVE_APP_PATTERN_IN_WEB</span>
                                         </div>
-                                        <div class="holo-frame small mt-4">
+                                        <div class="holo-frame small img-container">
                                             <div class="img-container">
                                                 <img src="./img/png/vc-02.png" alt="Challenge 2"
                                                     class="holo-img img-controller">
@@ -337,7 +332,7 @@
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-03">
                         <div class="linking-box" id="ts-03"></div>
                         <div class="breakout-zone">
                             <div class="title-zone">
@@ -363,73 +358,82 @@
                                             <div class="panel-header"><i class="fa-solid fa-network-wired"></i> PUSH
                                                 NOTIFICATION
                                                 MATRIX</div>
-                                            <div class="panel-body flex-row">
-                                                <div class="col">
-                                                    <h4 class="neon-subtitle">對應現實情況，解決痛點</h4>
-                                                    <p class="list-top-article-content">
-                                                        針對原本混亂的推播需求，我引入了系統化的分類邏輯，將零散的功能收斂為三大維度，並與後端工程師對焦資料庫結構:</p>
-                                                    <ul class="list-container">
-                                                        <li class="item-box">
-                                                            <div class="bullet-points dot">●</div>
-                                                            <p>訊息類型：區分「系統自動觸發」與「手動推播」。</p>
-                                                        </li>
-                                                        <li class="item-box">
-                                                            <div class="bullet-points triangle">▲</div>
-                                                            <p>發送時機：整合排程邏輯，將原本複雜的設定簡化為「立即發送」與「預約發送」兩種模式，滿足即時通知與活動預熱的需求。
-                                                            </p>
-                                                        </li>
-                                                        <li class="item-box">
-                                                            <div class="bullet-points star">★</div>
-                                                            <p>受眾分群：支援精準 ID 選擇與標籤類別篩選。</p>
-                                                        </li>
-                                                    </ul>
+                                            <div class="logic-visuals-zone">
+                                                <div class="logic-visuals-container">
+                                                    <div class="visual-card fig-left">
+                                                        <span class="card-label">FIG 3.1 系統邏輯流程重建</span>
+                                                        <div class="img-container">
+                                                            <img src="./img/png/vc-05.png" alt="System Logic"
+                                                                class="tech-img img-controller">
+                                                        </div>
+                                                    </div>
+                                                    <div class="article">
+                                                        <h4 class="neon-subtitle">對應現實情況，解決痛點</h4>
+                                                        <p class="list-top-article-content">
+                                                            針對原本混亂的推播需求，我引入了系統化的分類邏輯，將零散的功能收斂為三大維度，並與後端工程師對焦資料庫結構:</p>
+                                                        <ul class="list-container">
+                                                            <li class="item-box">
+                                                                <div class="bullet-points dot">●</div>
+                                                                <p>訊息類型：區分「系統自動觸發」與「手動推播」。</p>
+                                                            </li>
+                                                            <li class="item-box">
+                                                                <div class="bullet-points triangle">▲</div>
+                                                                <p>發送時機：整合排程邏輯，將原本複雜的設定簡化為「立即發送」與「預約發送」兩種模式，滿足即時通知與活動預熱的需求。
+                                                                </p>
+                                                            </li>
+                                                            <li class="item-box">
+                                                                <div class="bullet-points star">★</div>
+                                                                <p>受眾分群：支援精準 ID 選擇與標籤類別篩選。</p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
-                                                <div class="col border-left">
-                                                    <h4 class="neon-subtitle">後台 UX 優化</h4>
-                                                    <ul class="list-container">
-                                                        <li class="item-box">
-                                                            <div class="bullet-points num">1.</div>
-                                                            <p>經由使用者情境分析發現，客戶原想加入的「週期性循環發送」功能使用頻率極低，卻會大幅增加系統複雜度。因此，我主動建議客戶簡化規格，專注於優化最常用的「預約排程」體驗，成功將開發資源集中在刀口上。
-                                                            </p>
-                                                        </li>
-                                                        <li class="item-box">
-                                                            <div class="bullet-points num">2.</div>
-                                                            <p>在後台設計上，我發現原始設計缺少「推播設定」與「歷史紀錄」，導致管理者無法編輯訊息、設定時間。我重新梳理了後台操作流程，將推播功能拆解為單次推播、系統推播兩個子功能入口，並將推播設定與歷史紀錄納入。使操作流程簡化，大幅降低了管理人員的學習門檻。
-                                                            </p>
-                                                        </li>
-                                                        <li class="item-box">
-                                                            <div class="bullet-points star">★</div>
-                                                            <p>結果:
-                                                                客戶高度認可這套系統化的邏輯架構，<strong>我成功導正錯誤需求，轉化為具體可行的設計規格。</strong>
-                                                            </p>
-                                                        </li>
-                                                    </ul>
+                                                <div class="logic-visuals-container">
+                                                    <div class="visual-card fig-right">
+                                                        <span class="card-label">FIG 3.2 資訊架構優化</span>
+                                                        <div class="img-container">
+                                                            <img src="./img/png/vc-07.png" alt="IA"
+                                                                class="tech-img img-controller">
+                                                        </div>
+                                                    </div>
+                                                    <div class="article">
+                                                        <h4 class="neon-subtitle">後台 UX 優化</h4>
+                                                        <ul class="list-container">
+                                                            <li class="item-box">
+                                                                <div class="bullet-points num">1.</div>
+                                                                <p>經由使用者情境分析發現，客戶原想加入的「週期性循環發送」功能使用頻率極低，卻會大幅增加系統複雜度。因此，我主動建議客戶簡化規格，專注於優化最常用的「預約排程」體驗，成功將開發資源集中在刀口上。
+                                                                </p>
+                                                            </li>
+                                                            <li class="item-box">
+                                                                <div class="bullet-points num">2.</div>
+                                                                <p>在後台設計上，我發現原始設計缺少「推播設定」與「歷史紀錄」，導致管理者無法編輯訊息、設定時間。我重新梳理了後台操作流程，將推播功能拆解為單次推播、系統推播兩個子功能入口，並將推播設定與歷史紀錄納入。使操作流程簡化，大幅降低了管理人員的學習門檻。
+                                                                </p>
+                                                            </li>
+                                                            <li class="item-box">
+                                                                <div class="bullet-points star">★</div>
+                                                                <p>結果:
+                                                                    客戶高度認可這套系統化的邏輯架構，<strong>我成功導正錯誤需求，轉化為具體可行的設計規格。</strong>
+                                                                </p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
+
+
                                         </div>
                                     </div>
 
-                                    <div class="logic-visuals-container column-2">
-                                        <div class="visual-card">
-                                            <span class="card-label">FIG 3.1 系統邏輯流程重建</span>
-                                            <div class="img-container">
-                                                <img src="./img/png/vc-05.png" alt="System Logic"
-                                                    class="tech-img img-controller">
-                                            </div>
-                                        </div>
-                                        <div class="visual-card">
-                                            <span class="card-label">FIG 3.2 資訊架構優化</span>
-                                            <div class="img-container">
-                                                <img src="./img/png/vc-07.png" alt="IA" class="tech-img img-controller">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="logic-visuals-zone">
+
+
+                                    <div class="comparison img-wrapper">
                                         <h4 class="neon-subtitle">前後對比</h4>
-                                        <div class="logic-visuals-container column-2 beforeAndAfter">
+                                        <div class="logic-visuals-container virtical beforeAndAfter">
                                             <div class="visual-card wide">
                                                 <span class="card-label">// BEFORE</span>
-                                                <div class="img-container">
+                                                <div class="img-container holo-frame">
                                                     <img src="./img/png/vc-13.png" alt="Comparison"
                                                         class="tech-img img-controller">
                                                 </div>
@@ -447,6 +451,7 @@
                                                         <source src="./video/webm/C-01.webm">
                                                     </video>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -456,7 +461,7 @@
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-04">
                         <div class="linking-box" id="ts-04"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -562,33 +567,33 @@
                                             <div class="git-visual holo-frame">
                                                 <img src="./img/png/vc-08.png" alt="Git Flow" class="holo-img">
                                             </div>
-
-                                            <h3 class="neon-subtitle">前後對比</h3>
-                                            <div class="logic-visuals column-1 beforeAndAfter">
-                                                <div class="visual-card wide">
-                                                    <span class="card-label">// BEFORE</span>
-                                                    <div class="img-container">
-                                                        <img src="./img/png/vc-13.png" alt="Comparison"
-                                                            class="tech-img img-controller">
-                                                    </div>
-                                                </div>
-                                                <div class="visual-card video-zone">
-                                                    <div class="card-video-title">
-                                                        <span class="card-label">// 優化AFTER</span>
-                                                        <div class="rec-indicator">
-                                                            <div class="rec-dot"></div>
-                                                            <span>Play</span>
+                                            <div class="comparison img-wrapper">
+                                                <h3 class="neon-subtitle">前後對比</h3>
+                                                <div class="logic-visuals virtical beforeAndAfter">
+                                                    <div class="visual-card wide">
+                                                        <span class="card-label">// BEFORE</span>
+                                                        <div class="img-container holo-frame">
+                                                            <img src="./img/png/vc-13.png" alt="Comparison"
+                                                                class="tech-img img-controller">
                                                         </div>
                                                     </div>
+                                                    <div class="visual-card video-zone">
+                                                        <div class="card-video-title">
+                                                            <span class="card-label">// 優化AFTER</span>
+                                                            <div class="rec-indicator">
+                                                                <div class="rec-dot"></div>
+                                                                <span>Play</span>
+                                                            </div>
+                                                        </div>
 
-                                                    <div class="holo-frame video-mode">
-                                                        <video loop autoplay muted playsinline class="holo-video">
-                                                            <source src="./video/webm/C-01.webm">
-                                                        </video>
+                                                        <div class="holo-frame video-mode">
+                                                            <video loop autoplay muted playsinline class="holo-video">
+                                                                <source src="./video/webm/C-01.webm">
+                                                            </video>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -596,7 +601,7 @@
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-05">
                         <div class="linking-box" id="ts-05"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -664,12 +669,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="visual-full mt-4">
-                                        <h4 class="neon-subtitle">優化對比</h4>
-                                        <div class="logic-visuals-container column-2 beforeAndAfter">
+                                    <div class="comparison img-wrapper">
+                                        <h4 class="neon-subtitle">前後對比</h4>
+                                        <div class="logic-visuals-container virtical beforeAndAfter">
                                             <div class="visual-card wide">
                                                 <span class="card-label">// BEFORE</span>
-                                                <div class="img-container">
+                                                <div class="img-container holo-frame">
                                                     <img src="./img/png/vc-10.png" alt="Comparison"
                                                         class="tech-img img-controller">
                                                 </div>
@@ -697,7 +702,7 @@
                         </div>
                     </section>
 
-                    <section class="tech-section">
+                    <section class="tech-section ts-06">
                         <div class="linking-box" id="ts-06"></div>
                         <div class="default-zone">
                             <div class="title-zone">
@@ -752,7 +757,9 @@
     </main>
 
 
-    <script src="../works.js"></script>
+    <script src="../../js/particle-core.js"></script>
+    <script src="../../js/navegation.js"></script>
+    <script src="../js/works.js"></script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>

@@ -88,6 +88,76 @@
                 }
             }
         }
+
+        &.ts-02 {
+            .holo-frame.small {
+                margin-top: 30px;
+            }
+
+            .panel-body>.neon-subtitle {
+                margin-top: 0;
+            }
+
+            .analysis-zone .neon-subtitle {
+                margin-top: 0;
+            }
+        }
+
+        &.ts-03 {
+            .logic-visuals-zone {
+                width: 100%;
+                height: fit-content;
+                padding: clamp(16px, 3vw, 32px);
+                display: flex;
+                flex-direction: column;
+
+                .neon-subtitle {
+                    margin-top: 0;
+                }
+
+                .logic-visuals-container {
+                    &:nth-child(1) {
+                        padding-bottom: 40px;
+
+
+                    }
+
+                    &:nth-child(2) {
+                        padding-top: 40px;
+                        border-top: var(--border-tech);
+                    }
+
+                    display: grid;
+                    grid-template-columns:1.4fr 1fr;
+                    grid-template-rows: 1fr;
+                    width: 100%;
+                    height: auto;
+                    grid-auto-flow: row;
+                    gap: 30px;
+
+                    .visual-card {
+                        height: fit-content;
+                    }
+
+                    .article {
+                        padding: 0 1rem 1rem 1rem;
+                    }
+
+                    .list-container {
+                        gap: 20px;
+                    }
+                }
+
+            }
+        }
+
+        &.ts-05 {
+            .accent {
+                .conversation-header i {
+                    transform: scaleX(-1);
+                }
+            }
+        }
     }
 }
 
@@ -101,6 +171,25 @@
         &.-number-02 .tech-section-number-container {
             margin-top: 0px;
         }
+    }
+
+    .social-platform .tech-section.ts-02 .holo-frame.small {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 990px) {
+    .social-platform .tech-section.ts-03 .logic-visuals-zone .logic-visuals-container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .social-platform .tech-section.ts-03 .logic-visuals-zone .logic-visuals-container .article {
+        padding: 0;
+    }
+
+    .social-platform .tech-section.ts-03 .logic-visuals-zone .logic-visuals-container .list-container {
+        gap: 1rem;
     }
 }
 
