@@ -242,6 +242,10 @@
         .item-box.-result {
             display: flex;
             flex-direction: column;
+
+            .swiper:first-of-type {
+                margin-bottom: 20px;
+            }
         }
 
         .swiper {

@@ -180,6 +180,9 @@
   display: flex;
   flex-direction: column;
 }
+.xsvheiy .ts-03 .item-box.-result .swiper:first-of-type {
+  margin-bottom: 20px;
+}
 .xsvheiy .ts-03 .swiper {
   height: -moz-fit-content;
   height: fit-content;
