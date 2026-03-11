@@ -6,6 +6,15 @@
 
 /* --- 本頁專屬佈局邏輯 --- */
 .xsvheiy {
+    .case-content-zone {
+        max-width: calc(1640px + 1.3rem);
+        ;
+
+        .scrollbar-style01-inner {
+            width: 100%;
+        }
+    }
+
     .tech-section {
         .title-zone {
 
@@ -229,45 +238,23 @@
             grid-template-columns: 1fr;
             grid-auto-flow: row;
         }
-    }
 
-    .ts-04 {
-        .img-zone {
-            margin-top: 12px;
+        .item-box.-result {
+            display: flex;
+            flex-direction: column;
         }
 
-        .img-wrapper {
-            margin-top: 12px;
+        .swiper {
+            height: fit-content;
+            max-width: 900px;
+        }
+
+        .vd-wrapper.vd-ship {
+            max-height: unset;
         }
     }
 
-    .ts-05 {
-        .conversation-layout {
-            max-width: 100%;
 
-            .conversation-container {
-                margin-bottom: 0;
-
-                &.accent {
-                    max-width: 92%;
-                }
-            }
-
-
-
-            &:not(:first-of-type) {
-                margin-top: clamp(80px, 10vw, 110px);
-            }
-        }
-
-        // .neon-subtitle:nth-of-type(2) {
-        //     display: block;
-        //     width: fit-content;
-        //     margin-right: 0;
-        //     margin-left: auto;
-        // }
-
-    }
 
     .tech-card {
         display: flex;
@@ -376,6 +363,36 @@
         margin-bottom: 1.5rem;
     }
 
+
+
+    .vd-wrapper.vd-ship {
+        padding: .5rem 1rem 0rem .5rem;
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        max-height: 408px;
+
+        .vd-outter-container {
+            width: 100%;
+            height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            outline: 3px solid var(--color-accent);
+            outline-offset: -1px;
+            overflow: hidden;
+            border-radius: 8px;
+
+            &.-mobile {
+                width: fit-content;
+            }
+
+        }
+    }
 }
 
 

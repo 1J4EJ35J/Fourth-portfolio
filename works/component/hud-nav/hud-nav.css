@@ -25,12 +25,10 @@
   width: fit-content;
 }
 .hud-nav .nav ul {
-  -webkit-backdrop-filter: blur(8px);
-          backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 .hud-nav .nav ul li .nav-btn {
-  -webkit-backdrop-filter: initial;
-          backdrop-filter: initial;
+  backdrop-filter: initial;
 }
 .hud-nav .nav .nav-btn {
   padding: 0.25rem 1.25rem;

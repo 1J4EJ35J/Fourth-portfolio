@@ -7,8 +7,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap");
 /* --- Variables --- */
 :root {
-  --font-tech: "Orbitron", "Outfit", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-data: "Roboto", "Noto Sans TC", sans-serif;
+  --font-tech: 'Orbitron', 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-data: 'Roboto', 'Noto Sans TC', sans-serif;
   --color-neon: #008cff;
   --color-neon-2: #00ccff;
   --color-neon-dim: rgba(0, 140, 255, 0.3);
@@ -161,12 +161,13 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Title Zone & Numbers */
-  /* Text Components */
 }
 .tech-section .linking-box {
   position: absolute;
   top: -180px;
+}
+.tech-section {
+  /* Title Zone & Numbers */
 }
 .tech-section .title-zone {
   display: flex;
@@ -200,6 +201,9 @@ p {
   height: -moz-fit-content;
   height: fit-content;
 }
+.tech-section {
+  /* Text Components */
+}
 .tech-section .section-label {
   font-family: var(--font-tech);
   color: var(--color-neon);
@@ -219,8 +223,7 @@ p {
 .tech-panel {
   background: var(--bg-panel);
   border: var(--border-tech);
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   overflow: hidden;
   height: -moz-fit-content;
   height: fit-content;
@@ -469,10 +472,12 @@ p {
   border: 1px solid var(--color-neon-dim);
   padding: 10px;
   background: rgba(0, 140, 255, 0.02);
-  /* Video Mode */
 }
 .holo-frame .holo-img {
   width: 100%;
+}
+.holo-frame {
+  /* Video Mode */
 }
 .holo-frame.video-mode {
   width: 100%;
@@ -526,6 +531,10 @@ p {
   border-top: none;
 }
 
+.img-container.flex-column {
+  flex-direction: column;
+  align-items: start;
+}
 .img-container {
   width: 100%;
   height: -moz-fit-content;
@@ -533,10 +542,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.img-container.flex-column {
-  flex-direction: column;
-  align-items: start;
 }
 .img-container .img-controller,
 .img-container .tech-img {
@@ -680,8 +685,7 @@ p {
 .transparent {
   background: transparent;
   border: none;
-  -webkit-backdrop-filter: none;
-          backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .code-block {
@@ -834,8 +838,7 @@ p {
   outline: 1px solid rgba(0, 140, 255, 0.5);
   outline-offset: -1px;
   border-radius: 50%;
-  -webkit-backdrop-filter: blur(8px);
-          backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   box-shadow: 0 0 4px rgba(0, 140, 255, 0.1), inset 0 0 4px rgba(0, 140, 255, 0.05);
   transition: all 0.3s ease-out;
 }

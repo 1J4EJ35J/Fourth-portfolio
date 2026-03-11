@@ -4,11 +4,6 @@
 @import "../../css/main.css";
 @import "../component/layout/layout.css";
 /* --- 本頁專屬佈局邏輯 --- */
-.sports-admin {
-  /* 1. 3欄網格系統 */
-  /* 3. 特殊元件微調 */
-  /* --- 4. 垂直節奏系統 (間距補償) --- */
-}
 .sports-admin .tech-section .title-zone:has(.-number-02), .sports-admin .tech-section .title-zone:has(.-number-05) {
   justify-content: space-between;
 }
@@ -78,6 +73,9 @@
   flex-direction: column;
   gap: 10px;
 }
+.sports-admin {
+  /* 1. 3欄網格系統 */
+}
 .sports-admin .column-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -137,13 +135,14 @@
   overflow: hidden;
   height: 100%;
   transition: all 0.3s ease;
-  /* 圖片區域 */
-  /* 文字內容區域 */
 }
 .sports-admin .tech-card:hover {
   border-color: var(--color-neon);
   box-shadow: 0 0 15px rgba(0, 140, 255, 0.15);
   transform: translateY(-2px);
+}
+.sports-admin .tech-card {
+  /* 圖片區域 */
 }
 .sports-admin .tech-card .card-visual {
   width: 100%;
@@ -163,6 +162,9 @@
   mix-blend-mode: normal;
   /* 卡片內的圖片保持原色 */
 }
+.sports-admin .tech-card {
+  /* 文字內容區域 */
+}
 .sports-admin .tech-card .card-content {
   padding: 1.5rem;
   display: flex;
@@ -171,7 +173,6 @@
   gap: 0.75rem;
   flex-grow: 1;
   /* 標籤 (Pill Shape) */
-  /* 說明文字 */
 }
 .sports-admin .tech-card .card-content .tech-tag {
   background: rgba(255, 255, 255, 0.9);
@@ -183,12 +184,18 @@
   font-family: var(--font-tech);
   letter-spacing: 0.05em;
 }
+.sports-admin .tech-card .card-content {
+  /* 說明文字 */
+}
 .sports-admin .tech-card .card-content .tech-desc {
   font-size: var(--fs-small);
   color: var(--color-text-secondary);
   line-height: 1.6;
   margin: 0;
   /* 確保無預設 margin */
+}
+.sports-admin {
+  /* 3. 特殊元件微調 */
 }
 .sports-admin .tech-panel.full {
   width: 100%;
@@ -199,6 +206,9 @@
 }
 .sports-admin .ide-content.raw-mode {
   padding: 0;
+}
+.sports-admin {
+  /* --- 4. 垂直節奏系統 (間距補償) --- */
 }
 .sports-admin .panel-body p:last-child {
   margin-bottom: 0;
@@ -229,13 +239,14 @@
     overflow: hidden;
     height: 100%;
     transition: all 0.3s ease;
-    /* 圖片區域 */
-    /* 文字內容區域 */
   }
   .sports-admin .tech-card:hover {
     border-color: var(--color-neon);
     box-shadow: 0 0 15px rgba(0, 140, 255, 0.15);
     transform: translateY(-2px);
+  }
+  .sports-admin .tech-card {
+    /* 圖片區域 */
   }
   .sports-admin .tech-card .card-visual {
     width: 100%;
@@ -255,6 +266,9 @@
     mix-blend-mode: normal;
     /* 卡片內的圖片保持原色 */
   }
+  .sports-admin .tech-card {
+    /* 文字內容區域 */
+  }
   .sports-admin .tech-card .card-content {
     padding: 1.5rem;
     display: flex;
@@ -263,7 +277,6 @@
     gap: 0.75rem;
     flex-grow: 1;
     /* 標籤 (Pill Shape) */
-    /* 說明文字 */
   }
   .sports-admin .tech-card .card-content .tech-tag {
     background: rgba(255, 255, 255, 0.9);
@@ -274,6 +287,9 @@
     border-radius: 20px;
     font-family: var(--font-tech);
     letter-spacing: 0.05em;
+  }
+  .sports-admin .tech-card .card-content {
+    /* 說明文字 */
   }
   .sports-admin .tech-card .card-content .tech-desc {
     font-size: var(--fs-small);
@@ -322,13 +338,14 @@
     overflow: hidden;
     height: 100%;
     transition: all 0.3s ease;
-    /* 圖片區域 */
-    /* 文字內容區域 */
   }
   .sports-admin .tech-card:hover {
     border-color: var(--color-neon);
     box-shadow: 0 0 15px rgba(0, 140, 255, 0.15);
     transform: translateY(-2px);
+  }
+  .sports-admin .tech-card {
+    /* 圖片區域 */
   }
   .sports-admin .tech-card .card-visual {
     width: 100%;
@@ -348,6 +365,9 @@
     mix-blend-mode: normal;
     /* 卡片內的圖片保持原色 */
   }
+  .sports-admin .tech-card {
+    /* 文字內容區域 */
+  }
   .sports-admin .tech-card .card-content {
     padding: 1.5rem;
     display: flex;
@@ -356,7 +376,6 @@
     gap: 0.75rem;
     flex-grow: 1;
     /* 標籤 (Pill Shape) */
-    /* 說明文字 */
   }
   .sports-admin .tech-card .card-content .tech-tag {
     background: rgba(255, 255, 255, 0.9);
@@ -367,6 +386,9 @@
     border-radius: 20px;
     font-family: var(--font-tech);
     letter-spacing: 0.05em;
+  }
+  .sports-admin .tech-card .card-content {
+    /* 說明文字 */
   }
   .sports-admin .tech-card .card-content .tech-desc {
     font-size: var(--fs-small);

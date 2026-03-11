@@ -5,17 +5,21 @@
    ========================================= */
 .scrollbar-style01 {
   /* 2. Webkit 核心屬性 (Chrome, Edge, Safari) */
-  /* 設定滾動條的「軌道」 (Track) */
-  /* 設定滾動條的「滑塊」 (Thumb) */
 }
 .scrollbar-style01::-webkit-scrollbar {
   width: 6px;
   height: 4px;
 }
+.scrollbar-style01 {
+  /* 設定滾動條的「軌道」 (Track) */
+}
 .scrollbar-style01::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 0px;
   margin-block: 4px;
+}
+.scrollbar-style01 {
+  /* 設定滾動條的「滑塊」 (Thumb) */
 }
 .scrollbar-style01::-webkit-scrollbar-thumb {
   background-color: #00bbff;

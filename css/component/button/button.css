@@ -15,7 +15,6 @@
   max-height: 45px;
   height: 45px;
   border: 0;
-  /* --- Liquid Glass 按鈕特效 (藍色修正版) --- */
 }
 .btn .btn-text,
 .btn .icon-controller {
@@ -59,6 +58,9 @@
   font-size: var(--fs-small-title);
   font-weight: var(--fw-semibold);
   letter-spacing: 0.08em;
+}
+.btn {
+  /* --- Liquid Glass 按鈕特效 (藍色修正版) --- */
 }
 .btn.btn-liquid-glass {
   position: relative;
