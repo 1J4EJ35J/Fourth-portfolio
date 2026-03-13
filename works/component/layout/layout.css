@@ -164,7 +164,7 @@ p {
 }
 .tech-section .linking-box {
   position: absolute;
-  top: -180px;
+  top: -80px;
 }
 .tech-section {
   /* Title Zone & Numbers */
@@ -217,6 +217,7 @@ p {
   color: #fff;
   text-transform: uppercase;
   line-height: 125%;
+  z-index: 2;
 }
 
 /* --- Tech Panel --- */
@@ -870,7 +871,7 @@ p {
     flex-direction: column;
   }
   .tech-section .linking-box {
-    top: -160px;
+    top: -60px;
   }
   .tech-panel .panel-body .border-left {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -977,7 +978,7 @@ p {
 /* --- 768px (Mobile) --- */
 @media (max-width: 768px) {
   .tech-section .linking-box {
-    top: -120px;
+    top: -80px;
   }
   .bullet-points.diamond {
     font-size: 0.6rem;
@@ -1019,6 +1020,13 @@ p {
   }
   .tech-section .tech-heading {
     font-size: 27px;
+  }
+  .conversation-container {
+    max-width: 100%;
+  }
+  .sports-admin .ts-05 .conversation-layout .conversation-container.accent {
+    max-width: 100%;
+    margin-left: 0;
   }
 }
 /* --- 480px (Extra Small) --- */

@@ -45,23 +45,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Menu Toggle 開啟與關閉功能
     // ==========================================
 
-    // 依照指令：帶入描述的父層元素 (.hud-nav .hud-nav-container) 進行定位
     const navContainer = document.querySelector('.hud-nav .hud-nav-container');
 
-    // 確保父層存在後，再選取內部的按鈕
     if (navContainer) {
         const menuToggleBtn = navContainer.querySelector('.menu-toggle');
 
         if (menuToggleBtn) {
+            // [原有功能] 點擊 Menu 按鈕本身切換開關
             menuToggleBtn.addEventListener('click', function () {
-                // 切換按鈕的 active 狀態
-                // 根據 CSS 規則：.hud-nav-container:has(.menu-toggle.active) .nav
-                // 當按鈕具備 active 時，CSS 會自動顯示選單
                 this.classList.toggle('active');
+            });
+
+            // [新增功能] 點擊任何一個導覽連結 (.nav-btn) 後自動收合選單
+            const navBtns = navContainer.querySelectorAll('.nav-btn');
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 判斷當前視窗寬度是否小於等於 640px
+                    if (window.innerWidth <= 640) {
+                        // 移除 active 狀態，CSS 會自動把選單收起，並把圖示切換回漢堡排
+                        menuToggleBtn.classList.remove('active');
+                    }
+                });
             });
         }
     }
-
 });
 
 document.addEventListener("DOMContentLoaded", () => {

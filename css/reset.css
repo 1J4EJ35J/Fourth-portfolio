@@ -100,6 +100,21 @@ h6 {
   z-index: -1;
 }
 
+.section-subtitle.-short {
+  font-size: clamp(4.5rem, 5vw, 5.25rem);
+  color: var(--color-primary);
+  /* text-transform: uppercase; */
+  font-weight: var(--fw-regular);
+  /* padding-left: .2rem; */
+  position: absolute;
+  opacity: .4;
+  transform: skew(-12deg);
+  left: 2rem;
+  top: -.5rem;
+  letter-spacing: -3px;
+  z-index: -1;
+}
+
 .article-zone .article-title-box .title-text {
   font-size: clamp(1.05rem, 3vw, 1.3rem);
   font-weight: var(--fw-medium);

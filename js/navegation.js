@@ -1,7 +1,7 @@
 // js/nav.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // 檢查 Lenis 是否已由 particle-core.js 初始化
     // 注意：務必確保在 HTML 中，particle-core.js 排在 nav.js 之前引入
     if (typeof lenis === 'undefined') {
@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // 1. 通用導航按鈕 (.nav-btn) - 錨點捲動
     // ==========================================
-    
+
     // 選取所有帶有 href="#..." 的 .nav-btn
     const navButtons = document.querySelectorAll('.nav-btn[href^="#"]');
 
     navButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.preventDefault(); // 阻止瀏覽器預設的瞬間跳轉
 
             const targetId = this.getAttribute('href');
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // 2. 回到頂部按鈕 (.go-to-top.btn)
     // ==========================================
-    
+
     const toTopBtn = document.querySelector('.go-to-top.btn');
 
     if (toTopBtn) {
@@ -60,5 +60,26 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-    
+
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const goToTopBtn = document.querySelector('.go-to-top-workspage');
+
+    // 【關鍵修正】：將選取目標改為真正產生捲軸的 .case-content-zone
+    const caseContentZone = document.querySelector('.case-content-zone');
+
+    if (goToTopBtn && caseContentZone) {
+        goToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // 針對 .case-content-zone 的 scrollTop 進行平滑動畫
+            gsap.to(caseContentZone, {
+                duration: 0.4,
+                scrollTop: 0,          // 強制將捲軸位置動畫至 0
+                ease: "power3.inOut"
+            });
+        });
+    }
 });

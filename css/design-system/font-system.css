@@ -73,6 +73,14 @@ article {
     letter-spacing: var(--ls-article);
 }
 
-span {
+h1,
+h2,
+h3,
+h4,
+h5,
+span,
+article,
+p,
+strong {
     cursor: default;
 }

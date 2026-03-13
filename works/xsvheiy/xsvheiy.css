@@ -514,6 +514,19 @@
   .sports-admin .split-layout .visual-side {
     margin-top: 1.5rem;
   }
+  .visual-side {
+    grid-template-columns: 1fr;
+  }
+  .xsvheiy .ts-02 .holo-frame.img-container {
+    gap: 12px;
+  }
+}
+@media (max-width: 990px) {
+  .xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
 }
 /* --- 768px (Mobile/Tablet Portrait) --- */
 @media (max-width: 768px) {

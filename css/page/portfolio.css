@@ -25,6 +25,8 @@
     justify-content: center;
 }
 
+
+
 /* 保持 Desktop 3欄網格 */
 .portfolio-container {
     width: 100%;
@@ -41,7 +43,7 @@
 /* 讓標題橫跨 3 個欄位，但保持靠左對齊 */
 .portfolio-header {
     grid-column: 1 / -1;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
     /* 增加間距，避免與卡片太近 */
     width: 100%;
     /* 移除之前的置中設定，讓它繼承 reset.css 的預設靠左樣式 */
@@ -80,6 +82,11 @@
     transform: translateY(-8px);
 }
 
+.project-card .btn.style-01:has(.icon-controller) {
+    padding-right: 0;
+    padding-left: .25rem;
+}
+
 /* --- 5. 卡片圖片區 --- */
 .card-image-box {
     width: 100%;
@@ -95,19 +102,21 @@
 .card-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-muted);
-    font-family: var(--font-family-main);
-    font-size: var(--fs-smaller);
-    letter-spacing: 0.1em;
     transition: transform 0.5s ease;
+    overflow: hidden;
 }
 
 .project-card:hover .card-placeholder {
     transform: scale(1.05);
+}
+
+.card-placeholder img {
+    height: 100%;
+    width: auto;
 }
 
 /* --- 6. 卡片文字內容區 --- */

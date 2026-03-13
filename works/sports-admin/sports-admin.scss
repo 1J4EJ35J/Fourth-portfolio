@@ -402,7 +402,7 @@
 
 
         .holo-frame {
-            margin-top: 1.5rem;
+            margin-top: 0;
 
             img {
                 width: 100%;
@@ -520,7 +520,7 @@
 
 
         .holo-frame {
-            margin-top: 1.5rem;
+            margin-top: 0;
 
             img {
                 width: 100%;
@@ -545,8 +545,13 @@
 
     .sports-admin .split-layout {
         .visual-side {
-            margin-top: 1.5rem;
+            margin-top: 0;
         }
+    }
+
+    .comparison.img-wrapper .horizontal {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, auto);
     }
 }
 
@@ -560,5 +565,32 @@
     /* 手機版讓卡片圖片稍微縮小，避免佔據太多垂直空間 */
     .sports-admin .tech-card .card-visual img {
         max-height: 160px;
+    }
+}
+
+@media (max-width: 640px) {
+    .sports-admin .ts-05 .conversation-layout .conversation-container.accent {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .sports-admin .tech-section .tech-section-number-zone {
+
+        &.-number-02,
+        &.-number-02,
+        &.-number-05 {
+            position: absolute;
+            right: 0;
+        }
+
+        &.-number-05 {
+            opacity: .6;
+        }
+    }
+
+    .sports-admin .tech-section .tech-section-number-zone.-number-06 .tech-section-number {
+        color: var(--color-neon);
+        font-size: clamp(80px, 15vw, 10rem);
     }
 }
