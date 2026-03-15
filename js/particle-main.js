@@ -14,19 +14,19 @@ function animate() {
 
     // --- A. 更新舊粒子系統 ---
     if (runFirst) updateFirstParticlePhysics();
-    
+
     if (runSecond && secondParticleMaterial && secondParticleMaterial.uniforms) {
         secondParticleMaterial.uniforms.uTime.value = time;
     }
-    
+
     if (runThird && thirdParticleMaterial && thirdParticleMaterial.uniforms) {
         thirdParticleMaterial.uniforms.uTime.value = time;
     }
-    
+
     if (runFourth && fourthParticleMaterial && fourthParticleMaterial.uniforms) {
         fourthParticleMaterial.uniforms.uTime.value = time;
     }
-    
+
     if (runFifth && fifthParticleMaterial && fifthParticleMaterial.uniforms) {
         fifthParticleMaterial.uniforms.uTime.value = time;
     }
@@ -45,7 +45,7 @@ function animate() {
         if (beam4System) updateBeam(beam4System);
         if (beam5System) updateBeam(beam5System);
         if (beam6System) updateBeam(beam6System);
-        
+
         // 大腦光粒 7
         if (brainBeam7System) updateBeam(brainBeam7System);
     }
@@ -54,7 +54,7 @@ function animate() {
     if (renderer && scene && camera) {
         renderer.render(scene, camera);
     }
-    
+
     if (rendererLight && sceneLight && cameraLight) {
         rendererLight.render(sceneLight, cameraLight);
     }
@@ -67,17 +67,17 @@ function animate() {
 
 function initTunnelEffects() {
     const walls = [
-        { el: ".wall-1", start: 700, out: 1400, end: 1500, x: 60, y: 10 },
-        { el: ".wall-2", start: 700, out: 1600, end: 1700, x: -60, y: 20 },
-        { el: ".wall-3", start: 700, out: 1800, end: 1900, x: 40, y: -20 },
-        { el: ".wall-4", start: 720, out: 2000, end: 2100, x: -20, y: -50 },
-        { el: ".wall-5", start: 720, out: 2000, end: 2150, x: 10, y: 50 },
+        { el: ".wall-1", start: 700, out: 1000, end: 1300, x: 60, y: 10 },
+        { el: ".wall-2", start: 700, out: 1200, end: 1500, x: -60, y: 20 },
+        { el: ".wall-3", start: 700, out: 1350, end: 1600, x: 40, y: -20 },
+        //{ el: ".wall-4", start: 720, out: 1500, end: 1680, x: -20, y: -50 },
+        //{ el: ".wall-5", start: 720, out: 2000, end: 2150, x: 10, y: 50 },
     ];
 
     walls.forEach((w) => {
         const element = document.querySelector(w.el);
         if (!element) return;
-        
+
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "body",
@@ -86,7 +86,7 @@ function initTunnelEffects() {
                 scrub: 0.5,
             },
         });
-        
+
         tl.to(element, {
             scale: 1,
             opacity: 1,
@@ -125,7 +125,7 @@ function initAboutEffects() {
             anticipatePin: 1,
         },
     });
-    
+
     tl.to(innerContent, {
         scale: 1,
         opacity: 1,
@@ -172,7 +172,7 @@ function initCompetenciesEffects() {
     const background2 = document.querySelector(".background-layer-2");
 
     if (!aboutWrapper || !spacer1) return;
-    
+
     // Trigger 1: 進場
     ScrollTrigger.create({
         trigger: aboutWrapper,
@@ -249,7 +249,7 @@ function initCompetenciesEffects() {
         end: "top -680px",
         scrub: 0.1,
         onUpdate: (self) => {
-            const ratio = 1.0 - self.progress; 
+            const ratio = 1.0 - self.progress;
             if (fourthParticleMaterial && fourthParticleMaterial.uniforms) {
                 fourthParticleMaterial.uniforms.uVisibleRatio.value = ratio;
                 fourthParticleMaterial.uniforms.uOpacity.value = 1.0;
@@ -309,10 +309,10 @@ function onMouseMove(event) {
     let dir = vector.sub(camera.position).normalize();
     let distance = -camera.position.z / dir.z;
     let pos = camera.position.clone().add(dir.multiplyScalar(distance));
-    
+
     mouse3DVec.copy(pos);
     mouse3DVec.z = 0;
-    
+
     isIdle = false;
     if (idleTimer) clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
@@ -331,7 +331,7 @@ try {
     // 1. 基礎建設 (Core)
     initSceneOld();
     initSceneLight();
-    
+
     // 2. 光束路徑準備 (Beams)
     initPathLUTs();
 

@@ -44,7 +44,7 @@
 /* 1. 撐開高度的 Spacer */
 .about-spacer {
     width: 100%;
-    height: clamp(2200px, 300vh, 2200px);
+    height: clamp(1620px, 170vh, 1680px);
     /* 原本 margin-top 的數值 */
     pointer-events: none;
 }
@@ -86,10 +86,8 @@
     flex-direction: column;
     gap: 3rem;
     padding: 0 clamp(10px, 5vw, 5vw);
+
 }
-
-
-
 
 /* 內容區：左右佈局 */
 .about-content {
@@ -104,8 +102,6 @@
 /* 左側：照片佔位符 */
 .about-photo {
     width: 100%;
-
-
     position: relative;
     overflow: hidden;
 }
@@ -151,6 +147,30 @@
 
 .about-text.article-zone .article-title-box .title-text {
     transform: skew(-9deg);
+}
+
+.about-content .article-outter.des {
+    background: rgba(2, 12, 20, 0.4);
+    border: 1px solid rgba(0, 140, 255, 0.15);
+    border-radius: 20px;
+    padding: 1.5rem;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all 0.4s ease-out;
+    position: relative;
+    overflow: hidden;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+
+.about-content .article-outter.des .small {
+    color: var(--color-text-secondary);
+    font-size: var(--fs-smaller);
+
 }
 
 /* RWD */

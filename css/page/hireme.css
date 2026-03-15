@@ -85,17 +85,16 @@
 /* --- 1. 過渡區塊高度設定 --- */
 .hireme-spacer-1 {
     width: 100%;
-    height: 480px;
-    /* 第四、五粒子歸0 留20給它 */
+    height: 400px;
     pointer-events: none;
 }
 
 .hireme-spacer-2 {
     width: 100%;
-    height: 640px;
+    height: 300px;
     /* 撐開整個視窗高度 */
     pointer-events: none;
-    min-height: 640px;
+    min-height: 300px;
 }
 
 /* --- 2. 內容區塊佈局 --- */
@@ -118,30 +117,27 @@
     width: 100%;
     max-width: 1240px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .hireme-container .section-header {
     margin-bottom: clamp(2rem, 5vw, 3rem);
+    margin-left: -3rem;
 }
 
-.hireme-container .zone {
-    display: flex;
-    align-items: start;
-    gap: 3rem;
-}
+
 
 .hireme-container .left,
 .hireme-container .right {
-    width: 100%;
+    width: fit-content;
     height: 100%;
     display: flex;
     flex-direction: column;
-
 }
 
-.hireme-container .right {
-    align-items: flex-end;
+.hireme-container .left {
+    display: none;
 }
 
 .hireme-container .article-zone {
@@ -149,6 +145,7 @@
     flex-direction: column;
     gap: 3.5rem;
     max-width: 440px;
+    margin-left: 2rem;
 }
 
 .hireme-container .article-zone .article-outter {
@@ -187,31 +184,7 @@
 
 }
 
-.hireme-container .article-zone-small.des {
-    display: flex;
-    gap: 1.5rem;
-    background: rgba(2, 12, 20, 0.4);
-    border: 1px solid rgba(0, 140, 255, 0.15);
-    border-radius: 20px;
-    padding: 1.5rem;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: all 0.4s ease-out;
-    position: relative;
-    overflow: hidden;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 3rem;
-}
 
-.hireme-container .article-zone-small.des .text.small {
-    color: var(--color-text-secondary);
-    font-size: var(--fs-small);
-
-}
 
 /* --- RWD --- */
 @media (max-width: 768px) {

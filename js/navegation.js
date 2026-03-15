@@ -61,6 +61,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ==========================================
+    // 3. 首頁導航按鈕 (.nav-btn.home) - 回到頂部
+    // ==========================================
+
+    const homeBtn = document.querySelector(".nav-btn.home");
+
+    if (homeBtn) {
+        homeBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // 阻止 a 標籤的預設行為
+
+            // 使用 Lenis 提供的 scrollTo 滾動到頂部 (座標 0)
+            lenis.scrollTo(0, {
+                duration: 1.2, // 滑動時間(秒)，與 Lenis 初始化設定保持一致
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+        });
+    }
+
 });
 
 

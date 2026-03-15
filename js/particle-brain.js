@@ -52,7 +52,7 @@ async function initThreeLayerBrain() {
 // Layer 1: Base (Navy Blue) - 基礎輪廓
 function createBrainSystem1() {
     if (!brainData1.length) return;
-    
+
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData1.length * 3);
 
@@ -66,7 +66,7 @@ function createBrainSystem1() {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
     const texture = createBrainTexture(config.brainLayer1.blur);
-    
+
     const material = new THREE.PointsMaterial({
         size: config.brainLayer1.size,
         color: new THREE.Color(config.brainLayer1.color),
@@ -84,7 +84,7 @@ function createBrainSystem1() {
 // Layer 2: Network (Blue) - 連結網路
 function createBrainSystem2() {
     if (!brainData2.length) return;
-    
+
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData2.length * 3);
 
@@ -98,7 +98,7 @@ function createBrainSystem2() {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
     const texture = createBrainTexture(config.brainLayer2.blur);
-    
+
     const material = new THREE.PointsMaterial({
         size: config.brainLayer2.size,
         color: new THREE.Color(config.brainLayer2.color),
@@ -116,7 +116,7 @@ function createBrainSystem2() {
 // Layer 3: Highlight (Cyan) - 高亮閃爍節點
 function createBrainSystem3() {
     if (!brainData3.length) return;
-    
+
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData3.length * 3);
     const randomness = new Float32Array(brainData3.length);
@@ -133,7 +133,7 @@ function createBrainSystem3() {
     geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 1));
 
     const texture = createBrainTexture(config.brainLayer3.blur);
-    
+
     const material = new THREE.ShaderMaterial({
         uniforms: {
             uTime: { value: 0 },
@@ -181,7 +181,7 @@ function createBrainSystem3() {
 // ★ 新增 Layer 4: Extra Highlight (複製 Layer 3 邏輯)
 function createBrainSystem4() {
     if (!brainData4.length) return;
-    
+
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(brainData4.length * 3);
     const randomness = new Float32Array(brainData4.length);
@@ -199,7 +199,7 @@ function createBrainSystem4() {
 
     // 使用 config.brainLayer4
     const texture = createBrainTexture(config.brainLayer4.blur);
-    
+
     const material = new THREE.ShaderMaterial({
         uniforms: {
             uTime: { value: 0 },
@@ -250,22 +250,24 @@ function createBrainSystem4() {
 // ----------------------------------------------------------------
 // 3. 更新迴圈 (Update Loop)
 // ----------------------------------------------------------------
+// 新增一個變數來控制解除綁定的比例 (0 = 完全綁定, 1 = 完全散開)
+let brainUnbindRatio = 0;
 
 function updateBrainParticles() {
-    // Layer 1
+    // Layer 1 (不再參與 unbind，固定在 target)
     if (runBrainLayer1 && brainSystem1) {
         const pos = brainSystem1.geometry.attributes.position.array;
         for (let i = 0; i < brainData1.length; i++) {
             const i3 = i * 3;
             const p = brainData1[i];
-            pos[i3]     = p.targetX;
+            pos[i3] = p.targetX;
             pos[i3 + 1] = p.targetY;
             pos[i3 + 2] = p.targetZ;
         }
         brainSystem1.geometry.attributes.position.needsUpdate = true;
     }
 
-    // Layer 2
+    // Layer 2 (維持原本的進場動畫比例控制)
     if (runBrainLayer2 && brainSystem2) {
         const pos = brainSystem2.geometry.attributes.position.array;
         for (let i = 0; i < brainData2.length; i++) {
@@ -278,37 +280,34 @@ function updateBrainParticles() {
         brainSystem2.geometry.attributes.position.needsUpdate = true;
     }
 
-    // Layer 3
+    // Layer 3 (唯一保留 unbind 消散效果的層級)
     if (runBrainLayer3 && brainSystem3) {
         const pos = brainSystem3.geometry.attributes.position.array;
         for (let i = 0; i < brainData3.length; i++) {
             const i3 = i * 3;
             const p = brainData3[i];
-            pos[i3]     = p.targetX;
-            pos[i3 + 1] = p.targetY;
-            pos[i3 + 2] = p.targetZ;
+            pos[i3] = p.targetX + (p.initialX - p.targetX) * brainUnbindRatio;
+            pos[i3 + 1] = p.targetY + (p.initialY - p.targetY) * brainUnbindRatio;
+            pos[i3 + 2] = p.targetZ + (p.initialZ - p.targetZ) * brainUnbindRatio;
         }
         brainSystem3.geometry.attributes.position.needsUpdate = true;
         brainSystem3.material.uniforms.uTime.value = time;
     }
 
-    // ★ 新增 Layer 4 更新邏輯
+    // Layer 4 (不再參與 unbind，固定在 target)
     if (runBrainLayer4 && brainSystem4) {
         const pos = brainSystem4.geometry.attributes.position.array;
         for (let i = 0; i < brainData4.length; i++) {
             const i3 = i * 3;
             const p = brainData4[i];
-            // 直接鎖定 (同 Layer 3)
-            pos[i3]     = p.targetX;
+            pos[i3] = p.targetX;
             pos[i3 + 1] = p.targetY;
             pos[i3 + 2] = p.targetZ;
         }
         brainSystem4.geometry.attributes.position.needsUpdate = true;
-        // 更新閃爍時間
         brainSystem4.material.uniforms.uTime.value = time;
     }
 }
-
 
 // ----------------------------------------------------------------
 // 4. 觸發控制 (ScrollTriggers)
@@ -390,8 +389,71 @@ function initBrainScrollTriggers() {
             }
         }
     });
+
+    // ==========================================
+    // ★ 退場階段 1：Layer 1, 2, 4 提早淡出並關閉
+    // ==========================================
+    ScrollTrigger.create({
+        trigger: ".hireme-spacer-1",
+        start: "top 390px",
+        end: "top 200px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            const fadeRatio = 1.0 - self.progress;
+
+            if (brainSystem1) brainSystem1.material.opacity = fadeRatio * config.brainLayer1.opacity;
+            if (brainSystem2) brainSystem2.material.opacity = fadeRatio * config.brainLayer2.opacity;
+            if (brainSystem4) brainSystem4.material.uniforms.uOpacity.value = fadeRatio * config.brainLayer4.opacity;
+        },
+        onLeave: () => {
+            runBrainLayer1 = false;
+            runBrainLayer2 = false;
+            runBrainLayer4 = false;
+
+            if (brainSystem1) brainSystem1.material.opacity = 0;
+            if (brainSystem2) brainSystem2.material.opacity = 0;
+            if (brainSystem4) brainSystem4.material.uniforms.uOpacity.value = 0;
+        },
+        onEnterBack: () => {
+            runBrainLayer1 = true;
+            runBrainLayer2 = true;
+            runBrainLayer4 = true;
+        }
+    });
+
+    // ==========================================
+    // ★ 退場階段 2：Layer 3 單獨解除座標綁定 (開始消散)
+    // ==========================================
+    ScrollTrigger.create({
+        trigger: ".hireme-spacer-1",
+        start: "top 220px",
+        end: "top -240px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            // progress 從 0 -> 1，代表粒子從目標點漸漸退回四散的初始點
+            brainUnbindRatio = self.progress;
+        }
+    });
+
+    // ==========================================
+    // ★ 退場階段 3：Layer 3 單獨淡出並關閉運算
+    // ==========================================
+    ScrollTrigger.create({
+        trigger: ".hireme-spacer-1",
+        start: "top 40px",
+        end: "top -200px",
+        scrub: 0.1,
+        onUpdate: (self) => {
+            const fadeRatio = 1.0 - self.progress;
+            if (brainSystem3) brainSystem3.material.uniforms.uOpacity.value = fadeRatio * config.brainLayer3.opacity;
+        },
+        onLeave: () => {
+            runBrainLayer3 = false;
+            if (brainSystem3) brainSystem3.material.uniforms.uOpacity.value = 0;
+        },
+        onEnterBack: () => {
+            runBrainLayer3 = true;
+        }
+    });
 }
 
-// ==========================================
-// ★ 未來擴充區域：沙粒系統 (Sand System) ★
-// ==========================================

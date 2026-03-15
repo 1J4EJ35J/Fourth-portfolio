@@ -175,7 +175,7 @@
         </defs>
       </svg>
     </div>
-    <div class="wall-light wall-4">
+    <!-- <div class="wall-light wall-4">
       <svg width="177" height="207" viewBox="0 0 177 207" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#filter0_f_1727_725)">
           <path
@@ -284,7 +284,7 @@
           </linearGradient>
         </defs>
       </svg>
-    </div>
+    </div> -->
   </div>
   <!-- light-simulation-zone F1依序到F8 為<svg>路徑的變化情況 -->
 
@@ -296,25 +296,25 @@
     <nav class="nav">
       <ul>
         <li>
-          <a href="#home" class="nav-btn">
+          <a class="nav-btn home">
             <div class="liquid-light"></div>
             <span class="text">首頁</span>
           </a>
         </li>
         <li>
-          <a href="#about" class="nav-btn">
+          <a href="#competencies" class="nav-btn">
             <div class="liquid-light"></div>
-            <span class="text">關於我</span>
+            <span class="text">核心能力</span>
           </a>
         </li>
         <li>
           <a href="#portfolio" class="nav-btn">
             <div class="liquid-light"></div>
-            <span class="text">作品集</span>
+            <span class="text">精選案例</span>
           </a>
         </li>
         <li>
-          <a href="#contact" class="nav-btn">
+          <a href="#hireme" class="nav-btn">
             <div class="liquid-light"></div>
             <span class="text">與我聯繫</span>
           </a>
@@ -322,7 +322,7 @@
       </ul>
     </nav>
     <!-- hero section-->
-    <section class="hero-section" id="home">
+    <section class="hero-section">
       <div class="hero-container">
         <div class="hero-left">
           <div class="title-box">
@@ -347,8 +347,8 @@
         </div>
 
         <div class="hero-right">
+          <span class="hero-title-text first">&</span>
           <div class="hero-container">
-            <span class="hero-title-text first">&</span>
             <ul class="hero-list">
               <li><span>#具Git與前端實作，消除設計的轉譯落差</span></li>
               <li><span>#擅解析複雜流程，高保真原型加速產品驗證</span></li>
@@ -362,9 +362,9 @@
     </section>
     <section class="about-section">
       <div class="about-spacer"></div>
-      <div class="about-wrapper-outer" id="about">
+      <div class="about-wrapper-outer">
         <div class="about-content-inner">
-          <div class="about-container">
+          <div class="about-container" id="about">
             <div class="section-header">
               <span class="section-subtitle">About me</span>
               <div class="section-title zhtw-container">
@@ -398,6 +398,13 @@
                   <article class="text">
                     憑藉對前端技術的理解，我能有效填補設計與開發之間的溝通斷層。我的目標不僅是交付設計稿，而是透過建立精準的設計規範與模組化思維，減少團隊重工與來回溝通的成本，讓產品開發迭代更高效、更精準。
                   </article>
+                  <div class="article-outter des">
+                    <article class="text small">
+                      此作品集網站由我獨立設計與開發，使用 HTML、SCSS、JavaScript 等技術構建。
+                      <br>
+                      GSAP 與 Three.js 動態粒子效果技術，導入AI-Assisted 輔助工作流，程式碼由 Gemini Pro 協作完成。
+                    </article>
+                  </div>
                 </div>
               </div>
             </div>
@@ -615,61 +622,70 @@
         </article>
       </div>
     </section>
-
+    <div class="hireme-spacer-1"></div>
     <section class="hireme-section" id="hireme">
       <div class="hireme-container">
-        <div class="section-header comp">
-          <span class="section-subtitle">Contact me</span>
-          <div class="section-title zhtw-container">
-            <span>與</span>
-            <span>我</span>
-            <span>聯</span>
-            <span>繫</span>
-          </div>
-        </div>
-        <div class="zone">
-          <div class="left">
-            <div class="article-zone">
-              <div class="article-outter">
-                <div class="article-title-box">
-                  <h3 class="title-text">
-                    尋找跨職能邊界專家?
-                  </h3>
-                </div>
-                <div class="article-container">
-                  <article class="text">
-                    我致力於在極致的易用性與開發效能之間取得完美平衡。如果您正在尋找一位能打破「設計交付 vs. 工程實作」高牆，並將複雜業務邏輯轉化為直覺體驗的夥伴，期待能有進一步交流的機會。
-                  </article>
-                </div>
+
+
+        <div class="left">
+          <div class="hire-animation-zone">
+            <div class="hire-animation-container">
+              <div class="icon-box">
+                <i class="fa-regular fa-comment"></i>
               </div>
-            </div>
-          </div>
-          <div class="right">
-            <div class="article-zone">
-              <div class="article-outter">
-                <div class="article-title-box">
-                  <h3 class="title-text">
-                    聯絡方式
-                  </h3>
-                </div>
-                <div class="article-container">
-                  <article class="text">
-                    歡迎您直接透過 104 人力銀行發送面試邀約。
-                  </article>
+              <div class="ani-el">
+                <div class="star-conteiner">
+                  <div class="star star-1"></div>
+                  <div class="star star-2"></div>
+                  <div class="star star-3"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="article-zone-small des">
-          <article class="text small">
-            感謝您閱覽我的作品集。此作品集網站由我獨立設計與開發，使用 HTML、SCSS、JavaScript 等技術構建。
-            GSAP 與 Three.js 動態粒子效果技術，導入AI-Assisted 輔助工作流，與 Gemini Pro 協作完成。
-          </article>
+        <div class="right">
+          <div class="section-header comp">
+            <span class="section-subtitle">Contact me</span>
+            <div class="section-title zhtw-container">
+              <span>與</span>
+              <span>我</span>
+              <span>聯</span>
+              <span>繫</span>
+            </div>
+          </div>
+          <div class="article-zone">
+            <div class="article-outter ">
+              <div class="article-title-box">
+                <h3 class="title-text">
+                  尋找跨職能邊界專家?
+                </h3>
+              </div>
+              <div class="article-container">
+                <article class="text">
+                  我致力於在極致的易用性與開發效能之間取得完美平衡。如果您正在尋找一位能打破「設計交付 vs. 工程實作」高牆，並將複雜業務邏輯轉化為直覺體驗的夥伴，期待能有進一步交流的機會。
+                </article>
+              </div>
+            </div>
+            <div class="article-outter">
+              <div class="article-title-box">
+                <h3 class="title-text">
+                  聯絡方式
+                </h3>
+              </div>
+              <div class="article-container">
+                <article class="text">
+                  歡迎您直接透過 104 人力銀行發送面試邀約。
+                </article>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
   </main>
+
+
 
   <!-- Particle JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

@@ -186,7 +186,7 @@ const config = {
     brainLayer4: {
         count: 2500,
         color: "#4bedff",
-        size:6.0,
+        size: 6.0,
         glow: 0,
         blur: .8,
         flashSpeed: .0,
@@ -339,7 +339,7 @@ function initSceneOld() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
     camera.position.z = 750;
-    
+
     renderer = new THREE.WebGLRenderer({
         antialias: false,
         alpha: true
@@ -414,7 +414,7 @@ function onWindowResize() {
     }
 
     updateLightLayout();
-    
+
     // 確保 ScrollTrigger 重新計算位置
     if (typeof ScrollTrigger !== 'undefined') {
         ScrollTrigger.refresh();
@@ -427,8 +427,8 @@ function updateBrainCamera() {
     if (!camera) return;
 
     const w = window.innerWidth;
-    const baseWidth = 1920; 
-    const baseZ = 800; 
+    const baseWidth = 1920;
+    const baseZ = 800;
 
     let effectiveWidth = w;
 
