@@ -46,6 +46,10 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
+.nav ul:has(:hover) {
+  border: 1px solid rgba(0, 140, 255, 0);
+  background: rgba(0, 140, 255, 0);
+}
 .nav .nav-btn {
   display: block;
   padding: 0.25rem 2rem;
@@ -93,11 +97,89 @@
   text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
 }
 
+.main-nav-toggle.btn.style-01.btn-liquid-glass {
+  display: none;
+  pointer-events: none;
+  position: fixed;
+  z-index: 100;
+  justify-self: center;
+  bottom: 3vh;
+  width: calc(55px + 46vw);
+  transition: all 0.4s ease-in-out;
+}
+
+.main-nav-toggle.btn.style-01.btn-liquid-glass .icon-controller.menu-open-btn {
+  display: block;
+}
+
+.main-nav-toggle.btn.style-01.btn-liquid-glass .icon-controller.menu-close-btn {
+  display: none;
+}
+
 /* ==========================================================================
    ★ RWD MEDIA QUERIES (Organized at Bottom)
    ========================================================================== */
 @media (max-width: 768px) {
   .nav ul {
     gap: 1.5rem;
+  }
+}
+@media (max-width: 640px) {
+  .main-nav-toggle.btn.style-01.btn-liquid-glass.active {
+    width: calc(55px + 46vw + 45px + 3rem);
+  }
+  .main-nav-toggle.btn.style-01.btn-liquid-glass.active .icon-controller.menu-open-btn {
+    display: none;
+  }
+  .main-nav-toggle.btn.style-01.btn-liquid-glass.active .icon-controller.menu-close-btn {
+    display: flex;
+  }
+  .main-nav-toggle.btn.style-01.btn-liquid-glass {
+    display: flex;
+    pointer-events: auto;
+  }
+  .main-nav.nav.active {
+    pointer-events: auto;
+    top: 0;
+  }
+  .main-nav.nav {
+    position: fixed;
+    top: 101%;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    display: block;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+  }
+  .main-nav.nav ul {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 120px;
+    gap: 0rem;
+    background: rgba(10, 46, 79, 0.7);
+    transition: all 0.3s ease-in-out;
+  }
+  .main-nav.nav ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  .main-nav.nav ul li .nav-btn {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+  }
+  .main-nav.nav ul li .nav-btn:hover {
+    border-radius: 0;
   }
 }/*# sourceMappingURL=nav.css.map */

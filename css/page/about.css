@@ -44,7 +44,7 @@
 /* 1. 撐開高度的 Spacer */
 .about-spacer {
     width: 100%;
-    height: clamp(1620px, 170vh, 1680px);
+    height: clamp(1020px, 152vh, 1480px);
     /* 原本 margin-top 的數值 */
     pointer-events: none;
 }
@@ -104,19 +104,17 @@
     width: 100%;
     position: relative;
     overflow: hidden;
+    padding: 0 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    border-radius: 4px;
+    padding-bottom: .75rem;
 }
 
 .about-container .img-container {
     width: 100%;
     height: fit-content;
-    /* 直式照片比例 */
-    /* aspect-ratio: 3/4;  */
-    background: rgba(255, 255, 255, 0.05);
-    /* 半透明灰底 */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    border-radius: 4px;
-    padding-bottom: .75rem;
 }
 
 .boku-pig.img-controller {
@@ -136,7 +134,7 @@
 
 .about-text .job-title {
     font-size: clamp(1.75rem, 3vw, 2.4rem);
-    transform: skew(-9deg);
+    transform: skew(-10deg);
     font-weight: var(--fw-medium);
     line-height: var(--lh-tight);
 }
@@ -173,16 +171,28 @@
 
 }
 
+.about-section .section-header.des {
+    display: none;
+}
+
 /* RWD */
 @media (max-width: 768px) {
+    .about-section .section-header {
+        display: none;
+    }
+
+
+
     .about-content {
         grid-template-columns: 1fr;
         /* 手機變單欄 */
         gap: 2rem;
+        padding-top: 2rem;
     }
 
     .about-photo {
-        max-width: 300px;
+        max-width: 220px;
         margin: 0 auto;
+
     }
 }

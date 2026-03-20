@@ -101,3 +101,76 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// 監聽視窗縮放事件 (Resize)
+window.addEventListener('resize', () => {
+    // 當螢幕寬度大於 640px 時，進行防呆重置
+    if (window.innerWidth > 640) {
+        const menuToggleBtn = document.querySelector('.menu-toggle');
+
+        // 如果按鈕存在，而且目前帶有 active 狀態，就強制移除它
+        if (menuToggleBtn && menuToggleBtn.classList.contains('active')) {
+            menuToggleBtn.classList.remove('active');
+        }
+    }
+});
+
+// ==========================================
+// Main Nav (主要導覽列) 開關與防呆控制
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. 選取主要導覽列的相關元素 (使用專屬變數名稱避免衝突)
+    const mainNavToggle = document.querySelector('.main-nav-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    // 確保這兩個元素都存在，才執行後續綁定，避免報錯
+    if (mainNavToggle && mainNav) {
+
+        // 2. 點擊 Toggle 按鈕時的開關邏輯
+        mainNavToggle.addEventListener('click', () => {
+            // 先判斷 toggle 身上有沒有 .active
+            const isActive = mainNavToggle.classList.contains('active');
+
+            if (!isActive) {
+                // 如果沒有，對兩者都加上 .active
+                mainNavToggle.classList.add('active');
+                mainNav.classList.add('active');
+            } else {
+                // 如果有，對兩者都移除 .active
+                mainNavToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            }
+        });
+
+        // 3. 點擊子元素 (.nav-btn) 時的收合邏輯
+        const mainNavBtns = mainNav.querySelectorAll('.nav-btn');
+        mainNavBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 當任何一個選項被點擊，強制移除兩者的 .active
+                mainNavToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            });
+        });
+    }
+});
+
+// 4. 視窗縮放的防呆重置邏輯 (Resize Reset)
+// 注意：這個監聽器會與原本的 resize 監聽器疊加執行，不會互相覆蓋
+window.addEventListener('resize', () => {
+    // 當螢幕寬度大於 640px 時，進行強制重置
+    if (window.innerWidth > 640) {
+        const mainNavToggle = document.querySelector('.main-nav-toggle');
+        const mainNav = document.querySelector('.main-nav');
+
+        // 如果 mainNavToggle 存在且有 active，則移除
+        if (mainNavToggle && mainNavToggle.classList.contains('active')) {
+            mainNavToggle.classList.remove('active');
+        }
+
+        // 如果 mainNav 存在且有 active，則移除
+        if (mainNav && mainNav.classList.contains('active')) {
+            mainNav.classList.remove('active');
+        }
+    }
+});

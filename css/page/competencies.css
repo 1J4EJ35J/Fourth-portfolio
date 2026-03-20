@@ -188,13 +188,33 @@
 
 /* --- RWD --- */
 @media (max-width: 768px) {
+  .competencies-section {
+    height: 100%
+  }
+
   .competencies-container {
     grid-template-columns: 1fr;
     /* 手機版改為單欄 */
     gap: 3rem;
+    width: fit-content;
+  }
+
+  .competencies-section .section-header {}
+
+  .competencies-container .article-zone .article-outter {
+    margin-left: 3rem;
   }
 
   .comp-header {
     margin-bottom: 2rem;
+  }
+
+  .competencies-container .right {
+    align-items: flex-start;
+  }
+
+  .competencies-container .right .section-header {
+    display: none;
+    height: 0;
   }
 }

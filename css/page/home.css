@@ -75,11 +75,11 @@
     margin-left: -.25rem;
 }
 
-.hero-title-text.first {
-    font-size: clamp(3.4rem, 7.4vw, 8rem);
+.hero-left .hero-title-text.first {
+    font-size: clamp(3.4rem, 7.5vw, 8rem);
 }
 
-.hero-title-text {
+.hero-left .hero-title-text {
     margin-left: -.15rem;
     font-family: var(--font-family-main);
     /* 確保吃到 Montserrat */
@@ -91,32 +91,44 @@
     color: var(--color-text-primary);
 
     /* 英文全大寫時，加上字距會更有質感 */
-    letter-spacing: -0.07em;
-    transform: scaleY(1.008);
+    letter-spacing: -0.06em;
+    transform: scaleY(1.008) skew(-10deg);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .hero-left .sub-title {
     font-size: var(--fs-subtitle);
     font-weight: var(--fw-regular);
+    transform: skew(-8deg);
 }
 
 /* --- 右側內容設計 --- */
 .hero-right {
     /* 右側內容靠右對齊 (依據參考圖) */
     justify-self: end;
-    text-align: right;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     /* 讓內部元素靠右 */
+    gap: 1.3rem;
+    max-height: 120px;
+}
+
+.hero-right .hero-title-text.first {
+    font-family: 'Outfit', sans-serif;
+    font-weight: var(--fw-regular);
+    transform: translate(24px, -30%) skew(-10deg);
+    font-size: clamp(4rem, 9.3vw, 9rem);
+    line-height: 90%;
+
 }
 
 .hero-right .hero-container {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1.5rem;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: .25rem;
+    height: fit-content;
 }
 
 /* 上方小清單 */
@@ -136,59 +148,116 @@
     justify-content: flex-start;
 }
 
-.hero-right .hero-title-text {
-    font-family: 'Outfit', sans-serif;
-    font-weight: var(--fw-regular);
-    transform: scaleY(1);
-    /* margin-bottom: -.7rem; */
-}
+
 
 /* 右側中標題 */
-.hero-subtitle {
-    font-size: var(--fs-section-title);
+.hero-right .hero-subtitle {
+    font-size: clamp(1.8rem, 3vw, 2.25rem);
     font-weight: var(--fw-regular);
     color: var(--color-text-primary);
     line-height: 1.4;
-    margin-top: -1.5rem;
+    margin-top: -8px;
     letter-spacing: -.5px;
+    transform: skew(-10deg);
 }
 
 
+@media (max-width: 990px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin-bottom: 1.8rem;
+    }
 
+    .hero-left .hero-title-text.first {
+        font-size: clamp(3.4rem, 10.5vw, 8rem);
+    }
+
+    .hero-left .hero-title-text {
+        font-size: clamp(2.5rem, 9.3vw, 6rem);
+    }
+
+    .hero-right .hero-title-text.first {
+        font-family: 'Outfit', sans-serif;
+        font-weight: var(--fw-regular);
+        transform: translate(20px, -30%) skew(-10deg);
+        font-size: clamp(4rem, 12.3vw, 9rem);
+        line-height: 90%;
+    }
+
+    .hero-left {
+        margin-bottom: 0rem;
+    }
+}
 
 /* --- 響應式設計 (手機版適配) --- */
 @media (max-width: 768px) {
-    .hero-section {
-        padding-top: 80px;
-        /* 手機版上方留位置給未來的 Header */
-        justify-content: flex-start;
-        /* 手機版靠上對齊 */
-    }
-
     .hero-container {
-        grid-template-columns: 1fr;
-        /* 改為單欄堆疊 */
-        gap: 3rem;
-        text-align: center;
-        /* 手機版全部居中對齊比較好看 */
+        height: 600px;
     }
 
     .hero-left {
         margin-bottom: 2rem;
     }
+}
+
+@media (max-width: 640px) {
+    .hero-left {
+        transform: translateY(-30px);
+        gap: 14px;
+    }
+
+    .hero-left .hero-title-text.first {
+        font-size: 6rem;
+    }
+
+    .hero-left .hero-title-text {
+        font-size: 5rem;
+    }
+
+    .hero-right .hero-title-text.first {
+        font-size: 6rem;
+    }
+
+    .hero-right .hero-subtitle {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero-left {
+        padding: 1rem;
+    }
+
+    .hero-left .hero-title-text.first {
+        font-size: 4.8rem;
+    }
+
+    .hero-left .hero-title-text {
+        font-size: 4rem;
+    }
+
+    .hero-right .hero-title-text.first {
+        font-size: 5rem;
+    }
+
+    .hero-right .hero-subtitle {
+        font-size: 24px;
+    }
+
+    .hero-list {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-left {
+        padding: 2rem;
+    }
 
     .hero-right {
-        justify-self: center;
-        text-align: center;
-        align-items: center;
+        justify-self: flex-start;
     }
 
-    .hero-list li {
-        justify-content: center;
-    }
 
-    .hero-list li::before {
-        display: none;
-        /* 手機版移除裝飾線，保持簡潔 */
-    }
 }
