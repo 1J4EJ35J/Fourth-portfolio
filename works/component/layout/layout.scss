@@ -460,7 +460,6 @@ p {
             margin-top: 12px;
         }
     }
-
 }
 
 .bullet-points {
@@ -967,6 +966,17 @@ p {
 
             pointer-events: none;
         }
+    }
+}
+
+.user-survey-title-zone {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+
+    .btn.style-02 {
+        margin-bottom: 12px;
     }
 }
 

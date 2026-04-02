@@ -6,6 +6,10 @@
 
 /* --- 本頁專屬佈局邏輯 --- */
 .xsvheiy {
+    .img-caption.ERR {
+        padding-top: 8px;
+    }
+
     .case-content-zone {
         max-width: calc(1640px + 1.3rem);
         ;
@@ -175,15 +179,22 @@
             }
 
             .logic-visuals-container {
-                &:nth-child(1) {
-                    padding-bottom: 40px;
+                padding-bottom: 40px;
+                padding-top: 40px;
+                border-top: var(--border-tech);
+                border-bottom: var(--border-tech);
 
+                &:first-of-type {
+                    padding-top: 0px;
+                    border-top: 0;
+                    border-bottom: 0;
 
                 }
 
-                &:nth-child(2) {
-                    padding-top: 40px;
-                    border-top: var(--border-tech);
+                &:last-of-type {
+                    padding-bottom: 0px;
+                    border-top: 0;
+                    border-bottom: 0;
                 }
 
                 display: grid;
@@ -204,6 +215,10 @@
 
                 .list-container {
                     gap: 20px;
+
+                    &.sub-list {
+                        gap: 8px;
+                    }
                 }
             }
 

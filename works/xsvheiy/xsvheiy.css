@@ -4,6 +4,9 @@
 @import "../../css/main.css";
 @import "../component/layout/layout.css";
 /* --- 本頁專屬佈局邏輯 --- */
+.xsvheiy .img-caption.ERR {
+  padding-top: 8px;
+}
 .xsvheiy .case-content-zone {
   max-width: calc(1640px + 1.3rem);
 }
@@ -128,12 +131,21 @@
 .xsvheiy .ts-02 .logic-visuals-zone .neon-subtitle {
   margin-top: 0;
 }
-.xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container:nth-child(1) {
+.xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container {
   padding-bottom: 40px;
-}
-.xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container:nth-child(2) {
   padding-top: 40px;
   border-top: var(--border-tech);
+  border-bottom: var(--border-tech);
+}
+.xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container:first-of-type {
+  padding-top: 0px;
+  border-top: 0;
+  border-bottom: 0;
+}
+.xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container:last-of-type {
+  padding-bottom: 0px;
+  border-top: 0;
+  border-bottom: 0;
 }
 .xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container {
   display: grid;
@@ -153,6 +165,9 @@
 }
 .xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container .list-container {
   gap: 20px;
+}
+.xsvheiy .ts-02 .logic-visuals-zone .logic-visuals-container .list-container.sub-list {
+  gap: 8px;
 }
 .xsvheiy .ts-02 .logic-visuals-zone .swiper {
   height: -moz-fit-content;

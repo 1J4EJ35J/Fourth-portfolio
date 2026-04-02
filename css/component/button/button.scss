@@ -23,6 +23,7 @@
     &.style-01 {
         padding: 0 2rem;
 
+
         &:has(.icon-controller) {
             padding-right: 1.5rem;
             gap: .75rem;
@@ -99,6 +100,73 @@
             .btn-text,
             .icon-controller {
                 text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
+            }
+        }
+    }
+
+    &.style-02 {
+        padding: 0 1.2rem;
+        max-height: 32px;
+        height: 32px;
+        gap: 4px;
+
+        &:has(.icon-controller) {
+            padding-right: 1rem;
+        }
+
+        .btn-text {
+            position: relative;
+            text-shadow: none;
+            transition: all 0.3s ease-out;
+            font-size: var(--fs-small);
+            font-family: var(--font-family-main);
+            font-weight: var(--fw-semibold);
+            letter-spacing: 0.08em;
+        }
+
+        .icon-controller {
+            position: relative;
+            text-shadow: none;
+            transition: all 0.3s ease-out;
+            font-size: 16px;
+            font-weight: var(--fw-semibold);
+            letter-spacing: 0.08em;
+        }
+
+        &.btn-liquid-glass {
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 140, 255, 0.02);
+            outline: 1px solid rgba(0, 140, 255, 0.3);
+            outline-offset: -1px;
+            color: var(--color-primary);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            box-shadow: 0 0 10px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
+            transition: all 0.4s ease-out;
+
+            &:hover {
+                outline: 1px solid var(--color-primary);
+                background: rgba(0, 140, 255, 0.2);
+                color: #ffffff;
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                box-shadow:
+                    0 0 25px rgba(0, 140, 255, 0.6),
+                    0 0 50px rgba(0, 140, 255, 0.3),
+                    inset 0 0 15px rgba(0, 140, 255, 0.4);
+                transform: translateY(-2px) scale(1.02);
+
+                .liquid-light {
+                    opacity: 1;
+                    left: 60%;
+                    transition: left 0.7s ease-in-out;
+                }
+
+                .btn-text,
+                .icon-controller {
+                    text-shadow: 0 0 8px #ffffff2b, 0 0 5px var(--color-primary);
+                }
             }
         }
     }

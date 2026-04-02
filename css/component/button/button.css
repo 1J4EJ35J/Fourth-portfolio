@@ -92,6 +92,62 @@
 .btn.btn-liquid-glass:hover .icon-controller {
   text-shadow: 0 0 8px #ffffff, 0 0 15px var(--color-primary);
 }
+.btn.style-02 {
+  padding: 0 1.2rem;
+  max-height: 32px;
+  height: 32px;
+  gap: 4px;
+}
+.btn.style-02:has(.icon-controller) {
+  padding-right: 1rem;
+}
+.btn.style-02 .btn-text {
+  position: relative;
+  text-shadow: none;
+  transition: all 0.3s ease-out;
+  font-size: var(--fs-small);
+  font-family: var(--font-family-main);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+}
+.btn.style-02 .icon-controller {
+  position: relative;
+  text-shadow: none;
+  transition: all 0.3s ease-out;
+  font-size: 16px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+}
+.btn.style-02.btn-liquid-glass {
+  position: relative;
+  overflow: hidden;
+  background: rgba(0, 140, 255, 0.02);
+  outline: 1px solid rgba(0, 140, 255, 0.3);
+  outline-offset: -1px;
+  color: var(--color-primary);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 0 10px rgba(0, 140, 255, 0.1), inset 0 0 10px rgba(0, 140, 255, 0.05);
+  transition: all 0.4s ease-out;
+}
+.btn.style-02.btn-liquid-glass:hover {
+  outline: 1px solid var(--color-primary);
+  background: rgba(0, 140, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 0 25px rgba(0, 140, 255, 0.6), 0 0 50px rgba(0, 140, 255, 0.3), inset 0 0 15px rgba(0, 140, 255, 0.4);
+  transform: translateY(-2px) scale(1.02);
+}
+.btn.style-02.btn-liquid-glass:hover .liquid-light {
+  opacity: 1;
+  left: 60%;
+  transition: left 0.7s ease-in-out;
+}
+.btn.style-02.btn-liquid-glass:hover .btn-text,
+.btn.style-02.btn-liquid-glass:hover .icon-controller {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.168627451), 0 0 5px var(--color-primary);
+}
 
 /* 液態流體動畫層 */
 .liquid-light {
