@@ -38,6 +38,36 @@ select {
   font: inherit;
 }
 
+textarea {
+  /* 移除預設邊框與外輪廓 */
+  border: none;
+  outline: none;
+
+  /* 移除背景顏色與預設陰影（特別是 iOS） */
+  background: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* 移除右下角的縮放手把 */
+  resize: none !important;
+
+  /* 確保字體繼承父元素 */
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--color-text-secondary);
+
+  /* 移除某些瀏覽器預設的內距 */
+  padding: 0;
+  margin: 0;
+
+  resize: none;
+  border-top-color: none !important;
+  border-right-color: none !important;
+  border-bottom-color: none !important;
+  border-left-color: none !important;
+}
+
+
 ul,
 ol {
   list-style: none;

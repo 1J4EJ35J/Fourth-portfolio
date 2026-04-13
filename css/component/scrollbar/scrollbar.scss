@@ -25,6 +25,7 @@
         border-radius: 0px;
         border: 1px solid transparent;
         background-clip: content-box;
+        cursor: pointer;
 
         &:hover {
             background-color: #008cff;
@@ -37,7 +38,42 @@
     }
 }
 
-.scrollbar-style01-inner {
+.scrollbar-style01-inner,
+.scrollbar-style02-inner {
     width: inherit;
     height: fit-content;
+}
+
+.scrollbar-style02 {
+
+    /* 2. Webkit 核心屬性 (Chrome, Edge, Safari) */
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 4px;
+    }
+
+    /* 設定滾動條的「軌道」 (Track) */
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 0px;
+        margin-block: 4px;
+    }
+
+    /* 設定滾動條的「滑塊」 (Thumb) */
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-btn-glow);
+        border-radius: 0px;
+        border: 1px solid transparent;
+        background-clip: content-box;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--color-btn-glow);
+            border: 1px solid transparent;
+        }
+
+        &:active {
+            background-color: var(--color-btn-glow);
+        }
+    }
 }

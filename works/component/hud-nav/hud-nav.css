@@ -32,7 +32,7 @@
   width: fit-content;
 }
 .hud-nav .nav ul {
-  backdrop-filter: blur(8px);
+  backdrop-filter: var(--bg-backdrop);
 }
 .hud-nav .nav ul li .nav-btn {
   backdrop-filter: initial;

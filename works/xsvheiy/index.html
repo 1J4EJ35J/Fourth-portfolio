@@ -336,7 +336,7 @@
                                             <div class="article">
                                                 <div class="user-survey-title-zone">
                                                     <h4 class="neon-subtitle">數據驗證</h4>
-                                                    <button class="btn style-02 btn-liquid-glass">
+                                                    <button class="btn style-02 btn-liquid-glass popup-open">
                                                         <span class="btn-text">查看問卷</span>
                                                         <i class="fa-solid fa-file-lines icon-controller"></i>
                                                     </button>
@@ -1064,11 +1064,644 @@
                             </div>
                         </div>
                     </section>
-
                 </article>
             </div>
         </div>
+
+        <div class="popup style-1 active">
+            <div class="popup-wrapper">
+                <div class="gradient-outlined-box style-1">
+                    <div class="popup-zone">
+                        <div class="popup-container">
+                            <div class="title-box">
+                                <div class="tab-zone">
+                                    <div class="tab-btn active">
+                                        <i class="fa-solid fa-play icon-controller"></i>
+                                        <h4 class="tab-title">結果分析</h4>
+                                    </div>
+                                    <div class="tab-btn">
+                                        <i class="fa-solid fa-play icon-controller"></i>
+                                        <h4 class="tab-title">問卷題目</h4>
+                                    </div>
+                                </div>
+                                <button type="button" class="popup-close">
+                                    <i class="fa-solid fa-xmark icon-control"></i>
+                                </button>
+                            </div>
+                            <div class="popup-content-wrapper scrollbar-style02">
+                                <div class="item-zone scrollbar-style01-inner">
+                                    <div class="survey-result active">
+                                        <div class="zone">
+                                            <div class="result-info">
+                                                <ul class="question list-container">
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p>
+                                                            基礎數據分析：總回收問卷數、有效樣本數、受眾輪廓等基本指標，為後續深入分析提供基礎參考。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                                <div class="top">
+                                                    <div class="wrapper">
+                                                        <!-- 有效問卷比率 response-rate-->
+                                                        <div class="response-rate chart-container">
+                                                            <p class="chart-title">有效問卷比率：</p>
+                                                            <div class="chart-box" id="response-rate-box"></div>
+
+                                                        </div>
+                                                        <div class="data-list">
+                                                            <!-- 總回收問卷數 total -->
+                                                            <div class="data-item">
+                                                                <p class="item-header">總回收問卷數：</p>
+                                                                <div class="item-content ">
+                                                                    <p class="value">270</p>
+                                                                    <p class="small-text">份</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- 有效樣本數 total -->
+                                                            <div class="data-item">
+                                                                <p class="item-header">有效樣本數：</p>
+                                                                <div class="item-content ">
+                                                                    <p class="value">215</p>
+                                                                    <p class="small-text">
+                                                                        份
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- 排除無效 -->
+                                                            <div class="data-item">
+                                                                <small class="notice-text">排除 12 份未通過邏輯陷阱題 (I-02)
+                                                                    之無效問卷。</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="bottom">
+                                                    <div class="wrapper">
+                                                        <div class="demographic-distribution chart-container">
+                                                            <p class="chart-title">主要受測者輪廓（有效樣本 N=215）</p>
+                                                            <div class="chart-box" id="demographic-distribution-box">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="basic-features">
+                                                <ul class="question list-container">
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p>
+                                                            基本功能數據：針對Filter、Sidebar、RWD等基本功能的操作難易度的調查結果進行數據分析。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                                <div class="filter-sidebar-zone">
+                                                    <div class="result-filter wrapper">
+
+                                                        <div class="chart-title-box outline">
+                                                            <p class="chart-title">
+                                                                缺乏一致性的佈局標準，導致極高的導航摩擦力
+                                                            </p>
+                                                            <p class="chart-subtitle">
+                                                                依據問卷F-01~F-03 (Filter功能)、S-01~S-03 (Sidebar功能)
+                                                                的調查結果。
+                                                            </p>
+                                                        </div>
+                                                        <div class="filter-sidebar-chart chart-container">
+                                                            <p class="chart-title">
+                                                                Filter操作感受調查數據
+                                                            </p>
+                                                            <div class="filter-chart chart-box" id="filter-chart-box">
+                                                            </div>
+                                                            <p class="chart-title sidebar">
+                                                                Sidebar頁面切換難易度調查數據
+                                                            </p>
+                                                            <div class="sidebar-chart chart-box" id="sidebar-chart-box">
+                                                            </div>
+                                                        </div>
+                                                        <ul class="question list-container">
+                                                            <li class="item-box">
+                                                                <div class="bullet-points 
+triangle">▲</div>
+                                                                <p>
+                                                                    受測者對於篩選功能、頁面導航的操作感受分數普遍偏低。
+                                                                </p>
+                                                            </li>
+                                                            <li class="item-box">
+                                                                <div class="bullet-points 
+triangle">▲</div>
+                                                                <p>
+                                                                    依人數比，約30%~33%
+                                                                    的使用者處於『勉強適應』的狀態，代表系統操作高度依賴使用者的記憶，而非直覺的介面引導，是導致新人學習成本過高的主因。
+                                                                </p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="result-sidebar"></div>
+                                            </div>
+                                            <div class="result-RWD"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="questions-form survey-form">
+                                    <div class="brief">
+                                        <p class="">每題皆為必填單選，請依據您平時的使用情況選擇。
+                                            (1分為感受最差，10分為感受最佳)
+                                        </p>
+                                    </div>
+                                    <ul class="question list-container">
+                                        <li class="item-box">
+                                            <div class="bullet-points diamond">◆</div>
+                                            <p>
+                                                基本功能操作流程:
+                                            </p>
+                                            <div class="card">
+                                                <div class="list-container sub-list">
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">F-01</div>
+                                                            <p>
+                                                                請問您在各個不同頁面中，使用篩選功能的感受度如何？（例如：是否容易找到篩選功能、操作是否直觀）
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">1</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">2</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">3</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">4</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">5</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">6</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">7</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">8</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">9</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">10</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="question-item ">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">F-02</div>
+                                                            <p>
+                                                                請問下列哪一個選項最能描述您操作篩選功能的感受?
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">經常找不到</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">勉強可以</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很快就能找到</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">其他</p>
+                                                                <textarea name="other-text" class="other-textarea"
+                                                                    placeholder="請具體說明使用情況或感受"></textarea>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-container sub-list">
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">S-01</div>
+                                                            <p>
+                                                                請問您在切換主功能頁、子功能頁或尋找頁面時的感受如何？（例如：是否容易找到功能頁面?
+                                                                是否容易切換到您想要的頁面?）
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">1</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">2</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">3</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">4</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">5</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">6</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">7</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">8</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">9</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">10</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="question-item ">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">S-02</div>
+                                                            <p>
+                                                                請問下面哪一個選項，最能描述您在切換主功能頁、子功能頁或尋找頁面時的感受?
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">經常找不到</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">勉強可以</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很快就能找到</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">其他</p>
+                                                                <textarea name="other-text" class="other-textarea"
+                                                                    placeholder="請具體說明使用情況或感受"></textarea>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-container sub-list">
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">M-01</div>
+                                                            <p>
+                                                                請問您在使用行動裝置（平板/手機）操作系統時，畫面的篩選功能、頁面導航給您的感受如何？
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">1</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">2</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">3</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">4</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">5</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">6</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">7</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">8</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">9</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">10</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">M-02</div>
+                                                            <p>
+                                                                請問下面哪一個選項，最能描述您使用行動裝置（平板/手機）操作篩選功能、頁面導航的感受?
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很難操作</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">勉強可以</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很容易操作</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">其他</p>
+                                                                <textarea name="other-text" class="other-textarea"
+                                                                    placeholder="請具體說明使用情況或感受"></textarea>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item-box">
+                                            <div class="bullet-points diamond">◆</div>
+                                            <p>
+                                                產品設定流程:
+                                            </p>
+                                            <div class="card">
+                                                <div class="list-container sub-list">
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">P-01</div>
+                                                            <p>
+                                                                您對目前「產品設定」頁面的資訊量與欄位配置的感受？（例如：是否容易找到新增/編輯功能、容易了解產品分類階層）
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">1</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">2</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">3</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">4</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">5</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">6</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">7</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">8</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">9</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">10</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="question-item ">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">P-02</div>
+                                                            <p>
+                                                                請問下列哪一個選項最能描述您操作產品設頁面的感受?
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很難找到所需功能</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">勉強可以，須看教學手冊</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很快就能找到</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">其他</p>
+                                                                <textarea name="other-text" class="other-textarea"
+                                                                    placeholder="請具體說明使用情況或感受"></textarea>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-container sub-list">
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">P-03</div>
+                                                            <p>
+                                                                您對目前「產品設定」頁面的操作流程感受？（例如：是否容易完成新增/編輯流程，
+                                                                是否容易設定產品詳細內容）
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">1</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">2</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">3</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">4</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">5</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">6</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">7</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">8</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">9</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">10</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="question-item ">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">P-04</div>
+                                                            <p>
+                                                                請問下列哪一個選項最能描述您操作產品設頁面的感受?
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很難完成，操作流程時常卡住</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">勉強可以完成操作流程，須看教學手冊</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">很容易就能完成，操作流程順利</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">其他</p>
+                                                                <textarea name="other-text" class="other-textarea"
+                                                                    placeholder="請具體說明使用情況或感受"></textarea>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item-box">
+                                            <div class="bullet-points diamond">◆</div>
+                                            <p>
+                                                基本訊息:
+                                            </p>
+                                            <div class="card">
+                                                <div class="list-container sub-list">
+                                                    <div class="question-item">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">I-01</div>
+                                                            <p>
+                                                                請選擇您在門市中的職稱：
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">物理治療師</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">醫師</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">門市人員（含櫃台、一般行政）</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="question-item ">
+                                                        <div class="question-header">
+                                                            <div class="num-dash">I-02</div>
+                                                            <p>
+                                                                請在下列選項中，選擇最小的數字：
+                                                            </p>
+                                                        </div>
+                                                        <div class="option radio-box">
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">100</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">02</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">76</p>
+                                                            </label>
+                                                            <label class="radio style-1">
+                                                                <input name="filter-1" type="radio" value="">
+                                                                <p class="text">24</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
     </main>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -1078,6 +1711,12 @@
     <script src="../../js/particle-core.js"></script>
     <script src="../../js/navegation.js"></script>
     <script src="../js/works.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/6.0.0/echarts.min.js"
+        integrity="sha512-4/g9GAdOdTpUP2mKClpKsEzaK7FQNgMjq+No0rX8XZlfrCGtbi4r+T/p5fnacsEC3zIAmHKLJUL7sh3/yVA4OQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../../js/echarts.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".Swiper-1", {

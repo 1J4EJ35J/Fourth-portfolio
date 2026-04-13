@@ -1,0 +1,268 @@
+.questions-form {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+
+    .question.list-container {
+        .item-box {
+            margin-top: 1.75rem;
+            //border-bottom: 1px solid var(--color-text-secondary);
+
+            .card {
+                padding: 1rem;
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+        }
+
+        .list-container.sub-list {
+            padding-top: 1rem;
+            padding-right: 1rem;
+            gap: 1.75rem;
+            border: 1px solid rgba(0, 140, 255, .5);
+        }
+
+        .question-item {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            padding-bottom: 1rem;
+
+            &.bottom-dash-line {
+                border-bottom: 1px solid rgba(0, 140, 255, .5);
+
+            }
+
+
+            .question-header {
+                display: grid;
+                grid-template-columns: 40px 1fr;
+                gap: 4px;
+            }
+
+            .option.radio-box {
+                padding-left: 44px;
+
+                &:has(.other-textarea) {
+                    display: grid;
+                    grid-template-columns: repeat(4, auto);
+                    grid-template-rows: auto 1fr;
+                }
+
+                .radio.style-1:has(.other-textarea) {
+                    grid-column: 1/5;
+                    grid-row: 2/3;
+                    width: 100%;
+                    grid-template-columns: 20px minmax(150px, 100%);
+                }
+            }
+        }
+    }
+}
+
+.survey-result {
+    display: none;
+    width: 100%;
+    height: fit-content;
+
+    &.active {
+        display: block;
+    }
+
+    .chart-title-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0rem;
+
+        &.outline {
+            border: 1px solid rgba(0, 140, 255, 1);
+            padding: 1rem;
+        }
+
+        .chart-subtitle {
+            font-size: var(--fs-small);
+            //transform: skewX(-16deg);
+        }
+    }
+
+    .wrapper {
+        max-width: 600px;
+        width: 100%;
+        height: fit-content;
+    }
+
+    .chart-container {
+        width: 100%;
+        height: fit-content;
+    }
+
+    .result-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        height: fit-content;
+
+
+        .top {
+            width: 100%;
+            height: fit-content;
+
+            display: flex;
+            justify-content: center;
+
+            .wrapper {
+
+                display: grid;
+                grid-template-columns: minmax(360px, auto) minmax(160px, auto);
+                grid-template-rows: 1fr;
+                gap: 1rem;
+                border-bottom: 1px dashed rgba(0, 140, 255, .5);
+            }
+
+            .response-rate.chart-container {
+                display: flex;
+
+                flex-direction: column;
+                gap: 0;
+                justify-content: center;
+                align-items: start;
+
+                .chart-box {
+                    height: 360px;
+                    width: 100%;
+                    transform: translateX(0%);
+                }
+            }
+
+            .data-list {
+
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                width: fit-content;
+                padding-top: 2.5rem;
+
+                .data-item {
+                    width: 180px;
+                    display: flex;
+                    gap: 0;
+                    flex-direction: column;
+                    border: 1px solid rgba(0, 140, 255, .5);
+                    padding: 1rem 1rem .25rem 1rem;
+                    margin-bottom: 0;
+
+                    &:has(.notice-text) {
+                        border: 0px solid transparent;
+                        padding: 0;
+                    }
+
+                    .item-header {
+                        display: flex;
+                        gap: .5rem;
+                    }
+
+                    .item-content {
+                        display: flex;
+                        gap: 1.5rem;
+                        align-items: first baseline;
+                        align-self: end;
+                        position: relative;
+
+                        .value {
+                            font-size: clamp(2rem, 6.5vw, 3rem);
+                            ;
+                            font-weight: var(--fw-semibold);
+                        }
+                    }
+
+                    .notice-text {
+                        font-size: 13.3px;
+                    }
+                }
+            }
+        }
+
+        .bottom {
+            border-bottom: 1px solid rgba(0, 140, 255, 1);
+            padding: 1rem 0 2rem 0;
+            display: flex;
+            width: 100%;
+            height: fit-content;
+            justify-content: center;
+
+            .wrapper {
+                display: grid;
+                gap: 1rem;
+
+                .demographic-distribution.chart-container {
+
+                    .chart-box {
+                        margin-top: -20px;
+                        width: 100%;
+                        height: 280px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .basic-features {
+        padding: 2rem 0 2rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        height: fit-content;
+        width: 100%;
+
+        .filter-sidebar-zone {
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .wrapper {
+                max-width: 680px;
+                height: fit-content;
+                display: grid;
+                gap: 2.5rem;
+                justify-items: center;
+
+
+
+                .chart-title.sidebar {
+                    margin-top: 2rem;
+                }
+
+                .chart-container {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0rem;
+
+                    &:has(.filter-chart, .sidebar-chart) {
+                        height: 480px;
+                    }
+
+                    .chart-box {
+                        width: 100%;
+                        height: 100%;
+
+                        &.filter-chart {
+                            border-bottom: 1px dashed rgba(0, 140, 255, .5);
+                        }
+
+                        &.filter-chart,
+                        &.sidebar-chart {
+                            margin-top: -2.8rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

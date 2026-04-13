@@ -9,6 +9,10 @@
 @import url("./component/nav/nav.css");
 @import url("./component/scrollbar/scrollbar.css");
 @import url("./component/loading/loading.css");
+@import url("./component/radio/radio.css");
+@import url("./component/popup/popup.css");
+@import url("./component/survey/survey.css");
+
 
 @import url("./page/home.css");
 @import url("./page/about.css");
