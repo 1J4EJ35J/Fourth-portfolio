@@ -27,7 +27,7 @@
 .popup.style-1 .popup-wrapper .gradient-outlined-box {
   position: relative;
   width: 800px;
-  height: 65%;
+  height: 80%;
   background: rgb(7, 51, 92);
   z-index: 0;
   display: flex;
@@ -60,6 +60,9 @@
   height: calc(100% - 4px);
   background: var(--color-bg-abyss-core);
   position: relative;
+}
+.popup.style-1 .popup-wrapper .popup-zone .block-title {
+  color: var(--color-primary);
 }
 .popup.style-1 .popup-wrapper .popup-zone .popup-container {
   width: 100%;
@@ -145,10 +148,9 @@
   transition: all 0.25s linear;
 }
 .popup .popup-content-wrapper {
-  width: 100%;
+  width: calc(100% - 0.5rem);
   height: inherit;
   overflow-y: auto;
-  padding-right: 0.5rem;
 }
 .popup .item-zone {
   height: 1300px;

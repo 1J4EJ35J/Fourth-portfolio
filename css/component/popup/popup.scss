@@ -31,7 +31,7 @@
             .gradient-outlined-box {
                 position: relative;
                 width: 800px;
-                height: 65%;
+                height: 80%;
                 background: rgb(7, 51, 92);
                 z-index: 0;
                 display: flex;
@@ -68,6 +68,10 @@
                 height: calc(100% - 4px);
                 background: var(--color-bg-abyss-core);
                 position: relative;
+
+                .block-title {
+                    color: var(--color-primary);
+                }
 
                 .popup-container {
                     width: 100%;
@@ -178,10 +182,9 @@
 
 
     .popup-content-wrapper {
-        width: 100%;
+        width: calc(100% - .5rem);
         height: inherit;
         overflow-y: auto;
-        padding-right: .5rem;
     }
 
     .item-zone {
