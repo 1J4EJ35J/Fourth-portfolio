@@ -1,10 +1,12 @@
 .questions-form {
     display: none;
     pointer-events: none;
+    opacity: 0;
 
     &.active {
         display: block;
         pointer-events: all;
+        opacity: 1;
     }
 
     .question.list-container {
@@ -76,11 +78,13 @@
     display: none;
     width: 100%;
     pointer-events: none;
+    opacity: 0;
 
     &.active {
         display: block;
         pointer-events: all;
         height: fit-content;
+        opacity: 1;
     }
 
     .chart-title-box {
@@ -95,8 +99,8 @@
         &::before {
             content: "●";
             position: absolute;
-            top: .25rem;
-            left: -1rem;
+            top: .125rem;
+            left: -1.25rem;
             font-size: 12px;
 
         }
@@ -128,13 +132,91 @@
         height: fit-content;
     }
 
-    .result-info {
+    .shared-layout {
         display: flex;
         flex-direction: column;
         gap: .5rem;
         width: 100%;
         height: fit-content;
 
+        &.product-settings {
+            padding-top: 3rem;
+
+            .block-outline {
+                background: transparent;
+                padding: 1rem;
+            }
+
+            .top,
+            .bottom {
+                padding: 1.25rem;
+                flex-direction: column;
+                gap: 2.5rem;
+
+                .wrapper {
+                    grid-template-columns: minmax(360px, auto) minmax(160px, auto);
+                    padding-bottom: 2rem;
+
+
+
+                    &.product-settings-chart {}
+                }
+
+                .chart-box {
+                    width: 100%;
+                    height: 360px;
+                    margin-top: 2rem;
+                }
+
+                .data-list .data-item {
+                    width: 200px;
+
+                    .item-header {
+                        display: inline-block;
+                        position: relative;
+                        margin-left: 1rem;
+
+                        &::before {
+                            content: "■";
+                            position: absolute;
+                            top: .065rem;
+                            left: -1.2rem;
+                            font-size: 16px;
+                        }
+
+                        &.red::before {
+                            color: #953030;
+                        }
+
+                        &.pink::before {
+                            color: #e07070;
+                        }
+                    }
+
+                    .item-content .small-text {
+                        margin-right: 2px;
+                    }
+
+                    small {
+                        font-size: 13.3px;
+                        letter-spacing: 3%;
+                    }
+                }
+            }
+
+            .bottom {
+                .wrapper {
+
+
+                    .product-settings-chart.chart-container {}
+                }
+            }
+
+            .wrapper {
+                max-width: 100%;
+            }
+
+        }
 
         .top {
             width: 100%;
@@ -167,52 +249,7 @@
                 }
             }
 
-            .data-list {
 
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                width: fit-content;
-                padding-top: 2.5rem;
-
-                .data-item {
-                    width: 180px;
-                    display: flex;
-                    gap: 0;
-                    flex-direction: column;
-                    border: 1px solid rgba(0, 140, 255, .5);
-                    padding: 1rem 1rem .25rem 1rem;
-                    margin-bottom: 0;
-
-                    &:has(.notice-text) {
-                        border: 0px solid transparent;
-                        padding: 0;
-                    }
-
-                    .item-header {
-                        display: flex;
-                        gap: .5rem;
-                    }
-
-                    .item-content {
-                        display: flex;
-                        gap: 1.5rem;
-                        align-items: first baseline;
-                        align-self: end;
-                        position: relative;
-
-                        .value {
-                            font-size: clamp(2rem, 6.5vw, 3rem);
-                            ;
-                            font-weight: var(--fw-semibold);
-                        }
-                    }
-
-                    .notice-text {
-                        font-size: 13.3px;
-                    }
-                }
-            }
         }
 
         .bottom {
@@ -220,7 +257,6 @@
             padding: 1rem 0 1rem 0;
             display: flex;
             width: 100%;
-
             justify-content: center;
 
             .wrapper {
@@ -241,15 +277,65 @@
             }
         }
 
+        .data-list {
+
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: fit-content;
+            padding-top: 2.5rem;
+
+            .data-item {
+                width: 180px;
+                display: flex;
+                gap: 0;
+                flex-direction: column;
+                border: 1px solid rgba(0, 140, 255, .5);
+                padding: 1rem 1rem .25rem 1rem;
+                margin-bottom: 0;
+
+                &:has(.notice-text) {
+                    border: 0px solid transparent;
+                    padding: 0;
+                }
+
+                .item-header {
+                    display: flex;
+                    gap: .5rem;
+                }
+
+                .item-content {
+                    display: flex;
+                    gap: 1.5rem;
+                    align-items: first baseline;
+                    align-self: end;
+                    position: relative;
+
+                    .value {
+                        font-size: clamp(2rem, 6.5vw, 3rem);
+                        ;
+                        font-weight: var(--fw-semibold);
+                    }
+                }
+
+                .notice-text {
+                    font-size: 13.3px;
+                }
+            }
+        }
     }
 
     .basic-features {
-        padding: 2rem 0 2rem 0;
+        padding: 3rem 0 0rem 0;
         display: flex;
         flex-direction: column;
         gap: .5rem;
         height: fit-content;
         width: 100%;
+
+        .block-outline {
+            background: rgba(10, 67, 121, 0.3);
+        }
 
         .chart-container {
             width: 100%;
@@ -304,14 +390,16 @@
                 }
 
                 .result.list-container.filter-sidebar-result {
-                    border-bottom: 1px solid rgba(0, 140, 255, .5);
+
                     padding-bottom: 2rem;
+
                 }
             }
         }
 
         .filter-sidebar-zone {
             padding-top: 1rem;
+            border-bottom: 1px solid rgba(0, 140, 255, .5);
         }
 
         .result-RWD-zone {
@@ -322,20 +410,39 @@
 
 @media screen and (max-width: 992px) {
     .survey-result .chart-title-box {
-        margin-left: 0rem;
-        justify-self: center;
-        max-width: 345px;
+        margin-left: 1.25rem;
+
+    }
+
+    .survey-result .basic-features .chart-container .chart-title,
+    .survey-result .product-settings .chart-container .chart-title {
+        margin-left: 1.25rem;
     }
 
 }
 
+@media screen and (max-width: 991px) {
+    .questions-form .question.list-container .question-item .option.radio-box:has(.other-textarea) {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, auto);
+    }
+
+    .questions-form .question.list-container .question-item .option.radio-box .radio.style-1:has(.other-textarea) {
+        grid-column: initial;
+        grid-row: initial;
+    }
+}
+
 @media screen and (max-width: 767px) {
-    .survey-result .result-info .top .wrapper {
+
+
+    .survey-result .shared-layout .top .wrapper {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
     }
 
-    .survey-result .result-info .top .data-list {
+    .survey-result .shared-layout .top .data-list {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr auto;
@@ -345,33 +452,33 @@
         padding-bottom: 2rem;
     }
 
-    .survey-result .result-info .top .data-list .data-item {
+    .survey-result .shared-layout .top .data-list .data-item {
         width: 100%;
         padding: 1rem 1rem .8rem 1rem;
     }
 
-    .survey-result .result-info .top .data-list .data-item .item-content .value {
+    .survey-result .shared-layout .top .data-list .data-item .item-content .value {
         font-size: 40px;
     }
 
-    .survey-result .result-info .top .data-list .data-item .item-content {
+    .survey-result .shared-layout .top .data-list .data-item .item-content {
         align-self: center;
         margin-left: 16px;
     }
 
-    .survey-result .result-info .top .data-list .data-item .item-content {
+    .survey-result .shared-layout .top .data-list .data-item .item-content {
         gap: 12px;
     }
 
-    .survey-result .result-info .top .data-list .data-item:has(.notice-text) {
+    .survey-result .shared-layout .top .data-list .data-item:has(.notice-text) {
         grid-column: 1 / 3;
     }
 
-    .survey-result .result-info .bottom .wrapper .demographic-distribution.chart-container {
+    .survey-result .shared-layout .bottom .wrapper .demographic-distribution.chart-container {
         height: 300px;
     }
 
-    .survey-result .result-info .bottom .wrapper .demographic-distribution.chart-container .chart-box {
+    .survey-result .shared-layout .bottom .wrapper .demographic-distribution.chart-container .chart-box {
         margin-top: -125px;
         margin-left: -20px;
         width: 100%;
@@ -388,12 +495,12 @@
         outline-offset: -1px;
     }
 
-    .survey-result .result-info .bottom .wrapper .demographic-distribution.chart-container {
+    .survey-result .shared-layout .bottom .wrapper .demographic-distribution.chart-container {
         height: 270px;
     }
 
 
-    .survey-result .result-info .bottom .wrapper .demographic-distribution.chart-container .chart-box {
+    .survey-result .shared-layout .bottom .wrapper .demographic-distribution.chart-container .chart-box {
         margin-top: -50px;
         margin-left: -20px;
         width: 100%;
@@ -403,11 +510,11 @@
 
 
 @media screen and (max-width: 480px) {
-    .survey-result .result-info .bottom .wrapper .demographic-distribution.chart-container {
+    .survey-result .shared-layout .bottom .wrapper .demographic-distribution.chart-container {
         height: fit-content;
     }
 
-    .survey-result .result-info .bottom .wrapper .demographic-distribution.chart-container .chart-box {
+    .survey-result .shared-layout .bottom .wrapper .demographic-distribution.chart-container .chart-box {
         margin-top: -30px;
         margin-left: 0;
         width: 100%;

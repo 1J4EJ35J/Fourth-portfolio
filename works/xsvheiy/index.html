@@ -336,7 +336,8 @@
                                             <div class="article">
                                                 <div class="user-survey-title-zone">
                                                     <h4 class="neon-subtitle">數據驗證</h4>
-                                                    <button class="btn style-02 btn-liquid-glass popup-open">
+                                                    <button class="btn style-02 btn-liquid-glass popup-open"
+                                                        id="popup-open-btn">
                                                         <span class="btn-text">查看問卷</span>
                                                         <i class="fa-solid fa-file-lines icon-controller"></i>
                                                     </button>
@@ -1068,7 +1069,7 @@
             </div>
         </div>
 
-        <div class="popup style-1 active">
+        <div class="popup style-1" id="popup-templete">
             <div class="popup-wrapper">
                 <div class="gradient-outlined-box style-1">
                     <div class="popup-zone">
@@ -1084,181 +1085,12 @@
                                         <h4 class="tab-title">問卷題目</h4>
                                     </div>
                                 </div>
-                                <button type="button" class="popup-close">
+                                <button type="button" class="popup-close" id="popup-close-btn">
                                     <i class="fa-solid fa-xmark icon-control"></i>
                                 </button>
                             </div>
                             <div class="popup-content-wrapper scrollbar-style02">
                                 <div class="item-zone scrollbar-style01-inner">
-                                    <div class="survey-result active">
-                                        <div class="zone">
-                                            <div class="result-info">
-                                                <ul class="question list-container">
-                                                    <li class="item-box">
-                                                        <div class="bullet-points diamond">◆</div>
-                                                        <p>
-                                                            基礎數據分析：總回收問卷數、有效樣本數、受眾輪廓等基本指標，為後續深入分析提供基礎參考。
-                                                        </p>
-                                                    </li>
-                                                </ul>
-                                                <div class="block-outline">
-                                                    <div class="top">
-                                                        <div class="wrapper">
-                                                            <!-- 有效問卷比率 response-rate-->
-                                                            <div class="response-rate chart-container">
-                                                                <p class="chart-title">有效問卷比率：</p>
-                                                                <div class="chart-box" id="response-rate-box"></div>
-
-                                                            </div>
-                                                            <div class="data-list">
-                                                                <!-- 總回收問卷數 total -->
-                                                                <div class="data-item">
-                                                                    <p class="item-header">總回收問卷數：</p>
-                                                                    <div class="item-content ">
-                                                                        <p class="value">270</p>
-                                                                        <p class="small-text">份</p>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 有效樣本數 total -->
-                                                                <div class="data-item">
-                                                                    <p class="item-header">有效樣本數：</p>
-                                                                    <div class="item-content ">
-                                                                        <p class="value">215</p>
-                                                                        <p class="small-text">
-                                                                            份
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 排除無效 -->
-                                                                <div class="data-item">
-                                                                    <small class="notice-text">排除 12 份未通過邏輯陷阱題 (I-02)
-                                                                        之無效問卷。</small>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="bottom">
-                                                        <div class="wrapper">
-                                                            <div class="demographic-distribution chart-container">
-                                                                <p class="chart-title">主要受測者輪廓（有效樣本 N=215）</p>
-                                                                <div class="chart-box"
-                                                                    id="demographic-distribution-box">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="basic-features">
-                                                <ul class="survey list-container">
-                                                    <li class="item-box">
-                                                        <div class="bullet-points diamond">◆</div>
-                                                        <p>
-                                                            基本功能數據：針對Filter、頁面切換、RWD等基本功能的操作難易度的調查結果進行數據分析。
-                                                        </p>
-                                                    </li>
-                                                </ul>
-                                                <div class="block-outline">
-                                                    <div class="filter-sidebar-zone">
-                                                        <div class="result-filter wrapper">
-                                                            <div class="chart-title-box">
-                                                                <p class="chart-title">
-                                                                    缺乏一致性的佈局標準，導致極高的導航摩擦力
-                                                                </p>
-                                                                <p class="chart-subtitle">
-                                                                    依據問卷F-01~F-03 (Filter功能)、S-01~S-03 (頁面切換功能)
-                                                                    的調查結果。
-                                                                </p>
-                                                            </div>
-                                                            <div class="filter-sidebar-chart chart-container">
-                                                                <p class="chart-title">
-                                                                    Filter操作感受調查數據
-                                                                </p>
-                                                                <div class="filter-chart chart-box"
-                                                                    id="filter-chart-box">
-                                                                </div>
-                                                                <p class="chart-title sidebar">
-                                                                    頁面切換難易度調查數據
-                                                                </p>
-                                                                <div class="sidebar-chart chart-box"
-                                                                    id="sidebar-chart-box">
-                                                                </div>
-                                                            </div>
-                                                            <ul class="result list-container filter-sidebar-result">
-                                                                <li class="item-box">
-                                                                    <div class="bullet-points triangle">▲</div>
-                                                                    <p>
-                                                                        紅色區域人數顯示，超過50%受測者經常找不到功能，其中超過60位的使用者意見回覆「需要依靠教學手冊」才能操作，顯示出系統缺乏固定流程與直觀的引導，使用者難養成心智模型。
-                                                                    </p>
-                                                                </li>
-                                                                <li class="item-box">
-                                                                    <div class="bullet-points triangle">▲</div>
-                                                                    <p>
-                                                                        約30%~33%（黃色區）
-                                                                        的使用者處於「勉強可以」的狀態，代表系統操作高度依賴使用者的記憶，而非直覺的介面引導，是導致使用者學習成本過高的主因。
-                                                                    </p>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="result-RWD-zone">
-                                                        <div class="result-RWD wrapper">
-                                                            <div class="chart-title-box RWD">
-                                                                <p class="chart-title">
-                                                                    RWD 體驗崩潰：手機、平板與醫療車使用者的痛點
-                                                                </p>
-                                                                <p class="chart-subtitle">
-                                                                    依據問卷M-01~M-02 在行動裝置使用情況
-                                                                    的調查結果。
-                                                                </p>
-                                                            </div>
-                                                            <div class="RWD-chart chart-container">
-                                                                <p class="chart-title">
-                                                                    移動裝置體驗調查數據
-                                                                </p>
-                                                                <div class="RWD-chart chart-box" id="RWD-chart-box">
-                                                                </div>
-                                                            </div>
-                                                            <ul class="result list-container filter-sidebar-result">
-                                                                <li class="item-box">
-                                                                    <div class="bullet-points triangle">▲</div>
-                                                                    <p>
-                                                                        多數受測者反應在行動裝置上操作系統時，常見的問題包括按鈕過小、功能無法正常顯示、表格資料超出螢幕等，嚴重影響了他們的工作效率與使用體驗。
-                                                                    </p>
-                                                                <li class="item-box">
-                                                                    <div class="bullet-points triangle"></div>
-                                                                    <p>
-                                                                        「在病房用平板開，按鈕不是太小就是根本沒出現，不能送出。」
-                                                                    </p>
-                                                                </li>
-
-                                                                <li class="item-box">
-                                                                    <div class="bullet-points triangle"></div>
-                                                                    <p>
-                                                                        「篩選都擠在一起，文字都看不清楚怎麼選？」
-                                                                    </p>
-                                                                </li>
-
-                                                                <li class="item-box">
-                                                                    <div class="bullet-points triangle"></div>
-                                                                    <p>
-                                                                        「很多按鈕和表格資料都超出螢幕，看不到病人的資料也不能滑...」
-                                                                    </p>
-                                                                </li>
-
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="questions-form survey-form">
                                         <div class="brief">
                                             <p class="">每題皆為必填單選，請依據您平時的使用情況選擇。
@@ -1576,17 +1408,17 @@
                                                             <div class="question-header">
                                                                 <div class="num-dash">P-02</div>
                                                                 <p>
-                                                                    請問下列哪一個選項最能描述您操作產品設頁面的感受?
+                                                                    請問下列哪一個選項最能描述您在產品設定頁面尋找功能、頁面資訊理解難易度的感受?
                                                                 </p>
                                                             </div>
                                                             <div class="option radio-box">
                                                                 <label class="radio style-1">
                                                                     <input name="filter-1" type="radio" value="">
-                                                                    <p class="text">很難找到所需功能</p>
+                                                                    <p class="text">很難找到所需功能，也很難理解</p>
                                                                 </label>
                                                                 <label class="radio style-1">
                                                                     <input name="filter-1" type="radio" value="">
-                                                                    <p class="text">勉強可以，須看教學手冊</p>
+                                                                    <p class="text">勉強可以，依賴教學手冊，需要更多時間理解資訊</p>
                                                                 </label>
                                                                 <label class="radio style-1">
                                                                     <input name="filter-1" type="radio" value="">
@@ -1607,7 +1439,7 @@
                                                                 <div class="num-dash">P-03</div>
                                                                 <p>
                                                                     您對目前「產品設定」頁面的操作流程感受？（例如：是否容易完成新增/編輯流程，
-                                                                    是否容易設定產品詳細內容）
+                                                                    是否容易設定產品的分類、詳細內容）
                                                                 </p>
                                                             </div>
                                                             <div class="option radio-box">
@@ -1657,7 +1489,7 @@
                                                             <div class="question-header">
                                                                 <div class="num-dash">P-04</div>
                                                                 <p>
-                                                                    請問下列哪一個選項最能描述您操作產品設頁面的感受?
+                                                                    請問下列哪一個選項最能描述您操作產品設定功能的感受?
                                                                 </p>
                                                             </div>
                                                             <div class="option radio-box">
@@ -1667,7 +1499,7 @@
                                                                 </label>
                                                                 <label class="radio style-1">
                                                                     <input name="filter-1" type="radio" value="">
-                                                                    <p class="text">勉強可以完成操作流程，須看教學手冊</p>
+                                                                    <p class="text">勉強可以完成操作流程，須看教學手冊或更換PC操作</p>
                                                                 </label>
                                                                 <label class="radio style-1">
                                                                     <input name="filter-1" type="radio" value="">
@@ -1744,8 +1576,316 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
+                                    <div class="survey-result active">
+                                        <div class="zone">
+                                            <div class="result-info shared-layout">
+                                                <ul class="question list-container">
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p>
+                                                            受測者數據：總回收問卷數、有效樣本數、受眾輪廓等基本指標，為後續深入分析提供基礎參考。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                                <div class="block-outline">
+                                                    <div class="top">
+                                                        <div class="wrapper">
+                                                            <!-- 有效問卷比率 response-rate-->
+                                                            <div class="response-rate chart-container">
+                                                                <p class="chart-title">有效問卷比率：</p>
+                                                                <div class="chart-box" id="response-rate-box"></div>
 
+                                                            </div>
+                                                            <div class="data-list">
+                                                                <!-- 總回收問卷數 total -->
+                                                                <div class="data-item">
+                                                                    <p class="item-header">總回收問卷數：</p>
+                                                                    <div class="item-content ">
+                                                                        <p class="value">270</p>
+                                                                        <p class="small-text">份</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- 有效樣本數 total -->
+                                                                <div class="data-item">
+                                                                    <p class="item-header">有效樣本數：</p>
+                                                                    <div class="item-content ">
+                                                                        <p class="value">215</p>
+                                                                        <p class="small-text">
+                                                                            份
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- 排除無效 -->
+                                                                <div class="data-item">
+                                                                    <small class="notice-text">排除 12 份未通過邏輯陷阱題 (I-02)
+                                                                        之無效問卷。</small>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bottom">
+                                                        <div class="wrapper">
+                                                            <div class="demographic-distribution chart-container">
+                                                                <p class="chart-title">主要受測者輪廓（有效樣本 N=215）</p>
+                                                                <div class="chart-box"
+                                                                    id="demographic-distribution-box">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="basic-features">
+                                                <ul class="survey list-container">
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p>
+                                                            基本功能數據：針對Filter、頁面切換、RWD等基本功能的操作難易度的調查結果進行數據分析。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                                <div class="block-outline">
+                                                    <div class="filter-sidebar-zone">
+                                                        <div class="result-filter wrapper">
+                                                            <div class="chart-title-box">
+                                                                <p class="chart-title">
+                                                                    缺乏一致性的佈局標準，導致極高的導航摩擦力
+                                                                </p>
+                                                                <p class="chart-subtitle">
+                                                                    依據問卷F-01~F-03 (Filter功能)、S-01~S-03 (頁面切換功能)
+                                                                    的調查結果。
+                                                                </p>
+                                                            </div>
+                                                            <div class="filter-sidebar-chart chart-container">
+                                                                <p class="chart-title">
+                                                                    Filter操作感受調查數據
+                                                                </p>
+                                                                <div class="filter-chart chart-box"
+                                                                    id="filter-chart-box">
+                                                                </div>
+                                                                <p class="chart-title sidebar">
+                                                                    頁面切換難易度調查數據
+                                                                </p>
+                                                                <div class="sidebar-chart chart-box"
+                                                                    id="sidebar-chart-box">
+                                                                </div>
+                                                            </div>
+                                                            <ul class="result list-container filter-sidebar-result">
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle">▲</div>
+                                                                    <p>
+                                                                        紅色區域人數顯示，超過125位受測者（占總數約58%）經常找不到功能，其中超過60位的使用者意見回覆「需要依靠教學手冊」才能操作，顯示出系統缺乏固定流程與直觀的引導，使用者難養成心智模型。
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle">▲</div>
+                                                                    <p>
+                                                                        黃色區 64~71人（約30%~33% ）
+                                                                        的使用者處於「勉強可以」的狀態，代表系統操作高度依賴使用者的記憶，而非直覺的介面引導，是導致使用者學習成本過高的主因。
+                                                                    </p>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="result-RWD-zone">
+                                                        <div class="result-RWD wrapper">
+                                                            <div class="chart-title-box RWD">
+                                                                <p class="chart-title">
+                                                                    RWD 體驗崩潰：手機、平板與醫療車使用者的痛點
+                                                                </p>
+                                                                <p class="chart-subtitle">
+                                                                    依據問卷M-01~M-02 在行動裝置使用情況
+                                                                    的調查結果。
+                                                                </p>
+                                                            </div>
+                                                            <div class="RWD-chart chart-container">
+                                                                <p class="chart-title">
+                                                                    移動裝置體驗調查數據
+                                                                </p>
+                                                                <div class="RWD-chart chart-box" id="RWD-chart-box">
+                                                                </div>
+                                                            </div>
+                                                            <ul class="result list-container filter-sidebar-result">
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle">▲</div>
+                                                                    <p>
+                                                                        多數受測者反應在行動裝置上操作系統時，常見的問題包括按鈕過小、功能無法正常顯示、表格資料超出螢幕等，嚴重影響了他們的工作效率與使用體驗。
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle"></div>
+                                                                    <p>
+                                                                        「在病房用平板開，按鈕不是太小就是根本沒出現，不能送出。」
+                                                                    </p>
+                                                                </li>
+
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle"></div>
+                                                                    <p>
+                                                                        「篩選都擠在一起，文字都看不清楚怎麼選？」
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle"></div>
+                                                                    <p>
+                                                                        「很多按鈕和表格資料都超出螢幕，看不到病人的資料也不能滑...」
+                                                                    </p>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="product-settings shared-layout">
+                                                <ul class="product-settings list-container">
+                                                    <li class="item-box">
+                                                        <div class="bullet-points diamond">◆</div>
+                                                        <p>
+                                                            產品設定功能：針對產品設定頁面的欄位配置、資訊理解難易度、操作流程等方面的調查結果進行數據分析。
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                                <div class="block-outline">
+                                                    <div class="top">
+                                                        <div class="chart-title-box">
+                                                            <p class="chart-title">
+                                                                認知負荷超載：錯亂的資訊架構造成使用者挫敗感
+                                                            </p>
+                                                            <p class="chart-subtitle">
+                                                                依據問卷P-01~P-02 (產品設定頁面資訊理解難易度)
+                                                                的調查結果。
+                                                            </p>
+                                                        </div>
+                                                        <div class="wrapper">
+                                                            <div class="product-layout-chart chart-container">
+                                                                <p class="chart-title">挫敗人數比率：</p>
+                                                                <div class="chart-box" id="product-layout-chart-box">
+                                                                </div>
+                                                            </div>
+                                                            <div class="data-list">
+                                                                <!-- 很難找到所需功能 total -->
+                                                                <div class="data-item">
+                                                                    <p class="item-header red">很難理解：</p>
+                                                                    <div class="item-content ">
+                                                                        <p class="value">82</p>
+                                                                        <p class="small-text">人</p>
+                                                                    </div>
+                                                                    <small>約38%的受測者很難找到功能，或很難理解頁面資訊。
+                                                                    </small>
+                                                                </div>
+
+                                                                <!-- 勉強可以 total -->
+                                                                <div class="data-item">
+                                                                    <p class="item-header pink">勉強可以：</p>
+                                                                    <div class="item-content ">
+                                                                        <p class="value">110</p>
+                                                                        <p class="small-text">
+                                                                            人
+                                                                        </p>
+                                                                    </div>
+                                                                    <small>約51%受測者依賴手冊，耗費更多時間、精力才能理解頁面資訊。
+                                                                    </small>
+                                                                </div>
+
+                                                                <!-- 排除無效 -->
+                                                                <div class="data-item">
+                                                                    <small
+                                                                        class="notice-text">僅有23人（約11%）很快就能找到所需功能或容易理解資訊。</small>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bottom product-settings">
+                                                        <div class="chart-title-box">
+                                                            <p class="chart-title">
+                                                                不更換PC就無法完成任務：系統缺乏固定流程與直觀引導，再加上RWD UI崩潰，導致存活率低下。
+                                                            </p>
+                                                            <p class="chart-subtitle">
+                                                                依據問卷P-03~P-04 (產品設定流程)
+                                                                的調查結果。
+                                                            </p>
+                                                        </div>
+                                                        <div class="product-settings-chart-zone">
+                                                            <div class="wrapper product-settings-chart">
+                                                                <div class="product-settings-chart chart-container">
+                                                                    <p class="chart-title">任務成功的存活占比：</p>
+                                                                    <div class="chart-box"
+                                                                        id="product-setting-chart-box">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="data-list">
+                                                                    <div class="data-item">
+                                                                        <p class="item-header pink">勉強可以完成：</p>
+                                                                        <div class="item-content ">
+                                                                            <p class="value">133</p>
+                                                                            <p class="small-text">
+                                                                                人
+                                                                            </p>
+                                                                        </div>
+                                                                        <small>約63%的受測者須看教學手冊，或是換PC操作才能完成。
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="data-item">
+                                                                        <p class="item-header red">很難完成操作：</p>
+                                                                        <div class="item-content ">
+                                                                            <p class="value">67</p>
+                                                                            <p class="small-text">人</p>
+                                                                        </div>
+                                                                        <small>約30%的受測者很難完成，操作流程時常卡住。
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="data-item">
+                                                                        <small
+                                                                            class="notice-text">僅有15人（約7%）很容易就能完成，操作流程順利。</small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <ul class="result list-container filter-sidebar-result">
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle">▲</div>
+                                                                    <p>
+                                                                        在215位有效受測者中，任務完成的存活率僅有約7%（15人），超過90%的人分布在「很難完成」與「勉強可以」，顯示出系統的使用者體驗存在嚴重問題。
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle">▲</div>
+                                                                    <p>
+                                                                        多數受測者反應在行動裝置上操作產品設定時，功能無法正常顯示、選單文字擠壓、表格資料超出螢幕等，導致不更換PC就無法繼續進行。
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle"></div>
+                                                                    <p>
+                                                                        「流程亂跳沒提示，不知道下一步要點哪裡...」
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle"></div>
+                                                                    <p>
+                                                                        「使用院配平板操作，根本不能選擇設定詳細資料。」
+                                                                    </p>
+                                                                </li>
+                                                                <li class="item-box">
+                                                                    <div class="bullet-points triangle"></div>
+                                                                    <p>
+                                                                        「文字都擠在一起，不然就是看不到，必須換電腦才能進行，這樣很難即時操作。」
+                                                                    </p>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

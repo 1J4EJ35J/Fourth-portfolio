@@ -1,14 +1,19 @@
 .popup.active {
   display: block;
+  pointer-events: initial;
+  opacity: 1;
 }
 .popup {
   display: none;
   position: fixed;
+  pointer-events: none;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 105;
+  transition: all 0.25s linear;
+  opacity: 0;
 }
 .popup .button-zone {
   margin-top: 0;
