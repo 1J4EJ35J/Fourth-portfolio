@@ -1,76 +1,81 @@
-// 取得 DOM 元素
-const popupOpenBtn = document.getElementById('popup-open-btn');
-const popupCloseBtn = document.getElementById('popup-close-btn');
-const popupTemplate = document.getElementById('popup-templete'); // 注意拼字是 templete
+/**
+ * 彈窗邏輯優化：支援多組彈窗並存
+ * 邏輯：點擊 .popup-open-btn 時，尋找該按鈕對應的 .popup.style-1 並加上 .active
+ */
 
-// 確保彈窗元素存在，再綁定事件
-if (popupTemplate) {
+// 1. 處理「開啟」按鈕
+const openButtons = document.querySelectorAll('.popup-open-btn');
 
-    // 點擊「開啟」按鈕的事件
-    if (popupOpenBtn) {
-        popupOpenBtn.addEventListener('click', function () {
-            // 先判斷：如果沒有 .active 才加上去
-            if (!popupTemplate.classList.contains('active')) {
-                popupTemplate.classList.add('active');
+openButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+        // 取得按鈕上定義的 target 或是根據 DOM 結構尋找
+        // 假設彈窗緊跟在按鈕附近，或是在全局中尋找對應的 popup
+        // 這裡建議在 HTML 按鈕加上 data-target 屬性，例如 data-target=".popup-A"
+        const targetSelector = this.getAttribute('data-target') || '.popup.style-1';
+        const popup = document.querySelector(targetSelector);
 
-                // ✅ 終極解法：觸發全局的 resize 事件
-                // 延遲 100 毫秒，確保彈窗的 CSS display: block 已經完全渲染完畢
+        if (popup && !popup.classList.contains('active')) {
+            popup.classList.add('active');
+
+            // ✅ 觸發全局 resize 事件，確保彈窗內的內容（如圖表）能重新計算寬度
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 0);
+        }
+    });
+});
+
+// 2. 處理「關閉」按鈕 (建議在 popup 內部使用 class 標記)
+// 使用事件委託處理所有關閉動作，避免複數彈窗重複綁定
+document.addEventListener('click', function (e) {
+    // 如果點擊的是關閉按鈕 (.popup-close-btn)
+    if (e.target.closest('.popup-close-btn')) {
+        const popup = e.target.closest('.popup');
+        if (popup) {
+            popup.classList.remove('active');
+        }
+    }
+
+    // (選配) 點擊彈窗背景遮罩處也可關閉
+    if (e.target.classList.contains('popup')) {
+        e.target.classList.remove('active');
+    }
+});
+
+
+// 3. 頁籤切換邏輯 (保留並優化)
+const setupTabs = () => {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            if (this.classList.contains('active')) return;
+
+            // 取得父容器，確保只切換當前彈窗內的頁籤
+            const container = this.closest('.popup') || document.body;
+
+            // 移除同層所有按鈕與內容的 active
+            container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            container.querySelectorAll('.survey-result, .questions-form').forEach(c => c.classList.remove('active'));
+
+            // 加上當前點擊的 active
+            this.classList.add('active');
+
+            // 根據 class 切換對應內容
+            if (this.classList.contains('survey')) {
+                const target = container.querySelector('.survey-result');
+                if (target) target.classList.add('active');
+
+                // 觸發 resize 讓圖表自動適應
                 setTimeout(() => {
                     window.dispatchEvent(new Event('resize'));
-                }, 90);
+                }, 0);
+            } else if (this.classList.contains('questionnaire')) {
+                const target = container.querySelector('.questions-form');
+                if (target) target.classList.add('active');
             }
         });
-    }
-
-    // 點擊「關閉」按鈕的事件
-    if (popupCloseBtn) {
-        popupCloseBtn.addEventListener('click', function () {
-            // 先判斷：如果有 .active 才移除
-            if (popupTemplate.classList.contains('active')) {
-                popupTemplate.classList.remove('active');
-            }
-        });
-    }
-
-}
-
-// 取得所有需要的 DOM 元素（已修正拼字為 survey）
-const btnSurvey = document.querySelector('.tab-btn.survey');
-const btnQuestionnaire = document.querySelector('.tab-btn.questionnaire');
-const resultSurvey = document.querySelector('.survey-result');
-const formQuestions = document.querySelector('.questions-form');
-
-// 點擊「調查結果 (Survey)」的事件
-if (btnSurvey) {
-    btnSurvey.addEventListener('click', () => {
-        if (btnSurvey.classList.contains('active')) return;
-
-        // 1. 處理 Survey 相關：加上 active
-        btnSurvey.classList.add('active');
-        if (resultSurvey) resultSurvey.classList.add('active');
-
-        // 2. 處理 Questionnaire 相關：移除 active
-        if (btnQuestionnaire) btnQuestionnaire.classList.remove('active');
-        if (formQuestions) formQuestions.classList.remove('active');
-
-        // ✅ 同理：切換頁籤時，也觸發 resize 讓圖表自動適應新容器
-        setTimeout(() => {
-            window.dispatchEvent(new Event('resize'));
-        }, 90);
     });
-}
+};
 
-// 點擊「問卷表單 (Questionnaire)」的事件
-if (btnQuestionnaire) {
-    btnQuestionnaire.addEventListener('click', () => {
-        if (btnQuestionnaire.classList.contains('active')) return;
-
-        // 1. 處理 Questionnaire 相關：加上 active
-        btnQuestionnaire.classList.add('active');
-        if (formQuestions) formQuestions.classList.add('active');
-
-        // 2. 處理 Survey 相關：移除 active
-        if (btnSurvey) btnSurvey.classList.remove('active');
-        if (resultSurvey) resultSurvey.classList.remove('active');
-    });
-}
+setupTabs();

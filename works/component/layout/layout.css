@@ -858,16 +858,6 @@ p {
   pointer-events: none;
 }
 
-.user-survey-title-zone {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-}
-.user-survey-title-zone .btn.style-02 {
-  margin-bottom: 12px;
-}
-
 /* ==========================================================================
    ★ RWD MEDIA QUERIES (Organized at Bottom)
    ========================================================================== */

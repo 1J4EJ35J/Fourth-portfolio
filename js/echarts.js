@@ -1,8 +1,11 @@
 responseRate();
 demoGraphicDistribution();
-filterChart();
-sidebarChart();
-rwdChart();
+filterChart('filter-chart-box-main');
+filterChart('filter-chart-box-popup');
+sidebarChart('sidebar-chart-box-main');
+sidebarChart('sidebar-chart-box-popup');
+rwdChart('RWD-chart-box-main');
+rwdChart('RWD-chart-box-popup');
 productLayoutChart();
 productSettingChart();
 
@@ -261,8 +264,9 @@ function demoGraphicDistribution() {
 
 
 // 篩選功能圖表 (Filter Chart - F-02 數據)
-function filterChart() {
-    var chartDom = document.getElementById('filter-chart-box');
+// 篩選功能圖表 (加入 containerId 參數讓它變成共用元件)
+function filterChart(containerId) {
+    var chartDom = document.getElementById(containerId);
     var myChart = echarts.init(chartDom);
     var option;
 
@@ -387,8 +391,13 @@ function filterChart() {
 }
 
 // 側邊欄圖表 (Sidebar Chart - S-02 數據)
-function sidebarChart() {
-    var chartDom = document.getElementById('sidebar-chart-box');
+// 側邊欄圖表 (加入 containerId 參數讓它變成共用元件)
+function sidebarChart(containerId) {
+    // 改為動態抓取傳入的 ID
+    var chartDom = document.getElementById(containerId);
+
+    // 防呆機制：確保當前頁面有這個容器才執行，避免報錯
+    if (!chartDom) return;
     var myChart = echarts.init(chartDom);
     var option;
 
@@ -443,7 +452,7 @@ function sidebarChart() {
                 name: '經常找不到',
                 type: 'bar',
                 stack: 'total', emphasis: { focus: 'series' },
-                data: [125], // 58%
+                data: [122], // 58%
                 label: {
                     show: true,
                     fontSize: 20,
@@ -455,7 +464,7 @@ function sidebarChart() {
                 name: '勉強可以',
                 type: 'bar',
                 stack: 'total', emphasis: { focus: 'series' },
-                data: [64], // 30%
+                data: [66], // 30%
                 label: {
                     show: true,
                     fontSize: 20,
@@ -467,7 +476,7 @@ function sidebarChart() {
                 name: '很快就能找到',
                 type: 'bar',
                 stack: 'total', emphasis: { focus: 'series' },
-                data: [26], // 12%
+                data: [27], // 12%
                 label: {
                     show: true,
                     fontSize: 20,
@@ -508,8 +517,13 @@ function sidebarChart() {
 }
 
 // RWD 特效圖表 (RWD Chart)
-function rwdChart() {
-    var chartDom = document.getElementById('RWD-chart-box');
+// RWD 特效圖表 (加入 containerId 參數讓它變成共用元件)
+function rwdChart(containerId) {
+    // 動態抓取傳入的 ID
+    var chartDom = document.getElementById(containerId);
+
+    // 防呆機制
+    if (!chartDom) return;
     var myChart = echarts.init(chartDom);
     var option;
 
