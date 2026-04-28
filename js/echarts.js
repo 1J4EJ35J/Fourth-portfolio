@@ -6,8 +6,10 @@ sidebarChart('sidebar-chart-box-main');
 sidebarChart('sidebar-chart-box-popup');
 rwdChart('RWD-chart-box-main');
 rwdChart('RWD-chart-box-popup');
-productLayoutChart();
-productSettingChart();
+productLayoutChart('product-layout-chart-box-main');
+productLayoutChart('product-layout-chart-box-popup');
+productSettingChart('product-settings-chart-box-main');
+productSettingChart('product-settings-chart-box-popup');
 
 //問卷有效比率
 function responseRate() {
@@ -639,8 +641,13 @@ function rwdChart(containerId) {
 }
 
 // 產品設定 - 挫敗人數比率圖表 (融合 Gauge 視覺的細環圓餅圖)
-function productLayoutChart() {
-    var chartDom = document.getElementById('product-layout-chart-box');
+// 產品設定 - 挫敗人數比率圖表 (融合 Gauge 視覺的細環圓餅圖)
+// 加入 containerId 參數讓它變成共用元件
+function productLayoutChart(containerId) {
+    // 動態抓取傳入的 ID
+    var chartDom = document.getElementById(containerId);
+    // 防呆機制
+    if (!chartDom) return;
     var myChart = echarts.init(chartDom);
     var option;
 
@@ -654,7 +661,7 @@ function productLayoutChart() {
                 left: 'center',
                 top: isMobile ? '40%' : '37.5%', // 獨立調整 89% 的高度
                 textStyle: {
-                    fontSize: isMobile ? 48 : 82,
+                    fontSize: isMobile ? 60 : 72,
                     color: '#e07070',
                     fontWeight: 'bold'
                 }
@@ -662,9 +669,9 @@ function productLayoutChart() {
             {
                 text: '尋找功能與資訊的過程中\n感到挫敗的人數佔比',
                 left: 'center',
-                top: isMobile ? '55%' : '60.5%', // 單獨調整「挫敗比率」的高度，不受 89% 影響
+                top: isMobile ? '59%' : '60.5%', // 單獨調整「挫敗比率」的高度，不受 89% 影響
                 textStyle: {
-                    fontSize: 16,
+                    fontSize: isMobile ? 14 : 16,
                     color: '#c0d4eb',
                     fontWeight: 'normal',
                     lineHeight: 20
@@ -727,7 +734,7 @@ function productLayoutChart() {
         myChart.setOption({
             title: {
                 textStyle: {
-                    fontSize: currentIsMobile ? 48 : 60
+                    fontSize: currentIsMobile ? 60 : 72
                 }
             },
             series: [
@@ -747,8 +754,13 @@ function productLayoutChart() {
 }
 
 // 產品設定 - 任務成功的存活占比 (Funnel Chart 漏斗圖)
-function productSettingChart() {
-    var chartDom = document.getElementById('product-setting-chart-box');
+// 加入 containerId 參數讓它變成共用元件
+function productSettingChart(containerId) {
+    // 動態抓取傳入的 ID
+    var chartDom = document.getElementById(containerId);
+
+    // 防呆機制
+    if (!chartDom) return;
     var myChart = echarts.init(chartDom);
     var option;
 
