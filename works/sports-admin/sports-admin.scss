@@ -128,12 +128,23 @@
             margin-top: 12px;
         }
 
+        .dev-flow-img-open-btn {
+            margin-top: 12px;
+        }
+
         .holo-frame.img-container {
             max-height: fit-content;
             height: fit-content;
             display: flex;
             width: 100%;
 
+            &.dev-flow-img {
+                display: none;
+
+                &.active {
+                    display: flex;
+                }
+            }
 
             .img-controller {
                 width: auto;

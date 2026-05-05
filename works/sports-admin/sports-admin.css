@@ -90,6 +90,9 @@
 .sports-admin .ts-02 .panel-body .holo-frame.img-container {
   margin-top: 12px;
 }
+.sports-admin .ts-02 .dev-flow-img-open-btn {
+  margin-top: 12px;
+}
 .sports-admin .ts-02 .holo-frame.img-container {
   max-height: -moz-fit-content;
   max-height: fit-content;
@@ -97,6 +100,12 @@
   height: fit-content;
   display: flex;
   width: 100%;
+}
+.sports-admin .ts-02 .holo-frame.img-container.dev-flow-img {
+  display: none;
+}
+.sports-admin .ts-02 .holo-frame.img-container.dev-flow-img.active {
+  display: flex;
 }
 .sports-admin .ts-02 .holo-frame.img-container .img-controller {
   width: auto;

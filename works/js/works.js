@@ -119,3 +119,29 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("警告：桌機版影片與手機版影片的數量不一致，無法正確配對高度。");
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // 取得所有的觸發按鈕與圖片容器
+    const openBtns = document.querySelectorAll('.dev-flow-img-open-btn');
+    const flowImages = document.querySelectorAll('.dev-flow-img');
+
+    // 替每個按鈕綁定點擊事件
+    openBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            // 避免 a 標籤或 button 的預設行為
+            e.preventDefault();
+
+            // 針對目標圖片進行明確的 class 判斷與操作
+            flowImages.forEach(function (img) {
+                // 先判斷有沒有 .active
+                if (img.classList.contains('active')) {
+                    // 如果有，則移除
+                    img.classList.remove('active');
+                } else {
+                    // 如果沒有，則加上
+                    img.classList.add('active');
+                }
+            });
+        });
+    });
+});
