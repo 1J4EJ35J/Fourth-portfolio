@@ -74,6 +74,10 @@
   /* 允許光暈稍微溢出 */
 }
 
+.competencies-section .go-to-appErp-btn {
+  margin-top: .5rem;
+}
+
 /* RWD: 手機版調整 */
 @media (max-width: 768px) {
   .light-simulation-box {
